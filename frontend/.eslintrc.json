@@ -1,3 +1,71 @@
 {
-  "extends": "next/core-web-vitals"
+	"parser": "@typescript-eslint/parser",
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react-hooks/recommended",
+		"plugin:import/errors",
+		"plugin:import/warnings",
+		"plugin:import/typescript",
+		"prettier",
+		"plugin:@next/next/recommended",
+		"next/core-web-vitals"
+	],
+	"plugins": [
+		"react",
+		"react-hooks",
+		"@typescript-eslint",
+		"import",
+		"prettier"
+	],
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		},
+		"import/parsers": {
+			"@typescript-eslint/parser": [".ts", ".tsx"]
+		},
+		"import/resolver": {
+			"typescript": "./importresolver.config.js",
+			"node": {
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		}
+	},
+	"rules": {
+		"@typescript-eslint/no-explicit-any": "warn",
+		"react/react-in-jsx-scope": "off",
+		"prettier/prettier": ["error", { "endOfLine": "auto" }],
+		"react/prop-types": "off",
+		"import/no-unresolved": "off",
+		"no-unused-vars": "warn",
+		"@typescript-eslint/no-unused-vars": "warn",
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"@typescript-eslint/ban-ts-ignore": "off",
+		"@typescript-eslint/ban-ts-comment": "off",
+		"import/order": [
+			"error",
+			{
+				"groups": ["builtin", "external", "parent", "sibling", "index"],
+				"pathGroups": [
+					{
+						"pattern": "~/**",
+						"group": "parent"
+					}
+				],
+				"newlines-between": "always",
+				"alphabetize": {
+					"order": "asc",
+					"caseInsensitive": true
+				}
+			}
+		]
+	}
 }
