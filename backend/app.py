@@ -6,6 +6,7 @@ from config import app
 from flask_jwt_extended import JWTManager
 from request.exception import AppException, template
 from routes.users.controller import UsersResource
+from routes.cart_item.controller import CartItemResource
 
 
 # Convert the list of whitelisted origins to a list with stripped elements
@@ -32,6 +33,7 @@ def register_error_handler():
 
 def register_resources(api):
     api.add_resource(UsersResource, '/users')
+    api.add_resource(CartItemResource, '/cart-item')
 
 
 api = Api(app)
