@@ -4,7 +4,7 @@
     "description": "Making your wishlists come true.",
     "action": {
         "default_icon": "genie.png",
-        "default_popup": "popup.html",
+        "default_popup": "index.html",
         "default_title": "Genius"
     },
     "permissions": [

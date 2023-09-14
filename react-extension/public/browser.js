@@ -127,3 +127,4 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   );
   sendResponse({ farewell: product });
 });
+
