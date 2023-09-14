@@ -13,6 +13,7 @@ class CartItem(db.Model):
     image = db.Column(db.String(250), nullable=False)
     category = db.Column(db.String(250), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+    purchased = db.Column(db.Boolean, default=False, nullable=False)
 
     def json(self):
         return {
@@ -23,5 +24,6 @@ class CartItem(db.Model):
             "description": self.description,
             "image": self.image,
             "category": self.category,
-            'quantity': self.quantity,
+            "quantity": self.quantity,
+            "purchased": self.purchased
         }

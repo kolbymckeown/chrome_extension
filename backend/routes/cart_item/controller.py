@@ -73,6 +73,7 @@ class CartItemResource(Resource):
         cart_item.image = body.get("image", cart_item.image)
         cart_item.category = body.get("category", cart_item.category)
         cart_item.quantity = body.get("quantity", cart_item.quantity)
+        cart_item.purchased = body.get("purchased", cart_item.purchased)
 
         db.session.commit()
 
