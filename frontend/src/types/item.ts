@@ -3,8 +3,9 @@ export type CartItem = {
   readonly dateAdded: string;
   title: string;
   price: number;
-  description?: string;
-  image?: string;
-  quantity?: number;
-  category?: string;
+  description: string;
+  image: string;
+  quantity: number;
+  category: string;
+  purchased: boolean;
 };
