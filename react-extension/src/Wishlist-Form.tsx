@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import {
     Box,
     FormControl,
@@ -8,30 +8,40 @@ import {
     Select,
     Button,
 } from '@chakra-ui/react';
+import { Product } from './App'
 
-const WishlistForm = () => {
-    const [formData, setFormData] = useState({
-        title: '',
-        price: '',
-        category: '',
-        image: '',
-        description: '',
-        store: '',
-    });
+interface FormData {
+    title?: string;
+    price?: number;
+    category?: string;
+    image?: string;
+    description?: string;
+    store?: string;
+}
 
-    const handleChange = (e) => {
+interface WishlistProps {
+    product: Product;
+}
+
+const WishlistForm = ({ product }: WishlistProps) => {
+
+    const [formData, setFormData] = useState<FormData>(product);
+
+    console.log('IN THE FORM', product)
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('hit', formData);
         // Handle form submission logic here
-
+        console.log(formData);
     };
+
     return (
-        <Box p={3}>
+        <Box p={8}>
             <form onSubmit={handleSubmit}>
                 <FormControl>
                     <FormLabel>Title</FormLabel>
