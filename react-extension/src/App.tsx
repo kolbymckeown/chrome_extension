@@ -5,22 +5,32 @@ import { ChromeMessage, Sender } from './types';
 import { ChakraProvider } from '@chakra-ui/react';
 import WishlistForm from './Wishlist-Form';
 
+export type Product = {
+    url?: string;
+    store?: string;
+    img?: string;
+    title?: string;
+    price?: number;
+    description?: string
+}
+
 export default () => {
 
-    const [url, setUrl] = useState<string | undefined>('');
-    const [responseFromContent, setResponseFromContent] = useState<string>('');
+    const [responseFromContent, setResponseFromContent] = useState<Product>({
+        url: '',
+        store: '',
+        img: '',
+        title: '',
+        price: 0,
+        description: '',
+    });
 
 
     useEffect(() => {
-        const queryInfo = { active: true, lastFocusedWindow: true };
-
-        chrome.tabs && chrome.tabs.query(queryInfo, tabs => {
-            const url = tabs[0].url;
-            setUrl(url);
-        });
+        getProductOnClick();
     }, []);
 
-    const sendTestMessage = () => {
+    const getProductOnClick = () => {
         const message: ChromeMessage = {
             from: Sender.React,
             message: "Hello from React",
@@ -31,6 +41,7 @@ export default () => {
                 id,
                 message,
                 (responseFromContentScript) => {
+                    console.log("product", responseFromContentScript)
                     setResponseFromContent(responseFromContentScript);
                 });
         });
@@ -38,7 +49,7 @@ export default () => {
 
     return (
         <ChakraProvider>
-            <WishlistForm />
+            <WishlistForm product={responseFromContent} />
         </ChakraProvider>
     );
 }

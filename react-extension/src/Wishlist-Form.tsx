@@ -8,25 +8,26 @@ import {
     Select,
     Button,
 } from '@chakra-ui/react';
+import { Product } from './App'
 
 interface FormData {
-    title: string;
-    price: string;
-    category: string;
-    image: string;
-    description: string;
-    store: string;
+    title?: string;
+    price?: number;
+    category?: string;
+    image?: string;
+    description?: string;
+    store?: string;
 }
 
-const WishlistForm: React.FC = () => {
-    const [formData, setFormData] = useState<FormData>({
-        title: '',
-        price: '',
-        category: '',
-        image: '',
-        description: '',
-        store: '',
-    });
+interface WishlistProps {
+    product: Product;
+}
+
+const WishlistForm = ({ product }: WishlistProps) => {
+
+    const [formData, setFormData] = useState<FormData>(product);
+
+    console.log('IN THE FORM', product)
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
