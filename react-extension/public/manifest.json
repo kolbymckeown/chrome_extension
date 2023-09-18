@@ -1,33 +1,27 @@
 {
-    "name": "Genius Chrome Extension",
-    "description": "Making your wishlists come true.",
-    "version": "1.0",
-    "manifest_version": 3,
-    "action": {
-        "default_popup": "index.html",
-        "default_title": "Genius",
-        "default_icon": "genie.png"
-    },
-    "options_ui": {
-        "page": "index.html"
-    },
-    "background": {
-        "service_worker": "./static/js/background.js"
-    },
-	
-    "content_scripts": [
-        {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "./static/js/content.js"
-            ]
-        }
-    ],
-    "devtools_page": "index.html",
-    "permissions": ["tabs", "activeTab", "cookies"],
-	"host_permissions": ["http://localhost/*", "https://localhost/*"],
+	"name": "Genius Chrome Extension",
+	"description": "Making your wishlists come true.",
+	"version": "1.0",
+	"manifest_version": 3,
+	"action": {
+		"default_popup": "index.html",
+		"default_title": "Genius",
+		"default_icon": "genie.png"
+	},
+	"options_ui": {
+		"page": "index.html"
+	},
+	"background": {
+		"service_worker": "./static/js/background.js"
+	},
 
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["./static/js/content.js"]
+		}
+	],
+	"devtools_page": "index.html",
+	"permissions": ["tabs", "activeTab", "cookies"],
+	"host_permissions": ["http://localhost/*", "https://localhost/*"]
 }
-
