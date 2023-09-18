@@ -12,7 +12,6 @@ import { selectUser } from '@/redux/slices/user.slice';
 const navLinks = [
   { name: 'About', path: '#' },
   { name: 'Features', path: '#' },
-  { name: 'Find Shifts', path: '/find-shifts' },
 ];
 
 export default function Navbar() {
