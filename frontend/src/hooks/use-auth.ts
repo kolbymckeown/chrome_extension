@@ -45,11 +45,11 @@ const useAuth = (): AuthHook => {
     }
 
     dispatch(setUser(user));
-    setCookie('current_user', user.id, {
+    setCookie('genius_current_user', user.id, {
       expires: dateDaysFromNow(7),
     });
     if (authToken) {
-      setCookie('user_auth_token', authToken, {
+      setCookie('genius_user_auth_token', authToken, {
         expires: dateDaysFromNow(7),
       });
     }
@@ -83,7 +83,7 @@ const useAuth = (): AuthHook => {
   ) => {
     try {
       const { user } = await createUser(auth, email, password);
-      setCookie('current_user', user.uid, {
+      setCookie('genius_current_user', user.uid, {
         expires: dateDaysFromNow(7),
       });
 
@@ -110,8 +110,8 @@ const useAuth = (): AuthHook => {
     try {
       dispatch(resetUser());
       await signOut(auth);
-      deleteCookie('current_user');
-      deleteCookie('user_auth_token');
+      deleteCookie('genius_current_user');
+      deleteCookie('genius_user_auth_token');
       router.push('/');
     } catch (error) {
       console.error('Error signing out', error);

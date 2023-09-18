@@ -21,7 +21,7 @@ export interface IAsyncRequestOptions extends IRequestHeaders {
 }
 
 const getAuthorizationBearer = (): HeadersInit => {
-  const authToken = getCookie('user_auth_token');
+  const authToken = getCookie('genius_user_auth_token');
 
   return authToken
     ? {

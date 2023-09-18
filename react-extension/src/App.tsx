@@ -43,7 +43,7 @@ const App = () => {
 				console.log("All cookies:", allCookies);
 
 				const currentUserAuthToken = allCookies.find(
-					(cookie) => cookie.name === "user_auth_token"
+					(cookie) => cookie.name === "genius_user_auth_token"
 				);
 
 				if (currentUserAuthToken) {

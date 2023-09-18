@@ -23,9 +23,9 @@ export interface IAsyncRequestOptions extends IRequestHeaders {
 export const getAuthorizationBearer = async (): Promise<HeadersInit> => {
 	return new Promise((resolve, reject) => {
 		chrome.cookies.getAll({}, function (allCookies) {
-			// Find the cookie named "user_auth_token"
+			// Find the cookie named "genius_user_auth_token"
 			const currentUserAuthToken = allCookies.find(
-				(cookie) => cookie.name === "user_auth_token"
+				(cookie) => cookie.name === "genius_user_auth_token"
 			);
 
 			if (currentUserAuthToken) {
