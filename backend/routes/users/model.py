@@ -11,6 +11,8 @@ class Users(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     profile_complete = db.Column(db.Boolean, default=False)
 
+    categories = db.relationship('Category', backref='user', lazy=True)
+
     def json(self):
         return {
             "id": self.id,

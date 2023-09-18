@@ -43,11 +43,17 @@ const WishlistForm = ({ product }: WishlistProps) => {
 		console.log(formData);
 	};
 
-	const { data } = useQuery(`cart-item`, {
+	const { data: cartItem } = useQuery(`cart-item`, {
 		query: { cartItemId: "all" },
 	});
 
-	console.log({ data });
+	console.log({ cartItem });
+
+    const {data: categories} = useQuery(`categories`, {
+		query: { categoryId: "all" },
+	});
+
+    console.log({categories})
 
 	return (
 		<Box p={8}>
