@@ -1,9 +1,12 @@
+import { AddCategory } from '@/components/categories/add-category';
+import { CategoryCard } from '@/components/categories/category-card';
 import { AddItem } from '@/components/items/add-item';
 import { Item } from '@/components/items/item';
 import { Layout } from '@/components/layout';
 import useAuth from '@/hooks/use-auth';
 import useQuery from '@/hooks/use-query';
 import { selectUser } from '@/redux/slices/user.slice';
+import { Category } from '@/types/category';
 import { Button } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
@@ -17,16 +20,16 @@ export default function Home() {
   const user = useSelector(selectUser);
   console.log({ user });
 
-  const { data } = useQuery(
-    `cart-item`,
+  const { data: categories } = useQuery(
+    `categories`,
     {
-      query: { cartItemId: 'all' },
+      query: { categoryId: 'all' },
     },
     { enabled: !!user.email }
   );
 
-  console.log({ data });
-
+  console.log('categories',categories );
+  
   return (
     <Layout seoTranslationKey="index">
       {!user.email ? (
@@ -59,9 +62,11 @@ export default function Home() {
             Logout
           </Button>
           <AddItem />
-          {data?.cartItems?.map((item, i) => (
-            <Item item={item} key={i} />
+          <AddCategory />
+          {categories?.categories?.map((category: Category) => (
+            <CategoryCard category={category} key={category.id} />
           ))}
+
         </>
       )}
     </Layout>
