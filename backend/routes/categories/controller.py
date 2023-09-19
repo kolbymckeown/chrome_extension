@@ -1,4 +1,5 @@
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from flask_restful import Resource
 from flask import request
 from datetime import datetime
@@ -39,9 +40,14 @@ class CategoryResource(Resource):
             }, code=200).json
         else:
             return Response({"message": "Category not found"}, code=404).json
-
+    
+    @jwt_required()
     def post(self):
         body = Request().body
+        user_id = get_jwt_identity()
+
+        # Extend the body dictionary with the user_id
+        body['user_id'] = user_id
 
         new_category = Category(
             **body

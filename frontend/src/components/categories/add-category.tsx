@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+
 import {
   Flex,
   Button,
@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useMutation } from '@/hooks/use-query';
-import { cartItemSchema } from '@/schemas';
+
 
 export const AddCategory = () => {
   const [isOpen, setIsOpen] = useState(false);
