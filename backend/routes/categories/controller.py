@@ -23,9 +23,7 @@ class CategoryResource(Resource):
                 categories = find(Category, filter={"user_id": auth_token}).db_entries
 
                 return Response({
-                    "categories": [dissoc(
-                        category.json(), ['id']) for category in categories]
-                }, code=200).json
+                    "categories": [category.json() for category in categories]}, code=200).json
             except Exception as e:
                 print(e, file=sys.stderr)
                 return Response({"message": "Something went wrong"}, code=500).json

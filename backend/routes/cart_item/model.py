@@ -11,7 +11,7 @@ class CartItem(db.Model):
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(250), nullable=False)
     image = db.Column(db.String(250), nullable=False)
-    category = db.Column(db.String(250), nullable=False)
+    category_id = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     purchased = db.Column(db.Boolean, default=False, nullable=False)
 
@@ -23,7 +23,7 @@ class CartItem(db.Model):
             "price": self.price,
             "description": self.description,
             "image": self.image,
-            "category": self.category,
+            "category_id": self.category_id,
             "quantity": self.quantity,
             "purchased": self.purchased
         }
