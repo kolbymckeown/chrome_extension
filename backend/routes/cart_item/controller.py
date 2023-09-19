@@ -25,7 +25,7 @@ class CartItemResource(Resource):
             print(user_id, file=sys.stderr)
             print(cart_items, file=sys.stderr)
             if not cart_items:
-                return Response({"message": "No cart items found"}, code=401).json
+                return Response({"cart_items": []}, code=200).json
             return Response({"cart_items": [item.json() for item in cart_items]}, code=200).json
         else:
             # Fetch a specific cart item

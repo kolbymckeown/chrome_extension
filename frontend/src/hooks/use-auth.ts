@@ -1,6 +1,8 @@
 import {
   signInWithEmailAndPassword as signIn,
   createUserWithEmailAndPassword as createUser,
+  GoogleAuthProvider,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
   User,
@@ -13,6 +15,8 @@ import { resetUser, setUser } from '@/redux/slices/user.slice';
 import { asynchrounousRequest } from '@/utils/api';
 import { dateDaysFromNow, deleteCookie, setCookie } from '@/utils/cookies';
 import { auth } from '@/utils/firebase';
+
+const googleProvider = new GoogleAuthProvider();
 
 type AuthHook = {
   signInWithEmailAndPassword: (
@@ -28,6 +32,7 @@ type AuthHook = {
   logout: () => Promise<void>;
   setAuthenticatedUser: (user: any, token: string) => any;
   getAuthenticatedUser: (userId?: string) => any;
+  signInWithGoogle: (newAccount?: boolean) => Promise<void>;
 };
 
 const useAuth = (): AuthHook => {
@@ -52,6 +57,46 @@ const useAuth = (): AuthHook => {
       setCookie('genius_user_auth_token', authToken, {
         expires: dateDaysFromNow(7),
       });
+    }
+  };
+
+  const signInWithGoogle = async (newAccount?: boolean) => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      if (newAccount) {
+        const { user: dbUser, authToken } = await asynchrounousRequest(
+          'users',
+          {
+            type: 'POST',
+            body: {
+              id: user.uid,
+              email: user.email,
+              firstName: '',
+              lastName: '',
+            },
+          }
+        );
+
+        console.log('New DB User:', dbUser);
+        setAuthenticatedUser(dbUser, authToken);
+      } else {
+        try {
+          const { user: dbUser, authToken } = await getAuthenticatedUser();
+          if (!dbUser) {
+            throw new Error('User not found in database');
+          }
+          setAuthenticatedUser(dbUser, authToken);
+        } catch (error) {
+          console.error('Error fetching user from database:', error);
+        }
+      }
+
+      router.push('/');
+    } catch (error) {
+      console.error('Error signing in with Google', error);
+      throw error;
     }
   };
 
@@ -123,6 +168,7 @@ const useAuth = (): AuthHook => {
     signInWithEmailAndPassword,
     createAccountWithEmailAndPassword,
     logout,
+    signInWithGoogle,
     getAuthenticatedUser,
     setAuthenticatedUser,
   };

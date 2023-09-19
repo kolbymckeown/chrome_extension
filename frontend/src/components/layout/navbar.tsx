@@ -53,7 +53,7 @@ export default function Navbar() {
                 Login
               </Button>
             </NextLink>
-            <NextLink href="/session/sign-up">
+            <NextLink href="/session/register">
               <Button colorScheme="accent">Sign Up</Button>
             </NextLink>
           </Flex>
