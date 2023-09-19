@@ -45,14 +45,11 @@ class CartItemResource(Resource):
         user_id = get_jwt_identity()
         body = Request().body
 
+        # Extend the body dictionary with the user_id
+        body['user_id'] = user_id
+
         new_cart_item = CartItem(
-            user_id=user_id,
-            title=body.get("title"),
-            price=body.get("price"),
-            description=body.get("description"),
-            image=body.get("image"),
-            category_id=body.get("category_id"),
-            quantity=body.get("quantity")
+            **body
         )
 
         db.session.add(new_cart_item)

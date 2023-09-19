@@ -5,7 +5,7 @@ import { getCurrentTabUId } from "./chrome/utils";
 import { ChromeMessage, Sender } from "./types";
 import { ChakraProvider } from "@chakra-ui/react";
 import WishlistForm from "./Wishlist-Form";
-import { queryClient } from "./hooks/use-query";
+import useQuery from "./hooks/use-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import theme from "./styles/theme";
 import Auth from "./components/auth";
@@ -13,17 +13,28 @@ import Auth from "./components/auth";
 export type Product = {
 	url?: string;
 	store?: string;
-	img?: string;
+	image?: string;
 	title?: string;
 	price?: number;
 	description?: string;
+    categoryId?: number;
 };
+
+export type Category = {
+    id: string;
+    title: string;
+    isPublic: boolean;
+  };
+
+export type Categories={
+    categories: Category[]
+}
 
 const App = () => {
 	const [responseFromContent, setResponseFromContent] = useState<Product>({
 		url: "",
 		store: "",
-		img: "",
+		image: "",
 		title: "",
 		price: 0,
 		description: "",
@@ -73,12 +84,14 @@ const App = () => {
 		});
 	};
 
+    const { data: categories } = useQuery<Categories>(`categories`, {
+        query:  { categoryId: "all" },
+    });
+
 	return (
-		<QueryClientProvider client={queryClient}>
-			<ChakraProvider theme={theme}>
-				{user ? <WishlistForm product={responseFromContent} /> : <Auth />}
-			</ChakraProvider>
-		</QueryClientProvider>
+		<ChakraProvider theme={theme}>
+			{user ? <WishlistForm product={responseFromContent} categories={categories}/> : <Auth />}
+		</ChakraProvider>
 	);
 };
 
