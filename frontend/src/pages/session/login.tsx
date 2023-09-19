@@ -13,16 +13,18 @@ import {
   Image,
   useToast,
   Stack,
+  Icon,
 } from '@chakra-ui/react';
 import { Layout } from '@/components/layout';
 import useAuth from '@/hooks/use-auth';
+import { FcGoogle } from 'react-icons/fc';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup.string().required('Password is required'),
 });
 export default function RegisterPage() {
-  const { signInWithEmailAndPassword } = useAuth();
+  const { signInWithEmailAndPassword, signInWithGoogle } = useAuth();
   const toast = useToast();
   const {
     handleSubmit,
@@ -31,6 +33,14 @@ export default function RegisterPage() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle(false);
+    } catch (error) {
+      console.error('Failed to sign in with Google', error);
+    }
+  };
 
   const onSubmit = async (data: { email: string; password: string }) => {
     try {
@@ -109,6 +119,10 @@ export default function RegisterPage() {
               </FormControl>{' '}
               <Button mt={6} colorScheme="primary" type="submit" width="full">
                 Login
+              </Button>
+              <Button onClick={handleGoogleSignIn}>
+                <Icon as={FcGoogle} mr={2} />
+                Sign in with Google
               </Button>
             </Stack>
           </form>

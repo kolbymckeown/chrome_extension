@@ -7,17 +7,19 @@ export default function AuthProvider() {
   const { getAuthenticatedUser, setAuthenticatedUser } = useAuth();
 
   useEffect(() => {
-    // Listen for auth state changes
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        // @ts-ignore
-        getAuthenticatedUser().then(({ user: dbUser, authToken }) => {
-          setAuthenticatedUser(dbUser, authToken);
-        });
+        // Delay fetching by 1 second to allow for the user to be created in the database
+        // TODO: Find a better way to do this
+        setTimeout(() => {
+          // @ts-ignore
+          getAuthenticatedUser().then(({ user: dbUser, authToken }) => {
+            setAuthenticatedUser(dbUser, authToken);
+          });
+        }, 1000);
       }
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
