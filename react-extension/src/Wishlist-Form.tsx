@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import {
 	Box,
 	FormControl,
@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Product } from "./App";
 import useQuery, { useMutation } from "./hooks/use-query";
-import { title } from "process";
+
 
 interface FormData {
 	title?: string;
@@ -19,6 +19,15 @@ interface FormData {
 	image?: string;
 	description?: string;
 	store?: string;
+}
+type Category = {
+    id: string;
+    title: string;
+    isPublic: boolean;
+  };
+
+type Categories={
+    categories: Category[]
 }
 
 interface WishlistProps {
@@ -30,6 +39,13 @@ const WishlistForm = ({ product }: WishlistProps) => {
 
 	console.log("IN THE FORM", product);
 
+
+    useEffect(() => {
+        // This effect runs whenever 'product' changes
+        setFormData(product);
+      }, [product]); // Add 'product' as a dependency to listen for changes
+
+    
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
 	) => {
@@ -43,15 +59,9 @@ const WishlistForm = ({ product }: WishlistProps) => {
 		console.log(formData);
 	};
 
-	const { data: cartItem } = useQuery(`cart-item`, {
-		query: { cartItemId: "all" },
-	});
-
-	console.log({ cartItem });
-
-    const {data: categories} = useQuery(`categories`, {
-		query: { categoryId: "all" },
-	});
+    const { data: categories } = useQuery<Categories>(`categories`, {
+        query:  { categoryId: "all" },
+      });
 
     console.log({categories})
 
@@ -83,10 +93,9 @@ const WishlistForm = ({ product }: WishlistProps) => {
 						value={formData.category}
 						onChange={handleChange}
 					>
-						<option value="electronics">Electronics</option>
-						<option value="clothing">Clothing</option>
-						<option value="books">Books</option>
-						{/* Add more categories here */}
+                        {categories?.categories.map((category) =>
+                            <option value={category.id}>{category.title}</option>
+                        )}
 					</Select>
 				</FormControl>
 				<FormControl mt={4}>
