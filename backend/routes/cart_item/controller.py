@@ -17,16 +17,20 @@ class CartItemResource(Resource):
     def get(self):
         user_id = get_jwt_identity()
         cart_item_id = request.args.get("cart_item_id")
+        category_id = request.args.get("category_id")
 
         if cart_item_id == "all":
+            if category_id:
+                # Fetch all cart items associated with the user and the specified category_id
+                cart_items = CartItem.query.filter_by(user_id=user_id, category_id=category_id).all()
             # Fetch all cart items associated with the user
-            cart_items = CartItem.query.filter_by(user_id=user_id).all()
-            print(cart_item_id, file=sys.stderr)
-            print(user_id, file=sys.stderr)
-            print(cart_items, file=sys.stderr)
+            else:
+                # Fetch all cart items associated with the user (without category filtering)
+                cart_items = CartItem.query.filter_by(user_id=user_id).all()
             if not cart_items:
-                return Response({"message": "No cart items found"}, code=401).json
+                return Response({"cart_items": []}, code=200).json
             return Response({"cart_items": [item.json() for item in cart_items]}, code=200).json
+
         else:
             # Fetch a specific cart item
             cart_item = find_one(CartItem, filter={"id": cart_item_id})
@@ -47,7 +51,7 @@ class CartItemResource(Resource):
             price=body.get("price"),
             description=body.get("description"),
             image=body.get("image"),
-            category=body.get("category"),
+            category_id=body.get("category_id"),
             quantity=body.get("quantity")
         )
 
