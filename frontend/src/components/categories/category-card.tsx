@@ -29,6 +29,7 @@ export const CategoryCard = ({category}: CategoryCardProps) => {
             <Text fontSize="2xl" fontWeight="bold">
             {title}
             </Text>
+            <Text>{cartItems?.cartItems?.length}</Text>
         </Box>
         </Box>
     );
