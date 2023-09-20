@@ -25,7 +25,7 @@ interface CartItem {
   url: string | null;
 }
 
-interface CartItemsResponse {
+export interface CartItemsResponse {
   cartItems: CartItem[];
   statusCode: number;
 }
@@ -86,11 +86,13 @@ export default function DisplayCase() {
                   <Text fontWeight="bold">{item.title}</Text>
                   <Text>Price: ${item.price}</Text>
                   <Text>Quantity: {item.quantity}</Text>
-                  <Link href={`/cart/${item.id}`} passHref>
-                    <Button colorScheme="primary" variant="outline" mt={2}>
-                      View Item
-                    </Button>
-                  </Link>
+                  {item.url && (
+                    <Link href={`${item.url}`} passHref>
+                      <Button colorScheme="primary" variant="outline" mt={2}>
+                        View Product
+                      </Button>
+                    </Link>
+                  )}
                 </Box>
               ))}
             </Grid>

@@ -32,7 +32,7 @@ export default function CategoryTabs() {
 
   const categories = data?.categories || [];
 
-  const onClickTab = (tab: string) => {
+  const onClickTab = (tab: number) => {
     dispatch(toggleTab(tab));
   };
 
@@ -42,9 +42,9 @@ export default function CategoryTabs() {
         <Button
           variant="unstyled"
           key={index}
-          onClick={() => onClickTab(category.title)}
-          bg={activeTabs.includes(category.title) ? 'primary.500' : 'gray.200'}
-          color={activeTabs.includes(category.title) ? 'white' : 'black'}
+          onClick={() => onClickTab(category.id)}
+          bg={activeTabs.includes(category.id) ? 'primary.500' : 'gray.200'}
+          color={activeTabs.includes(category.id) ? 'white' : 'black'}
           borderColor={'primary.500'}
           borderWidth={1}
           mx={2}

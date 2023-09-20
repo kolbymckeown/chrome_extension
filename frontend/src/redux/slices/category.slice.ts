@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CategoryState {
-  activeTabs: string[];
+  activeTabs: number[];
 }
 
 const initialState: CategoryState = {
@@ -12,7 +12,7 @@ export const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    toggleTab: (state, action: PayloadAction<string>) => {
+    toggleTab: (state, action: PayloadAction<number>) => {
       const index = state.activeTabs.indexOf(action.payload);
       if (index === -1) {
         state.activeTabs.push(action.payload);
