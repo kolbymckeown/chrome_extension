@@ -22,7 +22,8 @@ class CartItemResource(Resource):
         if cart_item_id == "all":
             if category_id:
                 # Fetch all cart items associated with the user and the specified category_id
-                cart_items = CartItem.query.filter_by(user_id=user_id, category_id=category_id).all()
+                cart_items = CartItem.query.filter_by(
+                    user_id=user_id, category_id=category_id).all()
             # Fetch all cart items associated with the user
             else:
                 # Fetch all cart items associated with the user (without category filtering)

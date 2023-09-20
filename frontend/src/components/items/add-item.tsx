@@ -23,8 +23,9 @@ import {
   Checkbox,
 } from '@chakra-ui/react';
 import { itemCategories } from '@/constants';
-import { useMutation } from '@/hooks/use-query';
+import useQuery, { useMutation } from '@/hooks/use-query';
 import { cartItemSchema } from '@/schemas';
+import { CategoriesResponse } from '../categories/tabs';
 
 export const AddItem = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,10 @@ export const AddItem = () => {
     type: 'POST',
   });
 
+  const { data: categories } = useQuery<CategoriesResponse>(`categories`, {
+    query: { categoryId: 'all' },
+  });
+
   const { handleSubmit, control, reset } = useForm({
     resolver: yupResolver(cartItemSchema),
     defaultValues: {
@@ -44,7 +49,6 @@ export const AddItem = () => {
       price: 0,
       description: '',
       image: '',
-      category: 'unsorted',
       quantity: 1,
       purchased: false,
     },
@@ -133,13 +137,13 @@ export const AddItem = () => {
               <FormControl mt={4}>
                 <FormLabel>Category</FormLabel>
                 <Controller
-                  name="category"
+                  name="categoryId"
                   control={control}
                   render={({ field }) => (
                     <Select {...field}>
-                      {itemCategories.map((category, index) => (
-                        <option key={index} value={category.value}>
-                          {category.label}
+                      {categories?.categories.map((category, index) => (
+                        <option key={index} value={category.id}>
+                          {category.title}
                         </option>
                       ))}
                     </Select>
