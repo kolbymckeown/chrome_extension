@@ -13,7 +13,7 @@ const validateSender = (
 interface Product {
     url?: string;
     store?: string;
-    img?: string;
+    image?: string;
     title?: string;
     price?: number;
 }
@@ -117,17 +117,18 @@ const messagesFromReactAppListener = (
 
         product.store = storeName(window.location.hostname);
 
-        // const imgGetter = (): string | undefined => {
-        //     for (let image of document.images) {
-        //         if (image.height > 400 && !image.src.includes("LOADING")) {
-        //             return image.src;
-        //         }
-        //     }
-        // };
-        // const img = imgGetter();
-        // console.log("************", img);
-        // product.img = img;
-        console.log(document)
+        const imgGetter = (): string | undefined => {
+            // @ts-ignore
+            for (let image of document.images) {
+                if (image.height > 400 && !image.src.includes("LOADING")) {
+                    return image.src;
+                }
+            }
+        };
+        const img = imgGetter();
+
+        product.image = img;
+
         product.title = productName;
         if (productPrice) {
             product.price = priceToNumber(productPrice);

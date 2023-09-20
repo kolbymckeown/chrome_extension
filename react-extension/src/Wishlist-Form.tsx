@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import {
 	Box,
 	FormControl,
@@ -7,15 +7,16 @@ import {
 	Textarea,
 	Select,
 	Button,
+    Image,
 } from "@chakra-ui/react";
-import { Product } from "./App";
-import useQuery, { useMutation } from "./hooks/use-query";
-import { title } from "process";
+import { Categories, Product } from "./App";
+import { useMutation } from "./hooks/use-query";
+
 
 interface FormData {
 	title?: string;
 	price?: number;
-	category?: string;
+	categoryId?: string;
 	image?: string;
 	description?: string;
 	store?: string;
@@ -23,13 +24,24 @@ interface FormData {
 
 interface WishlistProps {
 	product: Product;
+    categories?: Categories;
 }
 
-const WishlistForm = ({ product }: WishlistProps) => {
-	const [formData, setFormData] = useState<FormData>(product);
+const WishlistForm = ({ product, categories = { categories: [] } }: WishlistProps) => {
+	const [formData, setFormData] = useState<FormData>({...product, categoryId: categories?.categories[0]?.id});
 
-	console.log("IN THE FORM", product);
+    useEffect(() => {
+        setFormData({...product, categoryId: categories?.categories[0]?.id});
+    }, [product, categories]); // Add 'product' as a dependency to listen for changes
 
+    const {
+        mutate: addItem,
+        isLoading,
+        isSuccess,
+      } = useMutation(`cart-item`, {
+        type: 'POST',
+      });
+    
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
 	) => {
@@ -41,19 +53,10 @@ const WishlistForm = ({ product }: WishlistProps) => {
 		e.preventDefault();
 		// Handle form submission logic here
 		console.log(formData);
+        addItem({...formData})
 	};
-
-	const { data: cartItem } = useQuery(`cart-item`, {
-		query: { cartItemId: "all" },
-	});
-
-	console.log({ cartItem });
-
-    const {data: categories} = useQuery(`categories`, {
-		query: { categoryId: "all" },
-	});
-
-    console.log({categories})
+    
+    console.log('FORMDATA', formData)
 
 	return (
 		<Box p={8}>
@@ -63,7 +66,7 @@ const WishlistForm = ({ product }: WishlistProps) => {
 					<Input
 						type="text"
 						name="title"
-						value={formData.title}
+						value={formData?.title}
 						onChange={handleChange}
 					/>
 				</FormControl>
@@ -72,37 +75,38 @@ const WishlistForm = ({ product }: WishlistProps) => {
 					<Input
 						type="text"
 						name="price"
-						value={formData.price}
+						value={formData?.price}
 						onChange={handleChange}
 					/>
 				</FormControl>
 				<FormControl mt={4}>
 					<FormLabel>Category</FormLabel>
 					<Select
-						name="category"
-						value={formData.category}
+						name="categoryId"
 						onChange={handleChange}
 					>
-						<option value="electronics">Electronics</option>
-						<option value="clothing">Clothing</option>
-						<option value="books">Books</option>
-						{/* Add more categories here */}
+                        {categories?.categories.map((category) =>
+                            <option value={category.id}>{category.title}</option>
+                        )}
 					</Select>
 				</FormControl>
 				<FormControl mt={4}>
 					<FormLabel>Image URL</FormLabel>
-					<Input
-						type="text"
-						name="image"
-						value={formData.image}
-						onChange={handleChange}
-					/>
+					{formData?.image && (
+                        <Image
+                            mt={4} // You can adjust the margin as needed
+                            src={formData.image}
+                            alt="Product Image"
+                            width={200} // Adjust the width as needed
+                            height={200} // Adjust the height as needed
+                        />
+                    )}
 				</FormControl>
 				<FormControl mt={4}>
 					<FormLabel>Description</FormLabel>
 					<Textarea
 						name="description"
-						value={formData.description}
+						value={formData?.description}
 						onChange={handleChange}
 					/>
 				</FormControl>
@@ -111,7 +115,7 @@ const WishlistForm = ({ product }: WishlistProps) => {
 					<Input
 						type="text"
 						name="store"
-						value={formData.store}
+						value={formData?.store}
 						onChange={handleChange}
 					/>
 				</FormControl>
