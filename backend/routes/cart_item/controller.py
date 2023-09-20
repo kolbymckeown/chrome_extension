@@ -22,7 +22,8 @@ class CartItemResource(Resource):
         if cart_item_id == "all":
             if category_id:
                 # Fetch all cart items associated with the user and the specified category_id
-                cart_items = CartItem.query.filter_by(user_id=user_id, category_id=category_id).all()
+                cart_items = CartItem.query.filter_by(
+                    user_id=user_id, category_id=category_id).all()
             # Fetch all cart items associated with the user
             else:
                 # Fetch all cart items associated with the user (without category filtering)
@@ -45,14 +46,11 @@ class CartItemResource(Resource):
         user_id = get_jwt_identity()
         body = Request().body
 
+        # Extend the body dictionary with the user_id
+        body['user_id'] = user_id
+
         new_cart_item = CartItem(
-            user_id=user_id,
-            title=body.get("title"),
-            price=body.get("price"),
-            description=body.get("description"),
-            image=body.get("image"),
-            category_id=body.get("category_id"),
-            quantity=body.get("quantity")
+            **body
         )
 
         db.session.add(new_cart_item)

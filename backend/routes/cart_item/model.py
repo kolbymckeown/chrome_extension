@@ -9,11 +9,13 @@ class CartItem(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     title = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    description = db.Column(db.String(250), nullable=False)
-    image = db.Column(db.String(250), nullable=False)
+    description = db.Column(db.String(250), nullable=True)
+    image = db.Column(db.String(250), nullable=True)
     category_id = db.Column(db.Integer, nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=True)
     purchased = db.Column(db.Boolean, default=False, nullable=False)
+    url = db.Column(db.String(250), nullable=False)
+    store = db.Column(db.String(250), nullable=False)
 
     def json(self):
         return {
@@ -25,5 +27,7 @@ class CartItem(db.Model):
             "image": self.image,
             "category_id": self.category_id,
             "quantity": self.quantity,
-            "purchased": self.purchased
+            "purchased": self.purchased,
+            "url": self.url,
+            "store": self.store
         }

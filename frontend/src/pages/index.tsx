@@ -1,5 +1,7 @@
 import { AddCategory } from '@/components/categories/add-category';
 import { CategoryCard } from '@/components/categories/category-card';
+import DisplayCase from '@/components/categories/display-case';
+import CategoryTabs, { CategoriesResponse } from '@/components/categories/tabs';
 import { AddItem } from '@/components/items/add-item';
 import { Item } from '@/components/items/item';
 import { Layout } from '@/components/layout';
@@ -18,9 +20,8 @@ export default function Home() {
   } = useAuth();
 
   const user = useSelector(selectUser);
-  console.log({ user });
 
-  const { data: categories } = useQuery(
+  const { data: categories } = useQuery<CategoriesResponse>(
     `categories`,
     {
       query: { categoryId: 'all' },
@@ -28,8 +29,6 @@ export default function Home() {
     { enabled: !!user.email }
   );
 
-  console.log('categories',categories );
-  
   return (
     <Layout seoTranslationKey="index">
       {!user.email ? (
@@ -58,15 +57,17 @@ export default function Home() {
         </>
       ) : (
         <>
+          <CategoryTabs />
+
           <Button onClick={() => logout()} colorScheme="success">
             Logout
           </Button>
           <AddItem />
           <AddCategory />
+          <DisplayCase />
           {categories?.categories?.map((category: Category) => (
             <CategoryCard category={category} key={category.id} />
           ))}
-
         </>
       )}
     </Layout>
