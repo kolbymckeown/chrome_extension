@@ -3,7 +3,6 @@ import { CategoryCard } from '@/components/categories/category-card';
 import DisplayCase from '@/components/categories/display-case';
 import CategoryTabs, { CategoriesResponse } from '@/components/categories/tabs';
 import { AddItem } from '@/components/items/add-item';
-import { Item } from '@/components/items/item';
 import { Layout } from '@/components/layout';
 import useAuth from '@/hooks/use-auth';
 import useQuery from '@/hooks/use-query';
