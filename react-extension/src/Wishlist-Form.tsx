@@ -46,7 +46,6 @@ const WishlistForm = ({
   const {
     mutate: addItem,
     isLoading,
-    isSuccess,
     isError,
   } = useMutation(`cart-item`, {
     type: "POST",
