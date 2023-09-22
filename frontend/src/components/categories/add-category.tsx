@@ -49,7 +49,7 @@ export const AddCategory = () => {
         onSuccess: () => {
           toast({
             title: 'Item added.',
-            description: 'Your item has been successfully added.',
+            description: 'Your category has been successfully added.',
             status: 'success',
             duration: 3000,
             isClosable: true,

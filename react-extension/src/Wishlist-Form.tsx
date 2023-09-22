@@ -10,6 +10,7 @@ import {
   Image,
   Spinner,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Categories, Product } from "./App";
 import { useMutation } from "./hooks/use-query";
@@ -40,6 +41,7 @@ const WishlistForm = ({
   useEffect(() => {
     setFormData({ ...product, categoryId: categories?.categories[0]?.id });
   }, [product, categories]); // Add 'product' as a dependency to listen for changes
+  const toast = useToast();
 
   const {
     mutate: addItem,
@@ -59,7 +61,29 @@ const WishlistForm = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addItem({ ...formData });
+    addItem(
+      { ...formData },
+      {
+        onSuccess: () => {
+          toast({
+            title: "Item added.",
+            description: "Your item has been successfully added.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Error",
+            description: "Something went wrong.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   if (isLoading) {

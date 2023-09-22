@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { getCurrentTabUId } from "./chrome/utils";
 import { ChromeMessage, Sender } from "./types";
-import { Box, ChakraProvider, Flex, Spinner, Text } from "@chakra-ui/react";
+import { ChakraProvider, Flex, Spinner, Text } from "@chakra-ui/react";
 import WishlistForm from "./Wishlist-Form";
 import useQuery from "./hooks/use-query";
-import { QueryClientProvider } from "@tanstack/react-query";
+
 import theme from "./styles/theme";
 import Auth from "./components/auth";
+import { ErrorBoundary } from "react-error-boundary";
 
 export type Product = {
   url?: string;
@@ -93,27 +94,34 @@ const App = () => {
   };
 
   return (
-    <ChakraProvider theme={theme}>
-      <Flex justifyContent="center" alignItems="center" height="100vh">
-        {isError ? (
-          <Text fontSize="xl" color="red.500">
-            Something went wrong...
-          </Text>
-        ) : isLoading ? (
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="xl"
-          />
-        ) : user ? (
-          <WishlistForm product={responseFromContent} categories={categories} />
-        ) : (
-          <Auth />
-        )}
-      </Flex>
-    </ChakraProvider>
+    <ErrorBoundary
+      fallback={
+        <Text color="red.500" fontSize="xl">
+          Something went wrong...
+        </Text>
+      }
+    >
+      <ChakraProvider theme={theme}>
+        <Flex justifyContent="center" alignItems="center" height="100vh">
+          {isLoading ? (
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          ) : user ? (
+            <WishlistForm
+              product={responseFromContent}
+              categories={categories}
+            />
+          ) : (
+            <Auth />
+          )}
+        </Flex>
+      </ChakraProvider>
+    </ErrorBoundary>
   );
 };
 
