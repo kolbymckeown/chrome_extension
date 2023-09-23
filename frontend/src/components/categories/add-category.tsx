@@ -25,16 +25,11 @@ import { useMutation } from '@/hooks/use-query';
 export const AddCategory = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
-  const {
-    mutate: addItem,
-    isLoading,
-    isSuccess,
-  } = useMutation(`categories`, {
+  const { mutate: addItem } = useMutation(`categories`, {
     type: 'POST',
   });
 
   const { handleSubmit, control, reset } = useForm({
-    // resolver: yupResolver(cartItemSchema),
     defaultValues: {
       title: '',
       isPublic: false,
@@ -42,14 +37,14 @@ export const AddCategory = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log({data});
+    console.log({ data });
     addItem(
       { ...data },
       {
         onSuccess: () => {
           toast({
             title: 'Item added.',
-            description: 'Your item has been successfully added.',
+            description: 'Your category has been successfully added.',
             status: 'success',
             duration: 3000,
             isClosable: true,
@@ -83,7 +78,7 @@ export const AddCategory = () => {
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Title</FormLabel>
                 <Controller
                   name="title"
@@ -114,7 +109,14 @@ export const AddCategory = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="red" mr={3} onClick={() => setIsOpen(false)}>
+              <Button
+                colorScheme="red"
+                mr={3}
+                onClick={() => {
+                  setIsOpen(false);
+                  reset();
+                }}
+              >
                 Close
               </Button>
               <Button type="submit" colorScheme="green">
