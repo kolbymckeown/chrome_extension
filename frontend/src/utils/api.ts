@@ -1,6 +1,8 @@
 import { getCookie } from './cookies';
 
 import { camelCaseKeys, snakeCaseKeys, camelToSnakeCase } from '@/utils/string';
+const MAX_RETRIES = 3;
+const INITIAL_BACKOFF = 500; // 500ms
 
 export const REQUEST_METHODS = {
   GET: 'GET',
@@ -64,27 +66,46 @@ export async function asynchrounousRequest(
     query = null,
   }: IAsyncRequestOptions = {}
 ) {
-  try {
-    const queryString = formatQueryString(query);
-    const requestHeaders = getRequestHeaders({ type, body });
+  let retries = 0;
+  let backoff = INITIAL_BACKOFF;
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${request}${queryString}`,
-      requestHeaders
-    );
+  while (retries < MAX_RETRIES) {
+    try {
+      const queryString = formatQueryString(query);
+      const requestHeaders = getRequestHeaders({ type, body });
 
-    const parsedResponse = camelCaseKeys(await response.json());
-
-    if (parsedResponse.statusCode >= 400) {
-      throw new Error(
-        `Network Error: Status ${parsedResponse.statusCode}, Message: ${parsedResponse.message}`
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/${request}${queryString}`,
+        requestHeaders
       );
-    }
 
-    return parsedResponse as any;
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error('Network Error:', e);
-    throw e;
+      const parsedResponse = camelCaseKeys(await response.json());
+
+      if (parsedResponse.statusCode >= 400) {
+        retries++;
+        if (retries < MAX_RETRIES) {
+          // Wait for the backoff duration then retry
+          await new Promise((res) => setTimeout(res, backoff));
+          // Double the backoff time for the next iteration
+          backoff *= 2;
+          continue;
+        } else {
+          throw new Error(
+            `Network Error: Status ${parsedResponse.statusCode}, Message: ${parsedResponse.message}`
+          );
+        }
+      }
+
+      return parsedResponse as any;
+    } catch (e) {
+      // If the error is not related to statusCode >= 400, we might want to handle it differently
+      // @ts-ignore
+      if (e.message && !e.message.startsWith('Network Error')) {
+        // eslint-disable-next-line no-console
+        console.error('Network Error:', e);
+        throw e;
+      }
+    }
   }
+  throw new Error('Max retries reached');
 }
