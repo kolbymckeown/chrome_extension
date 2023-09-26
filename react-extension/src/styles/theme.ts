@@ -2,8 +2,8 @@ import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
 	fonts: {
-		heading: `'Manrope', 'sans-serif'`,
-		body: `'Manrope', 'sans-serif'`,
+		heading: `'system-ui', 'sans-serif'`,
+		body: `'system-ui', 'sans-serif'`,
 	},
 	colors: {
 		primary: {
@@ -46,6 +46,15 @@ const theme = extendTheme({
 			800: "#349234",
 			900: "#1e6f24",
 		},
+        scheme:{
+            'warm-white': "#fdfcf6",
+            'light-rose': "#ead2ce",
+            'dusty-rose': "#c96a6c",
+            'bg-green-blue': "#e5ebe7",
+            'main-green-blue': "#4c8d99",
+            'dark-blue': "#1b243d",
+        }
+            
 	},
 });
 

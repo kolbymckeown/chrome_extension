@@ -8,6 +8,9 @@ import {
   Select,
   Button,
   Image,
+  InputGroup,
+  InputLeftElement,
+  Flex,
   Spinner,
   Text,
   useToast,
@@ -103,70 +106,110 @@ const WishlistForm = ({
     </Text>;
   }
 
-  return (
-    <Box p={8}>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel>Title</FormLabel>
-          <Input
-            type="text"
-            name="title"
-            value={formData?.title}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel>Price</FormLabel>
-          <Input
-            type="text"
-            name="price"
-            value={formData?.price}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel>Category</FormLabel>
-          <Select name="categoryId" onChange={handleChange}>
-            {categories?.categories.map((category) => (
-              <option value={category.id}>{category.title}</option>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel>Image URL</FormLabel>
-          {formData?.image && (
-            <Image
-              mt={4} // You can adjust the margin as needed
-              src={formData.image}
-              alt="Product Image"
-              width={200} // Adjust the width as needed
-              height={200} // Adjust the height as needed
-            />
-          )}
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel>Description</FormLabel>
-          <Textarea
-            name="description"
-            value={formData?.description}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <FormLabel>Store</FormLabel>
-          <Input
-            type="text"
-            name="store"
-            value={formData?.store}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <Button mt={4} colorScheme="teal" type="submit">
-          Add to Wishlist
-        </Button>
-      </form>
-    </Box>
-  );
+	return (
+		<Box p={4}>
+			<form onSubmit={handleSubmit}>
+				<FormControl>
+					<FormLabel color={'scheme.main-green-blue'}>Title</FormLabel>
+					<Input
+						type="text"
+						name="title"
+						value={formData?.title}
+						onChange={handleChange}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
+					/>
+				</FormControl>
+                <FormControl mt={4} color={'scheme.main-green-blue'}>
+					{formData?.image && (
+                        <Image
+                            mt={4} 
+                            src={formData.image}
+                            alt="Product Image"
+                            width={290} 
+                            height={290}
+                        />
+                    )}
+				</FormControl>
+				<FormControl mt={4} >
+					<FormLabel color={'scheme.main-green-blue'}>Price</FormLabel>
+                    <InputGroup>
+                    <InputLeftElement children="$"/>
+					<Input
+                        prefix="$"
+						type="text"
+						name="price"
+						value={formData?.price}
+						onChange={handleChange}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
+                        />
+                        </InputGroup>
+				</FormControl>
+				<FormControl mt={4}>
+					<FormLabel color={'scheme.main-green-blue'}>Category</FormLabel>
+					<Select
+						name="categoryId"
+						onChange={handleChange}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
+					>
+                        {categories?.categories.map((category) =>
+                            <option value={category.id}>{category.title}</option>
+                        )}
+					</Select>
+				</FormControl>
+				<FormControl mt={4}>
+					<FormLabel color={'scheme.main-green-blue'}>Description</FormLabel>
+					<Textarea
+                        placeholder="Add your own description"
+						name="description"
+						value={formData?.description}
+						onChange={handleChange}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
+					/>
+				</FormControl>
+				<FormControl mt={4}>
+					<FormLabel color={'scheme.main-green-blue'}>Store</FormLabel>
+					<Input
+						type="text"
+						name="store"
+						value={formData?.store}
+						onChange={handleChange}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
+					/>
+				</FormControl>
+                <Flex mt={4} justifyContent="space-between">
+				<Button mt={4} color='scheme.main-green-blue' type="submit">
+					Add to Wishlist
+				</Button>
+                <Button mt={4} color='scheme.main-green-blue' onClick={()=> {
+                    const home = `${process.env.REACT_APP_FRONTEND_URL}`;
+                    window.open(home, "_blank");
+                }}>
+                    Visit Genie
+                </Button>
+                </Flex>
+			</form>
+		</Box>
+	);
 };
 
 export default WishlistForm;
