@@ -1,16 +1,19 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import {
-	Box,
-	FormControl,
-	FormLabel,
-	Input,
-	Textarea,
-	Select,
-	Button,
-    Image,
-    InputGroup,
-    InputLeftElement,
-    Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  Select,
+  Button,
+  Image,
+  InputGroup,
+  InputLeftElement,
+  Flex,
+  Spinner,
+  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Categories, Product } from "./App";
 import { useMutation } from "./hooks/use-query";
