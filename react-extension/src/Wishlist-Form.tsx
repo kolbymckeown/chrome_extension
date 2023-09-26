@@ -15,51 +15,93 @@ import {
 import { Categories, Product } from "./App";
 import { useMutation } from "./hooks/use-query";
 
-
 interface FormData {
-	title?: string;
-	price?: number;
-	categoryId?: string;
-	image?: string;
-	description?: string;
-	store?: string;
+  title?: string;
+  price?: number;
+  categoryId?: string;
+  image?: string;
+  description?: string;
+  store?: string;
 }
 
 interface WishlistProps {
-	product: Product;
-    categories?: Categories;
+  product: Product;
+  categories?: Categories;
 }
 
-const WishlistForm = ({ product, categories = { categories: [] } }: WishlistProps) => {
-	const [formData, setFormData] = useState<FormData>({...product, categoryId: categories?.categories[0]?.id});
+const WishlistForm = ({
+  product,
+  categories = { categories: [] },
+}: WishlistProps) => {
+  const [formData, setFormData] = useState<FormData>({
+    ...product,
+    categoryId: categories?.categories[0]?.id,
+  });
 
-    useEffect(() => {
-        setFormData({...product, categoryId: categories?.categories[0]?.id});
-    }, [product, categories]); // Add 'product' as a dependency to listen for changes
+  useEffect(() => {
+    setFormData({ ...product, categoryId: categories?.categories[0]?.id });
+  }, [product, categories]); // Add 'product' as a dependency to listen for changes
+  const toast = useToast();
 
-    const {
-        mutate: addItem,
-        isLoading,
-        isSuccess,
-      } = useMutation(`cart-item`, {
-        type: 'POST',
-      });
-    
-	const handleChange = (
-		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-	) => {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
-	};
+  const {
+    mutate: addItem,
+    isLoading,
+    isError,
+  } = useMutation(`cart-item`, {
+    type: "POST",
+  });
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		// Handle form submission logic here
-		console.log(formData);
-        addItem({...formData})
-	};
-    
-    console.log('FORMDATA', formData)
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    addItem(
+      { ...formData },
+      {
+        onSuccess: () => {
+          toast({
+            title: "Item added.",
+            description: "Your item has been successfully added.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Error",
+            description: "Something went wrong.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        },
+      }
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    );
+  }
+
+  if (isError) {
+    <Text fontSize="xl" color="red.500">
+      Something went wrong...
+    </Text>;
+  }
 
 	return (
 		<Box p={4}>
