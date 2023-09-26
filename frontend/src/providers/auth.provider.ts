@@ -9,14 +9,10 @@ export default function AuthProvider() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        // Delay fetching by 1 second to allow for the user to be created in the database
-        // TODO: Find a better way to do this
-        setTimeout(() => {
-          // @ts-ignore
-          getAuthenticatedUser().then(({ user: dbUser, authToken }) => {
-            setAuthenticatedUser(dbUser, authToken);
-          });
-        }, 1000);
+        // @ts-ignore
+        getAuthenticatedUser().then(({ user: dbUser, authToken }) => {
+          setAuthenticatedUser(dbUser, authToken);
+        });
       }
     });
 
