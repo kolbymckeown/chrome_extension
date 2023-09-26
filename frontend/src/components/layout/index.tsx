@@ -22,8 +22,9 @@ export const Layout = ({
   plainDescription,
 }: ILayoutProps) => {
   const { txid } = useTranslations();
-  const fullPageTitle = `Mono Repo | ${
-    plainTitle || txid(`seo.title.${seoTranslationKey}`, seoTranslationVariables)
+  const fullPageTitle = `Genius | ${
+    plainTitle ||
+    txid(`seo.title.${seoTranslationKey}`, seoTranslationVariables)
   }`;
   const description =
     plainDescription ||
@@ -40,7 +41,7 @@ export const Layout = ({
         <meta key="twcard" content="summary" name="twitter:card" />
 
         <meta key="ogimage" content="/splash.jph" property="og:image" />
-        <meta key="ogsitename" content="Mono Repo" property="og:site_name" />
+        <meta key="ogsitename" content="Genius" property="og:site_name" />
         <meta key="ogtitle" content={fullPageTitle} property="og:title" />
         <meta key="ogdesc" content={description} property="og:description" />
         <meta name="theme-color" content="#000000" />
