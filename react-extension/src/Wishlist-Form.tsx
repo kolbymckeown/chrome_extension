@@ -71,12 +71,11 @@ const WishlistForm = ({ product, categories = { categories: [] } }: WishlistProp
 						name="title"
 						value={formData?.title}
 						onChange={handleChange}
-                        style={{
-                            color: '#1b243d',
-                            border: '1px solid #e5ebe7', // Customize the border color and style
-                            borderRadius: '0', // Optional: Remove any border-radius
-                            boxShadow: 'none', // Optional: Remove any box shadows
-                          }}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
 					/>
 				</FormControl>
                 <FormControl mt={4} color={'scheme.main-green-blue'}>
@@ -100,12 +99,11 @@ const WishlistForm = ({ product, categories = { categories: [] } }: WishlistProp
 						name="price"
 						value={formData?.price}
 						onChange={handleChange}
-                        style={{
-                            color: '#1b243d',
-                            border: '1px solid #e5ebe7', // Customize the border color and style
-                            borderRadius: '0', // Optional: Remove any border-radius
-                            boxShadow: 'none', // Optional: Remove any box shadows
-                        }}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
                         />
                         </InputGroup>
 				</FormControl>
@@ -114,12 +112,11 @@ const WishlistForm = ({ product, categories = { categories: [] } }: WishlistProp
 					<Select
 						name="categoryId"
 						onChange={handleChange}
-                        style={{
-                            color: '#1b243d',
-                            border: '1px solid #e5ebe7', // Customize the border color and style
-                            borderRadius: '0', // Optional: Remove any border-radius
-                            boxShadow: 'none', // Optional: Remove any box shadows
-                          }}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
 					>
                         {categories?.categories.map((category) =>
                             <option value={category.id}>{category.title}</option>
@@ -133,12 +130,11 @@ const WishlistForm = ({ product, categories = { categories: [] } }: WishlistProp
 						name="description"
 						value={formData?.description}
 						onChange={handleChange}
-                        style={{
-                            color: '#1b243d',
-                            border: '1px solid #e5ebe7', // Customize the border color and style
-                            borderRadius: '0', // Optional: Remove any border-radius
-                            boxShadow: 'none', // Optional: Remove any box shadows
-                          }}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
 					/>
 				</FormControl>
 				<FormControl mt={4}>
@@ -148,12 +144,11 @@ const WishlistForm = ({ product, categories = { categories: [] } }: WishlistProp
 						name="store"
 						value={formData?.store}
 						onChange={handleChange}
-                        style={{
-                            color: '#1b243d',
-                            border: '1px solid #e5ebe7', // Customize the border color and style
-                            borderRadius: '0', // Optional: Remove any border-radius
-                            boxShadow: 'none', // Optional: Remove any box shadows
-                          }}
+                        color='scheme.dark-blue'
+                        border='1px solid'
+                        borderColor='scheme.bg-green-blue'
+                        borderRadius='none'
+                        boxShadow='none'
 					/>
 				</FormControl>
                 <Flex mt={4} justifyContent="space-between">
