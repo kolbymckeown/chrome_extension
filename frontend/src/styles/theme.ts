@@ -6,8 +6,8 @@ const activeLabelStyles = {
 
 const theme = extendTheme({
   fonts: {
-    heading: `'Manrope', 'sans-serif'`,
-    body: `'Manrope', 'sans-serif'`,
+    heading: `'system-ui', 'sans-serif'`,
+    body: `'system-ui', 'sans-serif'`,
   },
   colors: {
     primary: {
@@ -23,8 +23,8 @@ const theme = extendTheme({
       900: '#0d47a1',
     },
     background: {
-      light: '#F7FAFC',
-      dark: '#1A202C',
+      light: '#fdfcf6',
+      dark: '#1b243d',
     },
     accent: {
       50: '#fff3e0',
@@ -49,6 +49,21 @@ const theme = extendTheme({
       700: '#4bb543',
       800: '#349234',
       900: '#1e6f24',
+    },
+    scheme: {
+      'warm-white': '#fdfcf6',
+      'light-rose': '#ead2ce',
+      'dusty-rose': '#c96a6c',
+      'bg-green-blue': '#e5ebe7',
+      'main-green-blue': '#4c8d99',
+      'dark-blue': '#1b243d',
+    },
+    styles: {
+      global: {
+        body: {
+          color: '#1b243d',
+        },
+      },
     },
   },
 });

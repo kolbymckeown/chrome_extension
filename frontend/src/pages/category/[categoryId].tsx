@@ -1,15 +1,7 @@
 import { CartItemsResponse } from '@/components/categories/display-case';
 import { Layout } from '@/components/layout';
 import useQuery from '@/hooks/use-query';
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -18,9 +10,9 @@ export default function CategoryPage() {
   const router = useRouter();
   const { categoryId } = router.query;
 
-  const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
-    query: { cartItemId: 'all', categoryId },
-  });
+  //   const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
+  //     query: { cartItemId: 'all', categoryId },
+  //   });
 
   return (
     <ErrorBoundary fallback={<Text>Something went wrong...</Text>}>
