@@ -7,7 +7,6 @@ import {
   Flex,
   Grid,
   Icon,
-  Image,
   Text,
 } from '@chakra-ui/react';
 import { Category } from '@/types/category';
@@ -44,6 +43,7 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
       width={'300px'}
       position="relative"
     >
+      {/* private badge */}
       {!isPublic && (
         <Badge
           borderRadius="7px 0px 7px 0px"
@@ -67,20 +67,19 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
             top="16px"
             right="16px"
           />
-
           {/* Badge */}
           {filteredImages.length > 0 && (
             <Box
-              backgroundColor="scheme.dusty-rose" // Badge background color
-              color="white" // Badge text color
-              borderRadius="full" // Make it round
-              paddingX="2" // Horizontal padding
-              fontSize="sm" // Font size
-              position="absolute" // Position the badge relative to the Icon
-              top="2" // Adjust vertical position to align with the top of the Icon
-              right="1" // Adjust horizontal position to align with the right of the Icon
+              backgroundColor="scheme.dusty-rose"
+              color="white"
+              borderRadius="full"
+              paddingX="2"
+              fontSize="sm"
+              position="absolute"
+              top="2"
+              right="1"
             >
-              {filteredImages.length} {/* Your badge number */}
+              {filteredImages.length}
             </Box>
           )}
         </Box>
@@ -104,7 +103,10 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
               w={'260px'}
               h={'260px'}
             >
-              <ImageWithFallback src={filteredImages[0]} alt={`Image ${filteredImages[0]}`} />
+              <ImageWithFallback
+                src={filteredImages[0]}
+                alt={`Image ${filteredImages[0]}`}
+              />
             </Box>
           )}
         </Grid>
