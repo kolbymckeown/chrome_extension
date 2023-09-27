@@ -11,9 +11,9 @@ const ImageWithFallback = ({ src, alt }: ImageWithFallbackProps) => {
 
   return (
     <Image
-      src={imageError ? '/shopping-bag.png' : src} // Use the fallbackSrc directly here
+      src={imageError ? '/shopping-bag.png' : src}
       alt={alt}
-      onError={() => setImageError(true)} // Set imageError to true directly in onError
+      onError={() => setImageError(true)}
     />
   );
 };
