@@ -57,6 +57,7 @@ const theme = extendTheme({
       'bg-green-blue': '#e5ebe7',
       'main-green-blue': '#4c8d99',
       'dark-blue': '#1b243d',
+      mint: '#BED2C3',
     },
     styles: {
       global: {

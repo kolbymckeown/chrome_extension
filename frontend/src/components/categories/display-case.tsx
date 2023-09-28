@@ -18,18 +18,6 @@ export interface CartItemsResponse {
 }
 
 export default function DisplayCase({ categories }: DisplayCaseProps) {
-  const dispatch = useDispatch();
-  const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
-    query: { cartItemId: 'all' },
-  });
-
-  useEffect(() => {
-    dispatch(fetchItemsStart());
-    if (cartItems) {
-      dispatch(fetchItemsSuccess(cartItems.cartItems));
-    }
-  }, [dispatch, cartItems]);
-
   return (
     <Box
       display="flex"
@@ -38,10 +26,16 @@ export default function DisplayCase({ categories }: DisplayCaseProps) {
       justifyContent="center"
       my={10}
     >
-      <Text fontSize="3xl" mb={4}>
+      <Text fontSize="3xl" mb={4} fontWeight={700} color="scheme.dusty-rose">
         Categories
       </Text>
-      <Grid templateColumns="repeat(auto-fill, 300px)" gap={6} w="100%" px={6}>
+      <Grid
+        templateColumns="repeat(auto-fill, 300px)"
+        gap={6}
+        w="100%"
+        px={6}
+        justifyContent="center"
+      >
         {categories?.categories?.map((category: Category) => (
           <CategoryCard category={category} key={category.id} />
         ))}
