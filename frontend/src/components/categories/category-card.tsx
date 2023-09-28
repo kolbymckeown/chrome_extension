@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Input, Text } from '@chakra-ui/react';
 import { Category } from '@/types/category';
 
 interface CategoryCardProps {

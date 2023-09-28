@@ -11,7 +11,7 @@ import { Category } from '@/types/category';
 import { Button, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
-
+import LandingPage from '@/components/landing-page';
 
 export default function Home() {
   const {
@@ -38,33 +38,13 @@ export default function Home() {
         </Text>
       }
     >
-      <Layout seoTranslationKey="index">
-        {!user.email ? (
-          <>
-            <Button
-              onClick={() => {
-                createAccountWithEmailAndPassword(
-                  'test@test.com',
-                  'Tester123',
-                  'Kolby',
-                  'McKeown'
-                );
-              }}
-              colorScheme="primary"
-            >
-              Create User
-            </Button>
-            <Button
-              onClick={() =>
-                signInWithEmailAndPassword('test@test.com', 'Tester123')
-              }
-              colorScheme="accent"
-            >
-              Sign In
-            </Button>
-          </>
-        ) : (
-          <>
+      {!user.email ? (
+        <>
+          <LandingPage />
+        </>
+      ) : (
+        <>
+          <Layout seoTranslationKey="index">
             <CategoryTabs />
 
             <Button onClick={() => logout()} colorScheme="success">
@@ -76,9 +56,9 @@ export default function Home() {
             {categories?.categories?.map((category: Category) => (
               <CategoryCard category={category} key={category.id} />
             ))}
-          </>
-        )}
-      </Layout>
+          </Layout>
+        </>
+      )}
     </ErrorBoundary>
   );
 }
