@@ -1,3 +1,4 @@
+import ImageWithFallback from '@/components/categories/image-fallback';
 import { CartItem } from '@/types/item';
 import { formatCurrency } from '@/utils/price-formatter';
 import {
@@ -60,14 +61,10 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
           <Text fontWeight="700">{item.store}</Text>
           <Text>{formatCurrency(item.price)}</Text>
         </Flex>
-
-        <Image
-          h={'225'}
-          w={'225'}
-          objectFit="cover"
-          src={item.image}
-          alt={item.title}
-        />
+        s
+        <Box h={'225'} w={'225'}>
+          <ImageWithFallback src={item.image} alt={item.title} />
+        </Box>
       </Link>
 
       <Box
