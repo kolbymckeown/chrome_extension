@@ -2,7 +2,7 @@ import { CartItem } from '@/types/item';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ItemsState {
-  items: CartItem[];
+  items: { [key: number]: CartItem[] };
   loading: boolean;
   error: string | null;
 }
@@ -23,7 +23,15 @@ const itemsSlice = createSlice({
     },
     fetchItemsSuccess(state, action: PayloadAction<CartItem[]>) {
       state.loading = false;
-      state.items = action.payload;
+      const sortedItems = action.payload.reduce((acc, item) => {
+        if (acc[item.categoryId]) {
+          acc[item.categoryId].push(item);
+        } else {
+          acc[item.categoryId] = [item];
+        }
+        return acc;
+      }, {} as { [key: number]: CartItem[] });
+      state.items = sortedItems;
     },
     fetchItemsFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -34,5 +42,7 @@ const itemsSlice = createSlice({
 
 export const { fetchItemsStart, fetchItemsSuccess, fetchItemsFailure } =
   itemsSlice.actions;
+
+export const selectItems = (state: { items: ItemsState }) => state.items.items;
 
 export default itemsSlice.reducer;

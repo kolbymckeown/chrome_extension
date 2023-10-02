@@ -20,6 +20,7 @@ export default function Home() {
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
   const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
     query: { cartItemId: 'all' },
   });
