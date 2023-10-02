@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Text, Grid } from '@chakra-ui/react';
 import { CategoriesResponse } from './tabs';
 import { Category } from '@/types/category';
 import { CategoryCard } from './category-card';
-import useQuery from '@/hooks/use-query';
 import { CartItem } from '@/types/item';
-import { useDispatch } from 'react-redux';
-import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
 
 interface DisplayCaseProps {
   categories: CategoriesResponse | undefined;

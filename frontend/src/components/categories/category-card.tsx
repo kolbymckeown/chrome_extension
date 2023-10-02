@@ -16,24 +16,22 @@ import { CartItem } from '@/types/item';
 import { FaShoppingCart } from 'react-icons/fa';
 import ImageWithFallback from './image-fallback';
 import Link from 'next/link';
+import { selectItems } from '@/redux/slices/items.slice';
 
 interface CategoryCardProps {
   category: Category;
 }
 
 export const CategoryCard = ({ category }: CategoryCardProps) => {
-  const { title, id: categoryId, isPublic } = category;
+  const { title, isPublic, id: categoryId } = category;
 
   //  @ts-ignore
-  const items = useSelector((state) => {
-    console.log(state);
-    return state.items.items;
-  });
+  const items = useSelector(selectItems);
 
-  const filteredImages = items
-    .filter((item: CartItem) => item.categoryId === categoryId)
-    .map((item: CartItem) => item.image)
-    .slice(0, 4);
+  const filteredImages =
+    categoryId !== undefined && items[+categoryId]
+      ? items[+categoryId].map((item: CartItem) => item.image).slice(0, 4)
+      : [];
 
   return (
     <Box
