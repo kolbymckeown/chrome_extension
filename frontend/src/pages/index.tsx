@@ -1,16 +1,13 @@
-import { AddCategory } from '@/components/categories/add-category';
 import DisplayCase, {
   CartItemsResponse,
 } from '@/components/categories/display-case';
-import CategoryTabs, { CategoriesResponse } from '@/components/categories/tabs';
-import { AddItem } from '@/components/items/add-item';
+import { CategoriesResponse } from '@/components/categories/tabs';
 import { Layout } from '@/components/layout';
 import useAuth from '@/hooks/use-auth';
 import useQuery from '@/hooks/use-query';
 import { selectUser } from '@/redux/slices/user.slice';
-import { Button, Text } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ErrorBoundary } from 'react-error-boundary';
 import { useEffect } from 'react';
 import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
 
@@ -43,42 +40,34 @@ export default function Home() {
   );
 
   return (
-    <ErrorBoundary
-      fallback={
-        <Text color="red.500" fontSize="xl">
-          Something went wrong...
-        </Text>
-      }
-    >
-      <Layout seoTranslationKey="index">
-        {!user.email ? (
-          <>
-            <Button
-              onClick={() => {
-                createAccountWithEmailAndPassword(
-                  'test@test.com',
-                  'Tester123',
-                  'Kolby',
-                  'McKeown'
-                );
-              }}
-              colorScheme="primary"
-            >
-              Create User
-            </Button>
-            <Button
-              onClick={() =>
-                signInWithEmailAndPassword('test@test.com', 'Tester123')
-              }
-              colorScheme="accent"
-            >
-              Sign In
-            </Button>
-          </>
-        ) : (
-          <DisplayCase categories={categories} />
-        )}
-      </Layout>
-    </ErrorBoundary>
+    <Layout seoTranslationKey="index">
+      {!user.email ? (
+        <>
+          <Button
+            onClick={() => {
+              createAccountWithEmailAndPassword(
+                'test@test.com',
+                'Tester123',
+                'Kolby',
+                'McKeown'
+              );
+            }}
+            colorScheme="primary"
+          >
+            Create User
+          </Button>
+          <Button
+            onClick={() =>
+              signInWithEmailAndPassword('test@test.com', 'Tester123')
+            }
+            colorScheme="accent"
+          >
+            Sign In
+          </Button>
+        </>
+      ) : (
+        <DisplayCase categories={categories} />
+      )}
+    </Layout>
   );
 }

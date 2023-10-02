@@ -5,8 +5,9 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Text } from '@chakra-ui/react';
 import AuthProvider from '@/providers/auth.provider';
+import { ErrorBoundary } from 'react-error-boundary';
 import theme from '@/styles/theme';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -15,8 +16,16 @@ export default function App({ Component, pageProps }: AppProps) {
       <ReactQueryDevtools initialIsOpen={false} />
       <Provider store={store}>
         <ChakraProvider theme={theme}>
-          <AuthProvider />
-          <Component {...pageProps} />
+          <ErrorBoundary
+            fallback={
+              <Text color="red.500" fontSize="xl">
+                Something went wrong...
+              </Text>
+            }
+          >
+            <AuthProvider />
+            <Component {...pageProps} />
+          </ErrorBoundary>
         </ChakraProvider>
       </Provider>
     </QueryClientProvider>
