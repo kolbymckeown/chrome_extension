@@ -1,26 +1,21 @@
 import { CartItemsResponse } from '@/components/categories/display-case';
 import { Layout } from '@/components/layout';
 import useQuery from '@/hooks/use-query';
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useSelector } from 'react-redux';
 
 export default function CategoryPage() {
   const router = useRouter();
   const { categoryId } = router.query;
 
-  const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
-    query: { cartItemId: 'all', categoryId },
+  const items = useSelector((state) => {
+    state.items.items;
   });
+
+  console.log(items);
 
   return (
     <ErrorBoundary fallback={<Text>Something went wrong...</Text>}>
@@ -31,7 +26,7 @@ export default function CategoryPage() {
           </Text>
 
           <Flex wrap="wrap" justify="space-between">
-            {cartItems?.cartItems.map((item) => (
+            {items?.cartItems?.map((item) => (
               <VStack
                 key={item.id}
                 w="250px"

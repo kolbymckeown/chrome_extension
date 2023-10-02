@@ -6,6 +6,6 @@ export type CartItem = {
   description: string;
   image: string;
   quantity: number;
-  category: string;
+  categoryId: number;
   purchased: boolean;
 };

@@ -1,28 +1,15 @@
-import React from 'react';
-import {
-  Box,
-  Button,
-  Grid,
-  Text,
-  Image,
-  useBreakpointValue,
-  Flex,
-} from '@chakra-ui/react';
-import Link from 'next/link';
+import React, { useEffect } from 'react';
+import { Box, Text, Grid } from '@chakra-ui/react';
+import { CategoriesResponse } from './tabs';
+import { Category } from '@/types/category';
+import { CategoryCard } from './category-card';
 import useQuery from '@/hooks/use-query';
+import { CartItem } from '@/types/item';
+import { useDispatch } from 'react-redux';
+import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
 
-interface CartItem {
-  categoryId: number;
-  dateAdded: string;
-  description: string;
-  id: number;
-  image: string;
-  price: number;
-  purchased: boolean;
-  quantity: number;
-  store: string | null;
-  title: string;
-  url: string | null;
+interface DisplayCaseProps {
+  categories: CategoriesResponse | undefined;
 }
 
 export interface CartItemsResponse {
@@ -30,75 +17,29 @@ export interface CartItemsResponse {
   statusCode: number;
 }
 
-export default function DisplayCase() {
-  const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
-    query: { cartItemId: 'all' },
-  });
-
-  const gridTemplateColumns = useBreakpointValue({
-    base: '1fr',
-    md: 'repeat(2, 1fr)',
-  });
-
-  const groupedItems: { [key: number]: CartItem[] } = {};
-
-  if (cartItems?.cartItems) {
-    cartItems.cartItems.forEach((item) => {
-      if (!groupedItems[item.categoryId]) {
-        groupedItems[item.categoryId] = [];
-      }
-      groupedItems[item.categoryId].push(item);
-    });
-  }
-
+export default function DisplayCase({ categories }: DisplayCaseProps) {
   return (
-    <Box>
-      <Text fontSize="3xl" mb={4}>
-        Display Case
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      my={10}
+    >
+      <Text fontSize="3xl" mb={4} fontWeight={700} color="scheme.dusty-rose">
+        Categories
       </Text>
-      <Flex gap={5} mx="auto" direction={['column', 'column', 'row', 'row']}>
-        {Object.keys(groupedItems).map((categoryId) => (
-          <Box
-            key={categoryId}
-            bg="background.light"
-            p={4}
-            rounded="md"
-            mb={4}
-            width={['100%', '100%', '100%', '600px']}
-          >
-            <Text fontSize="2xl" mb={2}>
-              Category {categoryId}
-            </Text>
-            <Link href={`/category/${categoryId}`} passHref>
-              <Button colorScheme="primary" mb={4}>
-                View Category
-              </Button>
-            </Link>
-            <Grid templateColumns={gridTemplateColumns} gap={4}>
-              {groupedItems[parseInt(categoryId)].slice(0, 4).map((item) => (
-                <Box key={item.id}>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    boxSize="100px"
-                    objectFit="cover"
-                  />
-                  <Text fontWeight="bold">{item.title}</Text>
-                  <Text>Price: ${item.price}</Text>
-                  <Text>Quantity: {item.quantity}</Text>
-                  {item.url && (
-                    <Link href={`${item.url}`} passHref>
-                      <Button colorScheme="primary" variant="outline" mt={2}>
-                        View Product
-                      </Button>
-                    </Link>
-                  )}
-                </Box>
-              ))}
-            </Grid>
-          </Box>
+      <Grid
+        templateColumns="repeat(auto-fill, 300px)"
+        gap={6}
+        w="100%"
+        px={6}
+        justifyContent="center"
+      >
+        {categories?.categories?.map((category: Category) => (
+          <CategoryCard category={category} key={category.id} />
         ))}
-      </Flex>
+      </Grid>
     </Box>
   );
 }

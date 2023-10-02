@@ -21,13 +21,16 @@ import {
   Select,
   useToast,
   Checkbox,
+  Icon,
+  Tooltip,
 } from '@chakra-ui/react';
-import { itemCategories } from '@/constants';
+
 import useQuery, { useMutation } from '@/hooks/use-query';
 import { cartItemSchema } from '@/schemas';
 import { CategoriesResponse } from '../categories/tabs';
+import { FaCartPlus } from 'react-icons/fa';
 
-export const AddItem = () => {
+export const AddItem = ({ variant = 'button' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
   const {
@@ -85,9 +88,33 @@ export const AddItem = () => {
 
   return (
     <Flex direction="column" align="center">
-      <Button colorScheme="primary" onClick={() => setIsOpen(true)}>
-        Add Item
-      </Button>
+      {variant === 'button' && (
+        <Button
+          color="scheme.dark-blue"
+          variant="outline"
+          border="none"
+          fontSize={'lg'}
+          rightIcon={<FaCartPlus />}
+          onClick={() => setIsOpen(true)}
+        >
+          Add Item
+        </Button>
+      )}
+
+      {variant === 'icon' && (
+        <Tooltip label="Add Item" aria-label="Add Item">
+          <span>
+            <Icon
+              as={FaCartPlus}
+              color="scheme.dark-blue"
+              cursor="pointer"
+              w={6}
+              h={6}
+              onClick={() => setIsOpen(true)}
+            />
+          </span>
+        </Tooltip>
+      )}
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay />
