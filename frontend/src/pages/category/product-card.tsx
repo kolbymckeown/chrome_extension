@@ -37,8 +37,8 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
           position="absolute"
           right={0}
           top={0}
-          color="scheme.dusty-rose"
-          backgroundColor={'scheme.light-rose'}
+          color="scheme.main-green-blue"
+          backgroundColor={'scheme.bg-green-blue'}
         >
           Purchased
         </Badge>
@@ -47,7 +47,7 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
         <Heading
           fontWeight="700"
           size="md"
-          color="scheme.dark-blue"
+          color="scheme.main-green-blue"
           display="-webkit-box"
           overflow={'hidden'}
           style={{
@@ -57,7 +57,11 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
         >
           {item.title}
         </Heading>
-        <Flex justifyContent={'space-between'} w="100%">
+        <Flex
+          justifyContent={'space-between'}
+          w="100%"
+          color="scheme.main-green-blue"
+        >
           <Text fontWeight="700">{item.store}</Text>
           <Text>{formatCurrency(item.price)}</Text>
         </Flex>
