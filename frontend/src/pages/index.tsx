@@ -8,6 +8,8 @@ import useQuery from '@/hooks/use-query';
 import { selectUser } from '@/redux/slices/user.slice';
 import { Button } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ErrorBoundary } from 'react-error-boundary';
+import LandingPage from '@/components/landing-page';
 import { useEffect } from 'react';
 import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
 
@@ -40,34 +42,19 @@ export default function Home() {
   );
 
   return (
-    <Layout seoTranslationKey="index">
+    <>
       {!user.email ? (
         <>
-          <Button
-            onClick={() => {
-              createAccountWithEmailAndPassword(
-                'test@test.com',
-                'Tester123',
-                'Kolby',
-                'McKeown'
-              );
-            }}
-            colorScheme="primary"
-          >
-            Create User
-          </Button>
-          <Button
-            onClick={() =>
-              signInWithEmailAndPassword('test@test.com', 'Tester123')
-            }
-            colorScheme="accent"
-          >
-            Sign In
-          </Button>
+          <LandingPage />
         </>
       ) : (
-        <DisplayCase categories={categories} />
+        <>
+          <Layout seoTranslationKey="index">
+            {/* <CategoryTabs /> */}
+            <DisplayCase categories={categories} />
+          </Layout>
+        </>
       )}
-    </Layout>
+      </>
   );
 }
