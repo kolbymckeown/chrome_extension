@@ -18,20 +18,17 @@ class CartItemResource(Resource):
         user_id = get_jwt_identity()
         cart_item_id = request.args.get("cart_item_id")
         category_id = request.args.get("category_id")
-        images = request.args.get("images")
         
         if cart_item_id == "all":
             if category_id:
-                # Fetch all cart items associated with the user and the specified category_id
+                # Fetch all cart items associated with the user and the specified category_id ordered by date_added (descending)
                 cart_items = CartItem.query.filter_by(
-                    user_id=user_id, category_id=category_id).all()
-                if cart_items and images:
-                    # return array of field values "image"  from cart_items array with a limit of 4
-                    return Response({"cart_items": [item.image for item in cart_items[:4]]}, code=200).json
+                    user_id=user_id, category_id=category_id).order_by(CartItem.date_added.desc()).all()
+
             # Fetch all cart items associated with the user
             else:
                 # Fetch all cart items associated with the user (without category filtering)
-                cart_items = CartItem.query.filter_by(user_id=user_id).all()
+                cart_items = CartItem.query.filter_by(user_id=user_id).order_by(CartItem.date_added.desc()).all()
             if not cart_items:
                 return Response({"cart_items": []}, code=200).json
             return Response({"cart_items": [item.json() for item in cart_items]}, code=200).json
@@ -67,7 +64,7 @@ class CartItemResource(Resource):
         user_id = get_jwt_identity()
         body = Request().body
 
-        cart_item_id = body.get("cart_item_id")
+        cart_item_id = body.get("id")
         cart_item = find_one(CartItem, filter={"id": cart_item_id})
 
         if not cart_item:
@@ -80,9 +77,11 @@ class CartItemResource(Resource):
         cart_item.price = body.get("price", cart_item.price)
         cart_item.description = body.get("description", cart_item.description)
         cart_item.image = body.get("image", cart_item.image)
-        cart_item.category = body.get("category", cart_item.category)
+        cart_item.category_id = body.get("categoryId", cart_item.category_id)
         cart_item.quantity = body.get("quantity", cart_item.quantity)
         cart_item.purchased = body.get("purchased", cart_item.purchased)
+        cart_item.store = body.get("store", cart_item.store)
+        cart_item.url = body.get("url", cart_item.url)
 
         db.session.commit()
 

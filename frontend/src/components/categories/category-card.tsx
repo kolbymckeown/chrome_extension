@@ -14,7 +14,7 @@ import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useSelector } from 'react-redux';
 import { CartItem } from '@/types/item';
 import { FaShoppingCart } from 'react-icons/fa';
-import ImageWithFallback from './image-fallback';
+import ImageWithFallback from '../helpers/image-fallback';
 import Link from 'next/link';
 import { selectItems } from '@/redux/slices/items.slice';
 
