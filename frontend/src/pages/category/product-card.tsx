@@ -197,7 +197,7 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
               />
             </Tooltip>
             <Tooltip
-              label={item.purchased ? 'Remove' : 'Purchased'}
+              label={item.purchased ? 'Unmark purchased' : 'Mark Purchased'}
               aria-label="Purchased"
             >
               <IconButton
@@ -303,7 +303,6 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
                 borderRadius={'lg'}
               />
             </FormControl>
-            {/* Add more form fields as needed */}
             <Button
               bg="scheme.bg-green-blue"
               color={'scheme.main-green-blue'}
