@@ -1,26 +1,39 @@
 import { AddCategory } from '@/components/categories/add-category';
-import { CategoryCard } from '@/components/categories/category-card';
-import DisplayCase from '@/components/categories/display-case';
+import DisplayCase, {
+  CartItemsResponse,
+} from '@/components/categories/display-case';
 import CategoryTabs, { CategoriesResponse } from '@/components/categories/tabs';
 import { AddItem } from '@/components/items/add-item';
 import { Layout } from '@/components/layout';
 import useAuth from '@/hooks/use-auth';
 import useQuery from '@/hooks/use-query';
 import { selectUser } from '@/redux/slices/user.slice';
-import { Category } from '@/types/category';
 import { Button, Text } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 import LandingPage from '@/components/landing-page';
+import { useEffect } from 'react';
+import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
 
 export default function Home() {
-  const {
-    createAccountWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    logout,
-  } = useAuth();
+  const { createAccountWithEmailAndPassword, signInWithEmailAndPassword } =
+    useAuth();
 
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
+    query: { cartItemId: 'all' },
+  });
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchItemsStart());
+      if (cartItems) {
+        dispatch(fetchItemsSuccess(cartItems.cartItems));
+      }
+    }
+  }, [dispatch, cartItems]);
 
   const { data: categories } = useQuery<CategoriesResponse>(
     `categories`,
@@ -45,17 +58,8 @@ export default function Home() {
       ) : (
         <>
           <Layout seoTranslationKey="index">
-            <CategoryTabs />
-
-            <Button onClick={() => logout()} colorScheme="success">
-              Logout
-            </Button>
-            <AddItem />
-            <AddCategory />
-            <DisplayCase />
-            {categories?.categories?.map((category: Category) => (
-              <CategoryCard category={category} key={category.id} />
-            ))}
+            {/* <CategoryTabs /> */}
+            <DisplayCase categories={categories} />
           </Layout>
         </>
       )}

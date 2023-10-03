@@ -17,12 +17,14 @@ import {
   Input,
   useToast,
   Checkbox,
+  Icon,
+  Tooltip,
 } from '@chakra-ui/react';
 
 import { useMutation } from '@/hooks/use-query';
+import { FaFolderPlus } from 'react-icons/fa';
 
-
-export const AddCategory = () => {
+export const AddCategory = ({ variant = 'button' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
   const { mutate: addItem } = useMutation(`categories`, {
@@ -67,9 +69,31 @@ export const AddCategory = () => {
 
   return (
     <Flex direction="column" align="center">
-      <Button colorScheme="primary" onClick={() => setIsOpen(true)}>
-        Add Category
-      </Button>
+      {variant === 'button' && (
+        <Button
+          color="scheme.dark-blue"
+          variant="outline"
+          border="none"
+          rightIcon={<FaFolderPlus />}
+          onClick={() => setIsOpen(true)}
+        >
+          Add Category
+        </Button>
+      )}
+      {variant === 'icon' && (
+        <Tooltip label="Add Category" aria-label="Add Category">
+          <span>
+            <Icon
+              as={FaFolderPlus}
+              color="scheme.dark-blue"
+              cursor="pointer"
+              w={6}
+              h={6}
+              onClick={() => setIsOpen(true)}
+            />
+          </span>
+        </Tooltip>
+      )}
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay />

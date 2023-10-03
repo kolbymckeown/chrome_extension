@@ -18,12 +18,16 @@ class CartItemResource(Resource):
         user_id = get_jwt_identity()
         cart_item_id = request.args.get("cart_item_id")
         category_id = request.args.get("category_id")
-
+        images = request.args.get("images")
+        
         if cart_item_id == "all":
             if category_id:
                 # Fetch all cart items associated with the user and the specified category_id
                 cart_items = CartItem.query.filter_by(
                     user_id=user_id, category_id=category_id).all()
+                if cart_items and images:
+                    # return array of field values "image"  from cart_items array with a limit of 4
+                    return Response({"cart_items": [item.image for item in cart_items[:4]]}, code=200).json
             # Fetch all cart items associated with the user
             else:
                 # Fetch all cart items associated with the user (without category filtering)
