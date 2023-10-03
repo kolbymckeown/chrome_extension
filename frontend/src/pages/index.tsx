@@ -3,20 +3,14 @@ import DisplayCase, {
 } from '@/components/categories/display-case';
 import { CategoriesResponse } from '@/components/categories/tabs';
 import { Layout } from '@/components/layout';
-import useAuth from '@/hooks/use-auth';
 import useQuery from '@/hooks/use-query';
 import { selectUser } from '@/redux/slices/user.slice';
-import { Button } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ErrorBoundary } from 'react-error-boundary';
 import LandingPage from '@/components/landing-page';
 import { useEffect } from 'react';
 import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
 
 export default function Home() {
-  const { createAccountWithEmailAndPassword, signInWithEmailAndPassword } =
-    useAuth();
-
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -50,11 +44,10 @@ export default function Home() {
       ) : (
         <>
           <Layout seoTranslationKey="index">
-            {/* <CategoryTabs /> */}
             <DisplayCase categories={categories} />
           </Layout>
         </>
       )}
-      </>
+    </>
   );
 }
