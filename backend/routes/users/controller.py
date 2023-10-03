@@ -12,6 +12,7 @@ from utils.database import find_one, find
 from utils.dict import dissoc
 from request.auth import get_app_auth_token
 import sys
+from routes.categories.model import Category
 
 
 class UsersResource(Resource):
@@ -50,6 +51,14 @@ class UsersResource(Resource):
         )
 
         db.session.add(new_user)
+        db.session.commit()
+
+        new_category = Category(
+            title="Generic",
+            is_public=False,
+            user_id=new_user.id
+        )
+        db.session.add(new_category)
         db.session.commit()
 
         return Response({"user": new_user.json(), "auth_token": get_app_auth_token(body.get("id"))}, code=200).json
