@@ -39,10 +39,17 @@ const ConfirmationModal = ({
           <p>Are you sure?</p>
         </ModalBody>
         <ModalFooter>
-          <Button variant="outline" onClick={onClose} mr={2}>
+          <Button
+            color={'scheme.dusty-rose'}
+            bg={'scheme.warm-white'}
+            onClick={onClose}
+            mr={2}
+            _hover={{ bg: 'scheme.light-rose' }}
+            variant={'outline'}
+          >
             Cancel
           </Button>
-          <Button colorScheme="blue" onClick={handleConfirm}>
+          <Button color={'scheme.main-green-blue'} onClick={handleConfirm}>
             Confirm
           </Button>
         </ModalFooter>
