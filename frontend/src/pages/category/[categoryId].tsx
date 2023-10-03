@@ -18,7 +18,7 @@ export default function CategoryPage() {
   const dispatch = useDispatch();
 
   const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
-    query: { cartItemId: 'all' },
+    query: { cartItemId: 'all', categoryId },
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function CategoryPage() {
           Category Page: {categoryId}
         </Text>
 
-        <Flex wrap="wrap" justify="space-between">
+        <Flex wrap="wrap">
           {categoryId &&
             itemsList?.map((item: CartItem) => (
               <ProductCard item={item} key={item.id} />

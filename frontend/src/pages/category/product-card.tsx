@@ -30,6 +30,7 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
       p={3}
       pt={4}
       position="relative"
+      m={2}
     >
       {item.purchased && (
         <Badge
