@@ -32,8 +32,9 @@ export default function InfoSection({
 
   return (
     <Flex
+      // @ts-ignore
       direction={direction}
-      align="center" // Centers content vertically
+      align="center"
       textAlign={{ base: 'center', sm: 'left' }}
       mx="auto"
       width={['100%', '100%', '80%', '80%']}
