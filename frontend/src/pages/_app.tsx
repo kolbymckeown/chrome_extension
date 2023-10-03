@@ -12,22 +12,22 @@ import theme from '@/styles/theme';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <Provider store={store}>
-        <ChakraProvider theme={theme}>
-          <ErrorBoundary
-            fallback={
-              <Text color="red.500" fontSize="xl">
-                Something went wrong...
-              </Text>
-            }
-          >
+    <ErrorBoundary
+      fallback={
+        <Text color="red.500" fontSize="xl">
+          Something went wrong...
+        </Text>
+      }
+    >
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Provider store={store}>
+          <ChakraProvider theme={theme}>
             <AuthProvider />
             <Component {...pageProps} />
-          </ErrorBoundary>
-        </ChakraProvider>
-      </Provider>
-    </QueryClientProvider>
+          </ChakraProvider>
+        </Provider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
