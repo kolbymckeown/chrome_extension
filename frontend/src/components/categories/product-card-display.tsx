@@ -98,7 +98,8 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
         >
           <Text
             fontSize="sm"
-            color={item.description ? 'inherit' : 'gray'}
+            color={item.description ? 'scheme.main-green-blue' : 'gray'}
+            fontWeight={'700'}
             lineHeight="1.25"
             maxHeight="2.5em"
             overflow="hidden"
@@ -109,6 +110,8 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
             }}
+            pl={2}
+            pt={1}
           >
             {item.description ? item.description : 'Edit to add description'}
           </Text>

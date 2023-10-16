@@ -1,31 +1,9 @@
 import ProductCardDisplay from '@/components/categories/product-card-display';
 import ProductCardEdit from '@/components/categories/product-card-edit';
-import ConfirmationModal from '@/components/helpers/confirmation-modal';
-import ImageWithFallback from '@/components/helpers/image-fallback';
 import { useMutation } from '@/hooks/use-query';
 import { CartItem } from '@/types/item';
-import { formatCurrency } from '@/utils/price-formatter';
-import {
-  Badge,
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  Heading,
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Link,
-  Spinner,
-  Text,
-  Textarea,
-  Tooltip,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { FaCheck, FaEdit, FaMinus, FaTrash } from 'react-icons/fa';
+import { Flex, Spinner, VStack, useToast } from '@chakra-ui/react';
+import { ChangeEvent, useState } from 'react';
 
 export const ProductCard = ({ item }: { item: CartItem }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -138,7 +116,9 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
         <ProductCardEdit
           item={item}
           onChange={handleChange}
-          onCancel={() => setIsEditing(false)}
+          onCancel={() => {
+            setIsEditing(false), setFormData(item);
+          }}
           onSave={onSubmit}
         />
       )}

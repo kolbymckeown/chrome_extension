@@ -8,8 +8,12 @@ import {
   InputLeftElement,
   Textarea,
   Button,
+  Flex,
+  Tooltip,
+  IconButton,
 } from '@chakra-ui/react';
 import { CartItem } from '@/types/item';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 interface ProductCardEditProps {
   item: CartItem;
@@ -40,35 +44,80 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
             placeholder="Enter title"
             name="title"
             defaultValue={item.title}
+            border={'none'}
+            borderBottom={'1px solid'}
+            borderColor={'scheme.main-green-blue'}
+            borderRadius={'none'}
+            color={'scheme.main-green-blue'}
+            fontWeight={'700'}
+            _focusVisible={{
+              border: 'none',
+              borderBottom: '1px solid',
+              borderColor: 'scheme.main-green-blue',
+            }}
+            padding={'0'}
+            h={'30px'}
           />
         </FormControl>
-        <FormControl mt={2}>
-          <Input
-            onChange={onChange}
-            placeholder="Enter store"
-            name="store"
-            defaultValue={item.store}
-          />
-        </FormControl>
-        <FormControl mt={4}>
-          <InputGroup>
-            <InputLeftElement children="$" />
+        <Flex>
+          <FormControl>
             <Input
               onChange={onChange}
-              type="text"
-              name="price"
-              defaultValue={item.price}
-              color="scheme.dark-blue"
-              border="1px solid"
-              borderColor="scheme.bg-green-blue"
-              borderRadius="none"
-              boxShadow="none"
+              placeholder="Enter store"
+              name="store"
+              defaultValue={item.store}
+              border={'none'}
+              borderBottom={'1px solid'}
+              borderColor={'scheme.main-green-blue'}
+              borderRadius={'none'}
+              color={'scheme.main-green-blue'}
+              fontWeight={'700'}
+              _focusVisible={{
+                border: 'none',
+                borderBottom: '1px solid',
+                borderColor: 'scheme.main-green-blue',
+              }}
+              padding={'0'}
+              h={'30px'}
             />
-          </InputGroup>
-        </FormControl>
-        <Box h={'125'} w={'125'}>
-          <ImageWithFallback src={item.image} alt={item.title} />
-        </Box>
+          </FormControl>
+          <FormControl>
+            <InputGroup h={'30'} mb={3}>
+              <InputLeftElement
+                children="$"
+                color={'scheme.main-green-blue'}
+                h="30"
+                left={'10px'}
+              />
+              <Input
+                onChange={onChange}
+                type="text"
+                name="price"
+                defaultValue={item.price}
+                boxShadow="none"
+                border={'none'}
+                borderBottom={'1px solid'}
+                borderColor={'scheme.main-green-blue'}
+                borderRadius={'none'}
+                color={'scheme.main-green-blue'}
+                _focusVisible={{
+                  border: 'none',
+                  borderBottom: '1px solid',
+                  borderColor: 'scheme.main-green-blue',
+                }}
+                h="30"
+              />
+            </InputGroup>
+          </FormControl>
+        </Flex>
+        <Flex justify={'center'}>
+          <ImageWithFallback
+            src={item.image}
+            alt={item.title}
+            h="200px"
+            w="200px"
+          />
+        </Flex>
         <FormControl mt={2}>
           <Textarea
             onChange={onChange}
@@ -78,24 +127,32 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
             bg={'scheme.bg-green-blue'}
             size="sm"
             borderRadius={'lg'}
+            minHeight={'none'}
+            h={'50px'}
           />
         </FormControl>
-        <Button
-          bg="scheme.bg-green-blue"
-          color={'scheme.main-green-blue'}
-          type="submit"
-          mt={3}
-        >
-          Save
-        </Button>
-        <Button
-          bg="scheme.bg-green-blue"
-          color={'scheme.main-green-blue'}
-          onClick={onCancel}
-          mt={3}
-        >
-          Cancel
-        </Button>
+        <Flex mt={2} justify="space-around">
+          <Tooltip label={'Save'} aria-label="save-edit-item">
+            <IconButton
+              bg={'scheme.bg-green-blue'}
+              aria-label="Purchased"
+              color={'scheme.main-green-blue'}
+              icon={<FaCheck />}
+              borderRadius={'full'}
+              type="submit"
+            />
+          </Tooltip>
+          <Tooltip label={'Cancel'} aria-label="cancel-edit-item">
+            <IconButton
+              bg={'scheme.bg-green-blue'}
+              aria-label="Purchased"
+              color={'scheme.main-green-blue'}
+              icon={<FaArrowLeft />}
+              borderRadius={'full'}
+              onClick={onCancel}
+            />
+          </Tooltip>
+        </Flex>
       </Box>
     </form>
   );
