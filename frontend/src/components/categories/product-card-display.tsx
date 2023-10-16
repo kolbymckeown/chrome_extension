@@ -13,7 +13,6 @@ import {
   Spinner,
   Text,
   Tooltip,
-  VStack,
 } from '@chakra-ui/react';
 import { FaCheck, FaEdit, FaMinus, FaTrash } from 'react-icons/fa';
 
