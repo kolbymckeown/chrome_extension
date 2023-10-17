@@ -15,11 +15,13 @@ import { selectUser } from '@/redux/slices/user.slice';
 import { AddItem } from '../items/add-item';
 import { AddCategory } from '../categories/add-category';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 export default function Navbar() {
   const user = useSelector(selectUser);
   const { logout } = useAuth();
-
+  const router = useRouter();
+  const isLoginPage = router.pathname.includes('login');
   return (
     <Box as="nav" px="4" bg="scheme.main-green-blue" boxShadow="sm">
       <Flex h="20" alignItems="center" justifyContent="space-between" mx="auto">
@@ -62,15 +64,14 @@ export default function Navbar() {
               </Tooltip>
             </Flex>
           </>
+        ) : isLoginPage ? (
+          <Text>Welcome to Genius</Text>
         ) : (
           <Flex display={{ base: 'none', md: 'flex' }} gap="4">
             <NextLink href="/session/login">
               <Button variant="outline" colorScheme="accent">
                 Login
               </Button>
-            </NextLink>
-            <NextLink href="/session/register">
-              <Button colorScheme="accent">Sign Up</Button>
             </NextLink>
           </Flex>
         )}

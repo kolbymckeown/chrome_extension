@@ -3,12 +3,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
-  Box,
   Flex,
   Heading,
-  FormControl,
-  FormLabel,
-  Input,
   Button,
   Image,
   useToast,
@@ -24,15 +20,7 @@ const schema = yup.object().shape({
   password: yup.string().required('Password is required'),
 });
 export default function RegisterPage() {
-  const { signInWithEmailAndPassword, signInWithGoogle } = useAuth();
-  const toast = useToast();
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const { signInWithGoogle } = useAuth();
 
   const handleGoogleSignIn = async () => {
     try {
@@ -42,29 +30,30 @@ export default function RegisterPage() {
     }
   };
 
-  const onSubmit = async (data: { email: string; password: string }) => {
-    try {
-      await signInWithEmailAndPassword(data.email, data.password);
-    } catch (error) {
-      if (error instanceof Error) {
-        toast({
-          title: 'Error',
-          description: error.message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: 'Error',
-          description: 'An unknown error occurred.',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      }
-    }
-  };
+  // deprecated sign-in method
+  // const onSubmit = async (data: { email: string; password: string }) => {
+  //   try {
+  //     await signInWithEmailAndPassword(data.email, data.password);
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       toast({
+  //         title: 'Error',
+  //         description: error.message,
+  //         status: 'error',
+  //         duration: 5000,
+  //         isClosable: true,
+  //       });
+  //     } else {
+  //       toast({
+  //         title: 'Error',
+  //         description: 'An unknown error occurred.',
+  //         status: 'error',
+  //         duration: 5000,
+  //         isClosable: true,
+  //       });
+  //     }
+  //   }
+  // };
 
   return (
     <Layout seoTranslationKey="register">
@@ -82,8 +71,8 @@ export default function RegisterPage() {
           justify="center"
           direction="column"
         >
-          <Heading mb={6}>Register</Heading>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Heading mb={6}>Login/Register with Google</Heading>
+          {/* <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
@@ -120,12 +109,13 @@ export default function RegisterPage() {
               <Button mt={6} colorScheme="primary" type="submit" width="full">
                 Login
               </Button>
-              <Button onClick={handleGoogleSignIn}>
-                <Icon as={FcGoogle} mr={2} />
-                Sign in with Google
-              </Button>
+              
             </Stack>
-          </form>
+          </form> */}
+          <Button onClick={handleGoogleSignIn}>
+            <Icon as={FcGoogle} mr={2} />
+            Sign in with Google
+          </Button>
         </Flex>
       </Stack>
     </Layout>

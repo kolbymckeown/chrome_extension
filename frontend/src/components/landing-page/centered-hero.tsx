@@ -26,7 +26,7 @@ export default function CenteredHero() {
       </Text>
       <Link
         as={NextLink}
-        href="/session/register"
+        href="/session/login"
         mt={5}
         display="flex"
         alignItems="center"

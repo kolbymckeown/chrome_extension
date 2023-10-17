@@ -11,16 +11,17 @@ export default function LandingHeader() {
       alignItems="center"
     >
       <Image w="150px" h="50px" src="/genius-logo.png" alt="Genius Logo" />
+
       <Link
         as={NextLink}
-        href="#features"
+        href="/session/login"
         fontWeight="bold"
         fontSize="xl"
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
-        Features
+        Login / Sign-up
       </Link>
     </Flex>
   );
