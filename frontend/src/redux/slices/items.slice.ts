@@ -23,7 +23,7 @@ const itemsSlice = createSlice({
     },
     fetchItemsSuccess(state, action: PayloadAction<CartItem[]>) {
       state.loading = false;
-      const sortedItems = action.payload.reduce((acc, item) => {
+      const sortedItems = action.payload?.reduce((acc, item) => {
         if (acc[item.categoryId]) {
           acc[item.categoryId].push(item);
         } else {

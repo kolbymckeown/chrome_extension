@@ -14,7 +14,7 @@ import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useSelector } from 'react-redux';
 import { CartItem } from '@/types/item';
 import { FaShoppingCart } from 'react-icons/fa';
-import ImageWithFallback from './image-fallback';
+import ImageWithFallback from '../helpers/image-fallback';
 import Link from 'next/link';
 import { selectItems } from '@/redux/slices/items.slice';
 
@@ -95,7 +95,12 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
             {filteredImages.length > 3 ? (
               filteredImages.map((image: string, i: number) => (
                 <Box key={i} overflow="hidden" w={'130px'} h={'130px'}>
-                  <ImageWithFallback src={image} alt={`Image ${image}`} />
+                  <ImageWithFallback
+                    src={image}
+                    alt={`Image ${image} `}
+                    w="130px"
+                    h="130px"
+                  />
                 </Box>
               ))
             ) : (
@@ -109,6 +114,8 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
                 <ImageWithFallback
                   src={filteredImages[0]}
                   alt={`Image ${filteredImages[0]}`}
+                  w={'260px'}
+                  h={'260px'}
                 />
               </Box>
             )}

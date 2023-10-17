@@ -148,7 +148,7 @@ export const Item = ({ item }: { item: CartItem }) => {
           <FormControl mt={4}>
             <FormLabel>Category</FormLabel>
             <Controller
-              name="category"
+              name="categoryId"
               control={control}
               render={({ field }) => (
                 <Select {...field}>
@@ -207,7 +207,7 @@ export const Item = ({ item }: { item: CartItem }) => {
               <Text fontSize="xl">{item.title}</Text>
               <Text>Price: ${item.price}</Text>
               <Text>Quantity: {item.quantity}</Text>
-              <Text>Category: {item.category}</Text>
+              <Text>Category: {item.categoryId}</Text>
               <Text>Description: {item.description}</Text>
               <Text>Purchased: {item.purchased ? 'Yes' : 'No'}</Text>
             </Box>
