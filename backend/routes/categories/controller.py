@@ -1,5 +1,4 @@
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
 from flask_restful import Resource
 from flask import request
 from datetime import datetime
@@ -20,10 +19,11 @@ class CategoryResource(Resource):
 
         if category_id == "all":
             try:
-                categories = find(Category, filter={"user_id": auth_token}).db_entries
+                categories = find(Category, filter={"user_id": auth_token, "deleted": False}).db_entries
 
                 return Response({
-                    "categories": [category.json() for category in categories]}, code=200).json
+                    "categories": [category.json() for category in categories]
+                }, code=200).json
             except Exception as e:
                 print(e, file=sys.stderr)
                 return Response({"message": "Something went wrong"}, code=500).json
@@ -38,7 +38,7 @@ class CategoryResource(Resource):
             }, code=200).json
         else:
             return Response({"message": "Category not found"}, code=404).json
-    
+
     @jwt_required()
     def post(self):
         body = Request().body
@@ -47,9 +47,7 @@ class CategoryResource(Resource):
         # Extend the body dictionary with the user_id
         body['user_id'] = user_id
 
-        new_category = Category(
-            **body
-        )
+        new_category = Category(**body)
 
         db.session.add(new_category)
         db.session.commit()
@@ -84,3 +82,22 @@ class CategoryResource(Resource):
         except Exception as e:
             print(e, file=sys.stderr)
             return Response({"message": "Something went wrong"}, code=500).json
+
+    @jwt_required()
+    def delete(self):
+        user_id = get_jwt_identity()
+        category_id = request.args.get('category_id')
+
+        # Ensure the user has the necessary permissions to delete this category
+        category = Category.query.filter_by(id=category_id, user_id=user_id).first()
+        if not category:
+            return {"message": "Category not found or you don't have permission to delete it"}, 404
+
+        # Try to set the 'deleted' column to True
+        try:
+            category.deleted = True
+            db.session.commit()
+            return {"message": "Category deleted successfully"}, 200
+        except Exception as e:
+            db.session.rollback()
+            return {"message": f"Failed to delete the category: {str(e)}"}, 500

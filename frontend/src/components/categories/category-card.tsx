@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Badge,
   Box,
@@ -8,6 +8,8 @@ import {
   Grid,
   Icon,
   Text,
+  Tooltip,
+  useToast,
 } from '@chakra-ui/react';
 import { Category } from '@/types/category';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
@@ -17,6 +19,8 @@ import { FaShoppingCart } from 'react-icons/fa';
 import ImageWithFallback from '../helpers/image-fallback';
 import Link from 'next/link';
 import { selectItems } from '@/redux/slices/items.slice';
+import ConfirmationModal from '../helpers/confirmation-modal';
+import { useMutation } from '@/hooks/use-query';
 
 interface CategoryCardProps {
   category: Category;
@@ -24,9 +28,39 @@ interface CategoryCardProps {
 
 export const CategoryCard = ({ category }: CategoryCardProps) => {
   const { title, isPublic, id: categoryId } = category;
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const toast = useToast();
 
   //  @ts-ignore
   const items = useSelector(selectItems);
+
+  const { mutate: deleteCategory } = useMutation(`categories`, {
+    type: 'DELETE',
+    query: { categoryId },
+  });
+
+  const handleDelete = () => {
+    deleteCategory({
+      onSuccess: () => {
+        toast({
+          title: 'Item deleted.',
+          description: 'Your item has been successfully deleted.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+      onError: () => {
+        toast({
+          title: 'Error',
+          description: 'Something went wrong.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      },
+    });
+  };
 
   const filteredImages =
     categoryId !== undefined && items[+categoryId]
@@ -124,15 +158,29 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
         <Flex direction={'column'} alignItems="center">
           <Divider borderColor="scheme.light-rose" width={'80%'} />
         </Flex>
-        <Flex p={4} justifyContent="space-evenly">
+      </Link>
+
+      <Flex p={4} justifyContent="space-evenly">
+        <Tooltip label="Edit" aria-label="Edit">
           <Button backgroundColor="scheme.light-rose">
             <EditIcon color="scheme.dusty-rose" />
           </Button>
-          <Button backgroundColor="scheme.light-rose">
+        </Tooltip>
+        <Tooltip label="Delete" aria-label="Delete">
+          <Button
+            backgroundColor="scheme.light-rose"
+            onClick={() => setModalIsOpen(true)}
+          >
             <DeleteIcon color="scheme.dusty-rose" />
           </Button>
-        </Flex>
-      </Link>
+        </Tooltip>
+        <ConfirmationModal
+          isOpen={modalIsOpen}
+          onClose={() => setModalIsOpen(false)}
+          title={'Delete Category'}
+          callback={handleDelete}
+        />
+      </Flex>
     </Box>
   );
 };
