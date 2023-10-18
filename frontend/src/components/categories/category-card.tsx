@@ -91,36 +91,6 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
             Private
           </Badge>
         )}
-        {filteredImages.length > 0 && (
-          <Box position="relative">
-            {/* Icon */}
-            <Icon
-              as={FaShoppingCart}
-              color="scheme.light-rose"
-              w={6}
-              h={6}
-              margin={2}
-              position="absolute"
-              top="16px"
-              right="16px"
-            />
-            {/* Badge */}
-            {filteredImages.length > 0 && (
-              <Box
-                backgroundColor="scheme.dusty-rose"
-                color="white"
-                borderRadius="full"
-                paddingX="2"
-                fontSize="sm"
-                position="absolute"
-                top="2"
-                right="1"
-              >
-                {filteredImages.length}
-              </Box>
-            )}
-          </Box>
-        )}
         <Flex p="4" alignItems="center" flexDirection="column">
           <Text fontSize="2xl" fontWeight="bold" color="scheme.dusty-rose">
             {title}
@@ -166,6 +136,34 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
             <EditIcon color="scheme.dusty-rose" />
           </Button>
         </Tooltip>
+        <Flex>
+          <Link href={`/category/${categoryId}`} passHref>
+            {/* Icon */}
+            <Icon
+              as={FaShoppingCart}
+              color="scheme.light-rose"
+              w={6}
+              h={6}
+              margin={2}
+            />
+          </Link>
+          {/* Badge */}
+          {filteredImages.length > 0 && (
+            <Tooltip label="Cart Items" aria-label="cart-items">
+              <Box
+                backgroundColor="scheme.dusty-rose"
+                color="white"
+                borderRadius="full"
+                paddingX="2"
+                fontSize="sm"
+                position="absolute"
+                right="120px"
+              >
+                {filteredImages.length}
+              </Box>
+            </Tooltip>
+          )}
+        </Flex>
         <Tooltip label="Delete" aria-label="Delete">
           <Button
             backgroundColor="scheme.light-rose"
