@@ -58,8 +58,8 @@ class CategoryResource(Resource):
     def put(self):
         try:
             auth_token = get_jwt_identity()
-
-            current_category = find_one(Category, filter={"id": auth_token})
+            category_id = Request().body['id']
+            current_category = find_one(Category, filter={"id": category_id})
 
             if not current_category:
                 return Response({"message": "Category not found"}, code=404).json
@@ -69,7 +69,7 @@ class CategoryResource(Resource):
             # Print the updated_data dictionary
             print(updated_data, file=sys.stderr)
 
-            immutable_fields = ["id", "title", "created_at", "is_public"]
+            immutable_fields = ["id", "created_at"]
 
             for key, value in updated_data.items():
                 print(key, value, file=sys.stderr)

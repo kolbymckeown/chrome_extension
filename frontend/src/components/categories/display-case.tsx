@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text, Grid } from '@chakra-ui/react';
 import { CategoriesResponse } from './tabs';
 import { Category } from '@/types/category';
-import { CategoryCard } from './category-card';
+import CategoryCard from './category-card';
 import { CartItem } from '@/types/item';
 
 interface DisplayCaseProps {
