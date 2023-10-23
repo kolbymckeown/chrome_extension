@@ -9,7 +9,12 @@ import useQuery from '@/hooks/use-query';
 import { useEffect } from 'react';
 import { selectUser } from '@/redux/slices/user.slice';
 import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
-import { selectCategories } from '@/redux/slices/category.slice';
+import {
+  fetchCategoriesStart,
+  fetchCategoriesSuccess,
+  selectCategories,
+} from '@/redux/slices/category.slice';
+import { CategoriesResponse } from '@/components/categories/tabs';
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -22,21 +27,29 @@ export default function CategoryPage() {
     query: { cartItemId: 'all', categoryId },
   });
 
+  const { data: categories } = useQuery<CategoriesResponse>(`categories`, {
+    query: { categoryId: 'all' },
+  });
+
   useEffect(() => {
     if (user) {
       dispatch(fetchItemsStart());
+      dispatch(fetchCategoriesStart());
       if (cartItems) {
         dispatch(fetchItemsSuccess(cartItems.cartItems));
+      }
+      if (categories) {
+        dispatch(fetchCategoriesSuccess(categories.categories));
       }
     }
   }, [dispatch, cartItems, user]);
 
   let itemsList = useSelector((state: any) => state.items.items[+categoryId!]);
 
-  const categories = useSelector(selectCategories);
-
-  const selectedCategory = categories?.find(
-    (category) => category.id === +categoryId!
+  const selectedCategory = useSelector((state: any) =>
+    state.category.categories.find(
+      (category: any) => category.id === +categoryId!
+    )
   );
 
   return (
