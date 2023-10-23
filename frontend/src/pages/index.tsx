@@ -1,6 +1,6 @@
 import DisplayCase, {
   CartItemsResponse,
-} from '@/components/categories/display-case';
+} from '@/containers/categories/display-case';
 import { CategoriesResponse } from '@/components/categories/tabs';
 import { Layout } from '@/components/layout';
 import useQuery from '@/hooks/use-query';

@@ -4,8 +4,8 @@ import { CartItem } from '@/types/item';
 import { Box, useToast } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import EditableCategoryCard from './category-card-edit';
-import DisplayCategoryCard from './category-card-display';
+import EditableCategoryCard from '../../components/categories/category-card-edit';
+import DisplayCategoryCard from '../../components/categories/category-card-display';
 interface CategoryCardProps {
   category: Category;
 }

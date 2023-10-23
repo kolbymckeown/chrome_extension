@@ -1,4 +1,4 @@
-import { CartItemsResponse } from '@/components/categories/display-case';
+import { CartItemsResponse } from '@/containers/categories/display-case';
 import CategoryTabs from '@/components/categories/tabs';
 import { Layout } from '@/components/layout';
 import useQuery from '@/hooks/use-query';
