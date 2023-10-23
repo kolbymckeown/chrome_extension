@@ -9,12 +9,13 @@ import useQuery from '@/hooks/use-query';
 import { useEffect } from 'react';
 import { selectUser } from '@/redux/slices/user.slice';
 import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
+import { selectCategories } from '@/redux/slices/category.slice';
 
 export default function CategoryPage() {
   const router = useRouter();
-  const { categoryId } = router.query;
-  const user = useSelector(selectUser);
 
+  const user = useSelector(selectUser);
+  const categoryId = router.query.categoryId as string | undefined;
   const dispatch = useDispatch();
 
   const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
@@ -28,16 +29,21 @@ export default function CategoryPage() {
         dispatch(fetchItemsSuccess(cartItems.cartItems));
       }
     }
-  }, [dispatch, cartItems]);
+  }, [dispatch, cartItems, user]);
 
-  //  @ts-ignore
-  let itemsList = useSelector((state) => state.items.items[+categoryId]);
+  let itemsList = useSelector((state: any) => state.items.items[+categoryId!]);
+
+  const categories = useSelector(selectCategories);
+
+  const selectedCategory = categories?.find(
+    (category) => category.id === +categoryId!
+  );
 
   return (
     <Layout seoTranslationKey={`${categoryId}`}>
       <Box p={5}>
         <Text fontSize="xl" mb={5}>
-          Category Page: {categoryId}
+          {selectedCategory?.title}
         </Text>
 
         <Flex wrap="wrap">

@@ -9,6 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import LandingPage from '@/components/landing-page';
 import { useEffect } from 'react';
 import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
+import {
+  fetchCategoriesStart,
+  fetchCategoriesSuccess,
+} from '@/redux/slices/category.slice';
 
 export default function Home() {
   const user = useSelector(selectUser);
@@ -18,22 +22,22 @@ export default function Home() {
     query: { cartItemId: 'all' },
   });
 
+  const { data: categories } = useQuery<CategoriesResponse>(`categories`, {
+    query: { categoryId: 'all' },
+  });
+
   useEffect(() => {
     if (user) {
       dispatch(fetchItemsStart());
+      dispatch(fetchCategoriesStart());
       if (cartItems) {
         dispatch(fetchItemsSuccess(cartItems.cartItems));
       }
+      if (categories) {
+        dispatch(fetchCategoriesSuccess(categories.categories));
+      }
     }
   }, [dispatch, cartItems]);
-
-  const { data: categories } = useQuery<CategoriesResponse>(
-    `categories`,
-    {
-      query: { categoryId: 'all' },
-    },
-    { enabled: !!user.email }
-  );
 
   return (
     <>
