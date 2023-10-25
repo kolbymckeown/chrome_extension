@@ -9,8 +9,12 @@ import { ChakraProvider, Text } from '@chakra-ui/react';
 import AuthProvider from '@/providers/auth.provider';
 import { ErrorBoundary } from 'react-error-boundary';
 import theme from '@/styles/theme';
+import { useEffect, useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [render, setRender] = useState(false);
+  useEffect(() => setRender(true), []);
   return (
     <ErrorBoundary
       fallback={
@@ -23,8 +27,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <ReactQueryDevtools initialIsOpen={false} />
         <Provider store={store}>
           <ChakraProvider theme={theme}>
-            <AuthProvider />
-            <Component {...pageProps} />
+            <div suppressHydrationWarning>
+              <AuthProvider />
+              {typeof window === 'undefined' ? null : render ? (
+                <BrowserRouter>
+                  <Component {...pageProps} />
+                </BrowserRouter>
+              ) : null}
+            </div>
           </ChakraProvider>
         </Provider>
       </QueryClientProvider>

@@ -92,8 +92,6 @@ const useAuth = (): AuthHook => {
           console.error('Error fetching user from database:', error);
         }
       }
-
-      router.push('/');
     } catch (error) {
       console.error('Error signing in with Google', error);
       throw error;

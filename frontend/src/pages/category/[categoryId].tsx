@@ -1,7 +1,6 @@
-import { Layout } from '@/components/layout';
 import { CartItem } from '@/types/item';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { ProductCard } from '../../containers/product/product-card';
 import { CartItemsResponse } from '@/containers/categories/display-case';
@@ -12,15 +11,14 @@ import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
 import {
   fetchCategoriesStart,
   fetchCategoriesSuccess,
-  selectCategories,
 } from '@/redux/slices/category.slice';
 import { CategoriesResponse } from '@/components/categories/tabs';
+import { useParams } from 'react-router-dom';
+import LandingPage from '@/components/landing-page';
 
 export default function CategoryPage() {
-  const router = useRouter();
-
+  const { categoryId } = useParams();
   const user = useSelector(selectUser);
-  const categoryId = router.query.categoryId as string | undefined;
   const dispatch = useDispatch();
 
   const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
@@ -44,28 +42,28 @@ export default function CategoryPage() {
     }
   }, [dispatch, cartItems, user]);
 
-  let itemsList = useSelector((state: any) => state.items.items[+categoryId!]);
+  let itemsList = useSelector(
+    (state: any) => state.items.items?.[+categoryId!]
+  );
 
   const selectedCategory = useSelector((state: any) =>
     state.category.categories.find(
       (category: any) => category.id === +categoryId!
     )
   );
-
+  console.log('hitting the cate');
   return (
-    <Layout seoTranslationKey={`${categoryId}`}>
-      <Box p={5}>
-        <Text fontSize="xl" mb={5}>
-          {selectedCategory?.title}
-        </Text>
+    <Box p={5}>
+      <Text fontSize="xl" mb={5}>
+        {selectedCategory?.title}
+      </Text>
 
-        <Flex wrap="wrap">
-          {categoryId &&
-            itemsList?.map((item: CartItem) => (
-              <ProductCard item={item} key={item.id} />
-            ))}
-        </Flex>
-      </Box>
-    </Layout>
+      <Flex wrap="wrap">
+        {categoryId &&
+          itemsList?.map((item: CartItem) => (
+            <ProductCard item={item} key={item.id} />
+          ))}
+      </Flex>
+    </Box>
   );
 }

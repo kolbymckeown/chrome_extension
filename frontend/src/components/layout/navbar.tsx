@@ -8,7 +8,6 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import NextLink from 'next/link';
 
 import useAuth from '@/hooks/use-auth';
 import { selectUser } from '@/redux/slices/user.slice';
@@ -16,18 +15,26 @@ import { AddItem } from '../items/add-item';
 import { AddCategory } from '../categories/add-category';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const user = useSelector(selectUser);
   const { logout } = useAuth();
   const router = useRouter();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/session/login');
+  };
+
   const isLoginPage = router.pathname.includes('login');
   return (
     <Box as="nav" px="4" bg="scheme.main-green-blue" boxShadow="sm">
       <Flex h="20" alignItems="center" justifyContent="space-between" mx="auto">
-        <NextLink href="/">
+        <Link to="/">
           <Image w="150px" h="50px" src="/genius-logo.png" alt="Genius Logo" />
-        </NextLink>
+        </Link>
         {user.email ? (
           <>
             <Flex display={{ base: 'none', md: 'flex' }} gap="4">
@@ -38,7 +45,7 @@ export default function Navbar() {
               <Button
                 variant="outline"
                 color="scheme.dark-blue"
-                onClick={logout}
+                onClick={handleLogout}
                 border="none"
                 rightIcon={<FaSignOutAlt />}
               >
@@ -54,7 +61,7 @@ export default function Navbar() {
                     as={FaSignOutAlt}
                     variant="outline"
                     color="scheme.dark-blue"
-                    onClick={logout}
+                    onClick={handleLogout}
                     border="none"
                     cursor={'pointer'}
                     w={6}
@@ -68,11 +75,11 @@ export default function Navbar() {
           <Text>Welcome to Genius</Text>
         ) : (
           <Flex display={{ base: 'none', md: 'flex' }} gap="4">
-            <NextLink href="/session/login">
+            <Link to="/session/login">
               <Button variant="outline" colorScheme="accent">
                 Login
               </Button>
-            </NextLink>
+            </Link>
           </Flex>
         )}
       </Flex>

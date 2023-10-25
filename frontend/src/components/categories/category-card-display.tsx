@@ -14,9 +14,9 @@ import {
 } from '@chakra-ui/react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import Link from 'next/link';
 import ImageWithFallback from '../helpers/image-fallback';
 import ConfirmationModal from '../helpers/confirmation-modal';
+import { Link, useParams } from 'react-router-dom';
 import { useMutation } from '@/hooks/use-query';
 import CategoryDisplayImages from './category-display-images';
 
@@ -74,7 +74,7 @@ const DisplayCategoryCard = ({
       width={'300px'}
       position="relative"
     >
-      <Link href={`/category/${categoryId}`} passHref>
+      <Link to={`/category/${categoryId}`}>
         {/* private badge */}
         {!isPublic && (
           <Badge
@@ -124,7 +124,7 @@ const DisplayCategoryCard = ({
             />
           </Tooltip>
           <Flex>
-            <Link href={`/category/${categoryId}`} passHref>
+            <Link to={`/category/${categoryId}`}>
               {/* Icon */}
               <Icon
                 as={FaShoppingCart}

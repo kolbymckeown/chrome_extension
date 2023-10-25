@@ -14,6 +14,7 @@ import {
 import { Layout } from '@/components/layout';
 import useAuth from '@/hooks/use-auth';
 import { FcGoogle } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -21,10 +22,12 @@ const schema = yup.object().shape({
 });
 export default function RegisterPage() {
   const { signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle(false);
+      navigate('/');
     } catch (error) {
       console.error('Failed to sign in with Google', error);
     }
@@ -56,23 +59,22 @@ export default function RegisterPage() {
   // };
 
   return (
-    <Layout seoTranslationKey="register">
-      <Stack
-        minHeight="100%"
-        flex={1}
-        direction={{ base: 'column-reverse', md: 'row' }}
+    <Stack
+      minHeight="100%"
+      flex={1}
+      direction={{ base: 'column-reverse', md: 'row' }}
+    >
+      <Flex flex={1}>
+        <Image alt="shopping bag" objectFit="cover" src="/shopping-bag.jpg" />
+      </Flex>
+      <Flex
+        w={['100%', '100%', '50%']}
+        p={8}
+        justify="center"
+        direction="column"
       >
-        <Flex flex={1}>
-          <Image alt="shopping bag" objectFit="cover" src="/shopping-bag.jpg" />
-        </Flex>
-        <Flex
-          w={['100%', '100%', '50%']}
-          p={8}
-          justify="center"
-          direction="column"
-        >
-          <Heading mb={6}>Login/Register with Google</Heading>
-          {/* <form onSubmit={handleSubmit(onSubmit)}>
+        <Heading mb={6}>Login/Register with Google</Heading>
+        {/* <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
@@ -112,12 +114,11 @@ export default function RegisterPage() {
               
             </Stack>
           </form> */}
-          <Button onClick={handleGoogleSignIn}>
-            <Icon as={FcGoogle} mr={2} />
-            Sign in with Google
-          </Button>
-        </Flex>
-      </Stack>
-    </Layout>
+        <Button onClick={handleGoogleSignIn}>
+          <Icon as={FcGoogle} mr={2} />
+          Sign in with Google
+        </Button>
+      </Flex>
+    </Stack>
   );
 }

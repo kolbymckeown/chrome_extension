@@ -1,18 +1,23 @@
+import React, { Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
+import {
+  fetchCategoriesStart,
+  fetchCategoriesSuccess,
+} from '@/redux/slices/category.slice';
+import { selectUser } from '@/redux/slices/user.slice';
 import DisplayCase, {
   CartItemsResponse,
 } from '@/containers/categories/display-case';
 import { CategoriesResponse } from '@/components/categories/tabs';
 import { Layout } from '@/components/layout';
 import useQuery from '@/hooks/use-query';
-import { selectUser } from '@/redux/slices/user.slice';
-import { useDispatch, useSelector } from 'react-redux';
+import CategoryPage from './category/[categoryId]';
+import NotFound from './404page';
+import RegisterPage from './session/login';
 import LandingPage from '@/components/landing-page';
-import { useEffect } from 'react';
-import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
-import {
-  fetchCategoriesStart,
-  fetchCategoriesSuccess,
-} from '@/redux/slices/category.slice';
+import { Route, RouteObject, Routes, useRoutes } from 'react-router-dom';
+import { Spinner } from '@chakra-ui/react';
 
 export default function Home() {
   const user = useSelector(selectUser);
@@ -37,21 +42,44 @@ export default function Home() {
         dispatch(fetchCategoriesSuccess(categories.categories));
       }
     }
-  }, [dispatch, cartItems]);
+  }, [dispatch, cartItems, user]);
 
-  return (
-    <>
-      {!user.email ? (
-        <>
-          <LandingPage />
-        </>
-      ) : (
-        <>
-          <Layout seoTranslationKey="index">
-            <DisplayCase categories={categories} />
-          </Layout>
-        </>
-      )}
-    </>
-  );
+  const InnerRouter = () => {
+    const routes: RouteObject[] = [
+      {
+        path: '/',
+        element: <Layout seoTranslationKey="try" />,
+        children: [
+          {
+            index: true,
+            element: user?.email ? (
+              <DisplayCase categories={categories} />
+            ) : (
+              <RegisterPage />
+            ),
+          },
+          {
+            path: `category/:categoryId`,
+            element: user?.email ? <CategoryPage /> : <RegisterPage />,
+          },
+          {
+            path: 'session/login',
+            element: <RegisterPage />,
+          },
+          {
+            path: '*',
+            element: <NotFound />,
+          },
+        ],
+      },
+    ];
+    const element = useRoutes(routes);
+    return (
+      <div>
+        <Suspense fallback={<Spinner />}>{element}</Suspense>
+      </div>
+    );
+  };
+
+  return <InnerRouter />;
 }
