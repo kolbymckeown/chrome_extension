@@ -2,7 +2,7 @@ import { CartItem } from '@/types/item';
 import { Box, Flex, Text } from '@chakra-ui/react';
 
 import { useSelector } from 'react-redux';
-import { ProductCard } from '../../containers/product/product-card';
+import { ProductCard } from '../containers/product/product-card';
 import { useParams } from 'react-router-dom';
 
 export default function CategoryPage() {

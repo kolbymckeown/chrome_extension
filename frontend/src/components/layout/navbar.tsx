@@ -15,7 +15,7 @@ import { AddItem } from '../items/add-item';
 import { AddCategory } from '../categories/add-category';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const user = useSelector(selectUser);
@@ -24,11 +24,13 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await logout();
     navigate('/session/login');
+    await logout();
   };
+  const { pathname } = useLocation();
 
-  const isLoginPage = router.pathname.includes('login');
+  const isLoginPage = pathname === '/session/login';
+
   return (
     <Box as="nav" px="4" bg="scheme.main-green-blue" boxShadow="sm">
       <Flex h="20" alignItems="center" justifyContent="space-between" mx="auto">
@@ -72,7 +74,7 @@ export default function Navbar() {
             </Flex>
           </>
         ) : isLoginPage ? (
-          <Text>Welcome to Genius</Text>
+          <Text fontWeight={'700'}>Welcome to Genius</Text>
         ) : (
           <Flex display={{ base: 'none', md: 'flex' }} gap="4">
             <Link to="/session/login">

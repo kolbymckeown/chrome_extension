@@ -12,9 +12,9 @@ import DisplayCase, {
 import { CategoriesResponse } from '@/components/categories/tabs';
 import { Layout } from '@/components/layout';
 import useQuery from '@/hooks/use-query';
-import CategoryPage from './category/[categoryId]';
+import CategoryPage from './category';
 import NotFound from './404page';
-import RegisterPage from './session/login';
+import RegisterPage from './login';
 import LandingPage from '@/components/landing-page';
 import { RouteObject, useRoutes } from 'react-router-dom';
 import LoadingScreen from './Loading';
