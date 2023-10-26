@@ -5,7 +5,7 @@ import {
   fetchCategoriesStart,
   fetchCategoriesSuccess,
 } from '@/redux/slices/category.slice';
-import { selectUser } from '@/redux/slices/user.slice';
+import { selectUser, userLoading } from '@/redux/slices/user.slice';
 import DisplayCase, {
   CartItemsResponse,
 } from '@/containers/categories/display-case';
@@ -16,11 +16,12 @@ import CategoryPage from './category/[categoryId]';
 import NotFound from './404page';
 import RegisterPage from './session/login';
 import LandingPage from '@/components/landing-page';
-import { Route, RouteObject, Routes, useRoutes } from 'react-router-dom';
-import { Spinner } from '@chakra-ui/react';
+import { RouteObject, useRoutes } from 'react-router-dom';
+import LoadingScreen from './Loading';
 
 export default function Home() {
   const user = useSelector(selectUser);
+  const userIsLoading = useSelector(userLoading);
   const dispatch = useDispatch();
 
   const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
@@ -54,13 +55,21 @@ export default function Home() {
             index: true,
             element: user?.email ? (
               <DisplayCase categories={categories} />
+            ) : userIsLoading ? (
+              <LoadingScreen />
             ) : (
-              <RegisterPage />
+              <LandingPage />
             ),
           },
           {
             path: `category/:categoryId`,
-            element: user?.email ? <CategoryPage /> : <RegisterPage />,
+            element: user?.email ? (
+              <CategoryPage />
+            ) : userIsLoading ? (
+              <LoadingScreen />
+            ) : (
+              <RegisterPage />
+            ),
           },
           {
             path: 'session/login',
@@ -76,7 +85,7 @@ export default function Home() {
     const element = useRoutes(routes);
     return (
       <div>
-        <Suspense fallback={<Spinner />}>{element}</Suspense>
+        <Suspense fallback={<LoadingScreen />}>{element}</Suspense>
       </div>
     );
   };
