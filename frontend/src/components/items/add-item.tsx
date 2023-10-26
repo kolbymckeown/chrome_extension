@@ -58,7 +58,6 @@ export const AddItem = ({ variant = 'button' }) => {
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
     addItem(
       { ...data },
       {

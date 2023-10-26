@@ -15,7 +15,6 @@ export interface CartItemsResponse {
 }
 
 export default function DisplayCase({ categories }: DisplayCaseProps) {
-  console.log('display', categories);
   return (
     <Box
       display="flex"

@@ -69,7 +69,6 @@ const EditableCategoryCard = ({
         },
       }
     );
-    console.log(isLoading);
     setIsEditing(false);
   };
 

@@ -1,6 +1,5 @@
 import { CartItemsResponse } from '@/containers/categories/display-case';
 import CategoryTabs from '@/components/categories/tabs';
-import { Layout } from '@/components/layout';
 import useQuery from '@/hooks/use-query';
 import { selectActiveTabs } from '@/redux/slices/category.slice';
 import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';

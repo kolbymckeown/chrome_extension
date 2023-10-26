@@ -14,7 +14,7 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const items = useSelector(selectItems);
-  console.log('items', items);
+
   const filteredImages =
     categoryId !== undefined && items?.[+categoryId]
       ? items[+categoryId].map((item: CartItem) => item.image).slice(0, 4)

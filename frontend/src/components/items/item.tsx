@@ -73,7 +73,6 @@ export const Item = ({ item }: { item: CartItem }) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log('Updated Item:', data);
     updateItem(
       {
         ...data,
