@@ -1,17 +1,7 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {
-  Flex,
-  Heading,
-  Button,
-  Image,
-  useToast,
-  Stack,
-  Icon,
-} from '@chakra-ui/react';
-import { Layout } from '@/components/layout';
+import { Flex, Heading, Button, Image, Stack, Icon } from '@chakra-ui/react';
+
 import useAuth from '@/hooks/use-auth';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +16,7 @@ export default function RegisterPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle(false);
+      await signInWithGoogle();
       navigate('/');
     } catch (error) {
       console.error('Failed to sign in with Google', error);

@@ -79,6 +79,11 @@ export async function asynchrounousRequest(
         requestHeaders
       );
 
+      if (response.status === 404) {
+        // User not found
+        return false;
+      }
+
       const parsedResponse = camelCaseKeys(await response.json());
 
       if (parsedResponse.statusCode >= 400) {
