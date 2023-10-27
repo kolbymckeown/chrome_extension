@@ -31,7 +31,7 @@ export default function LandingPage() {
       minH="100vh"
       bgGradient="linear(to-b, #c96a6c, #4c8d99)"
     >
-      <LandingHeader />
+      {/* <LandingHeader /> */}
       <CenteredHero />
       {/* TODO: Replace with usage photos */}
       <Box mx="auto" mt={10} overflow={'hidden'}>

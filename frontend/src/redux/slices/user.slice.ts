@@ -13,12 +13,16 @@ export const userSlice = createSlice({
       loading: false,
     }),
     resetUser: () => {
-      return { initialState, loading: false };
+      return { ...initialState, loading: false };
     },
+    setNoUserFound: (state) => ({
+      ...state,
+      loading: false,
+    }),
   },
 });
 
-export const { setUser, resetUser } = userSlice.actions;
+export const { setUser, resetUser, setNoUserFound } = userSlice.actions;
 
 export const selectUser = (state: { user: any }) => state.user;
 

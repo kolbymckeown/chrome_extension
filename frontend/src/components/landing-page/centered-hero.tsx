@@ -33,6 +33,7 @@ export default function CenteredHero() {
           textDecoration: 'none',
         }}
       >
+        {/* TODO: add to chrome link */}
         <Link to="/session/login">
           <Button colorScheme="accent" textTransform="uppercase">
             <Icon as={FaChrome} mr={2} />

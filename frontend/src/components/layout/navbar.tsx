@@ -78,9 +78,7 @@ export default function Navbar() {
         ) : (
           <Flex display={{ base: 'none', md: 'flex' }} gap="4">
             <Link to="/session/login">
-              <Button variant="outline" colorScheme="accent">
-                Login
-              </Button>
+              <Button color={'scheme.main-green-blue'}>Login</Button>
             </Link>
           </Flex>
         )}
