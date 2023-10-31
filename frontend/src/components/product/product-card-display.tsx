@@ -48,7 +48,7 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
   return (
     <>
       {isPurchasing && (
-        <Flex position={'absolute'} top={'40%'}>
+        <Flex position={'absolute'} top={'40%'} zIndex={10}>
           <Spinner size={'lg'} color="scheme.main-green-blue" thickness="3px" />
         </Flex>
       )}
@@ -142,7 +142,7 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
         </Accordion>
 
         <Link href={item.url} target="_blank" w={'100%'}>
-          <Box filter={optionsOpen ? 'blur(1px)' : 'none'}>
+          <Box filter={optionsOpen || isPurchasing ? 'blur(1px)' : 'none'}>
             <ImageWithFallback
               src={item.image}
               alt={item.title}
