@@ -29,6 +29,8 @@ import useQuery, { useMutation } from '@/hooks/use-query';
 import { cartItemSchema } from '@/schemas';
 import { CategoriesResponse } from '../categories/tabs';
 import { FaCartPlus } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { selectCategories } from '@/redux/slices/category.slice';
 
 export const AddItem = ({ variant = 'button' }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,9 +43,10 @@ export const AddItem = ({ variant = 'button' }) => {
     type: 'POST',
   });
 
-  const { data: categories } = useQuery<CategoriesResponse>(`categories`, {
-    query: { categoryId: 'all' },
-  });
+  // const { data: categories } = useQuery<CategoriesResponse>(`categories`, {
+  //   query: { categoryId: 'all' },
+  // });
+  const categories = useSelector(selectCategories);
 
   const { handleSubmit, control, reset } = useForm({
     resolver: yupResolver(cartItemSchema),
@@ -167,7 +170,7 @@ export const AddItem = ({ variant = 'button' }) => {
                   control={control}
                   render={({ field }) => (
                     <Select {...field}>
-                      {categories?.categories.map((category, index) => (
+                      {categories.map((category, index) => (
                         <option key={index} value={category.id}>
                           {category.title}
                         </option>

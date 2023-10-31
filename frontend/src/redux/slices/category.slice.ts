@@ -1,5 +1,22 @@
 import { Category } from '@/types/category';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { asynchrounousRequest } from '@/utils/api';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export const fetchCategories = createAsyncThunk(
+  'data/fetchCategories',
+  async () => {
+    try {
+      const data = await asynchrounousRequest('categories', {
+        query: {
+          categoryId: 'all',
+        },
+      });
+      return data?.categories;
+    } catch (error) {
+      throw error; // Will be caught as a failure by createAsyncThunk
+    }
+  }
+);
 
 interface CategoryState {
   activeTabs: number[];
@@ -27,19 +44,24 @@ export const categorySlice = createSlice({
         state.activeTabs.splice(index, 1);
       }
     },
-    fetchCategoriesStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    fetchCategoriesSuccess(state, action: PayloadAction<Category[]>) {
-      state.loading = false;
-      state.categories = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCategories.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categories = action.payload;
+      })
+      .addCase(fetchCategories.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || null;
+      });
   },
 });
 
-export const { toggleTab, fetchCategoriesStart, fetchCategoriesSuccess } =
-  categorySlice.actions;
+export const { toggleTab } = categorySlice.actions;
 
 export const selectActiveTabs = (state: { category: CategoryState }) =>
   state.category.activeTabs;

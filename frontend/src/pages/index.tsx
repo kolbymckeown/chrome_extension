@@ -1,49 +1,29 @@
 import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
-import {
-  fetchCategoriesStart,
-  fetchCategoriesSuccess,
-} from '@/redux/slices/category.slice';
+import { fetchCartItems } from '@/redux/slices/items.slice';
+import { fetchCategories } from '@/redux/slices/category.slice';
 import { selectUser, userLoading } from '@/redux/slices/user.slice';
-import DisplayCase, {
-  CartItemsResponse,
-} from '@/containers/categories/display-case';
-import { CategoriesResponse } from '@/components/categories/tabs';
+import DisplayCase from '@/containers/categories/display-case';
 import { Layout } from '@/components/layout';
-import useQuery from '@/hooks/use-query';
 import CategoryPage from './category';
 import NotFound from './404page';
 import RegisterPage from './login';
 import LandingPage from '@/components/landing-page';
 import { RouteObject, useRoutes } from 'react-router-dom';
 import LoadingScreen from './Loading';
+import { AppDispatch } from '@/redux/store';
 
 export default function Home() {
   const user = useSelector(selectUser);
   const userIsLoading = useSelector(userLoading);
-  const dispatch = useDispatch();
-
-  const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
-    query: { cartItemId: 'all' },
-  });
-
-  const { data: categories } = useQuery<CategoriesResponse>(`categories`, {
-    query: { categoryId: 'all' },
-  });
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (user) {
-      dispatch(fetchItemsStart());
-      dispatch(fetchCategoriesStart());
-      if (cartItems) {
-        dispatch(fetchItemsSuccess(cartItems.cartItems));
-      }
-      if (categories) {
-        dispatch(fetchCategoriesSuccess(categories.categories));
-      }
+    if (user?.email) {
+      dispatch(fetchCategories());
+      dispatch(fetchCartItems());
     }
-  }, [dispatch, cartItems, user]);
+  }, [dispatch, user?.email]);
 
   const InnerRouter = () => {
     const routes: RouteObject[] = [
@@ -54,7 +34,7 @@ export default function Home() {
           {
             index: true,
             element: user?.email ? (
-              <DisplayCase categories={categories} />
+              <DisplayCase />
             ) : userIsLoading ? (
               <LoadingScreen />
             ) : (

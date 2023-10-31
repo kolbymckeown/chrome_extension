@@ -14,12 +14,24 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const items = useSelector(selectItems);
+  // type the following function
 
-  const filteredImages =
-    categoryId !== undefined && items?.[+categoryId]
-      ? items[+categoryId].map((item: CartItem) => item.image).slice(0, 4)
-      : [];
+  function getFirst4ImagesByCategoryId(
+    itemsList: CartItem[],
+    categoryId: number
+  ) {
+    const filteredItems = itemsList.filter(
+      (item: CartItem) => item.categoryId === categoryId
+    );
 
+    const first4Items = filteredItems.slice(0, 4);
+
+    const images = first4Items.map((item: CartItem) => item.image);
+
+    return images;
+  }
+
+  const filteredImages = getFirst4ImagesByCategoryId(items, +categoryId);
   return (
     <Box
       maxW="sm"

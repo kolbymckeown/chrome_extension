@@ -20,16 +20,15 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 export default function Navbar() {
   const user = useSelector(selectUser);
   const { logout } = useAuth();
-  const router = useRouter();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const isLoginPage = pathname === '/session/login';
 
   const handleLogout = async () => {
     navigate('/session/login');
     await logout();
   };
-  const { pathname } = useLocation();
-
-  const isLoginPage = pathname === '/session/login';
 
   return (
     <Box as="nav" px="4" bg="scheme.main-green-blue" boxShadow="sm">

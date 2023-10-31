@@ -1,8 +1,24 @@
 import { CartItem } from '@/types/item';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { asynchrounousRequest } from '@/utils/api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+export const fetchCartItems = createAsyncThunk(
+  'data/fetchCartItems',
+  async () => {
+    try {
+      const data = await asynchrounousRequest('cart-item', {
+        query: {
+          cartItemId: 'all',
+        },
+      });
+      return data?.cartItems;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 interface ItemsState {
-  items: { [key: number]: CartItem[] };
+  items: CartItem[];
   loading: boolean;
   error: string | null;
 }
@@ -21,27 +37,24 @@ const itemsSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchItemsSuccess(state, action: PayloadAction<CartItem[]>) {
-      state.loading = false;
-      const sortedItems = action.payload?.reduce((acc, item) => {
-        if (acc[item.categoryId]) {
-          acc[item.categoryId].push(item);
-        } else {
-          acc[item.categoryId] = [item];
-        }
-        return acc;
-      }, {} as { [key: number]: CartItem[] });
-      state.items = sortedItems;
-    },
-    fetchItemsFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
-      state.error = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCartItems.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCartItems.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload;
+      })
+      .addCase(fetchCartItems.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || null;
+      });
   },
 });
 
-export const { fetchItemsStart, fetchItemsSuccess, fetchItemsFailure } =
-  itemsSlice.actions;
+export const { fetchItemsStart } = itemsSlice.actions;
 
 export const selectItems = (state: { items: ItemsState }) => state.items.items;
 
