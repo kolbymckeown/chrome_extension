@@ -24,10 +24,7 @@ import {
 import { useMutation } from '@/hooks/use-query';
 import { FaFolderPlus } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import {
-  addReduxCategory,
-  fetchCategories,
-} from '@/redux/slices/category.slice';
+import { fetchCategories } from '@/redux/slices/category.slice';
 import { AppDispatch } from '@/redux/store';
 
 export const AddCategory = ({ variant = 'button' }) => {
