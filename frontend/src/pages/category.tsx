@@ -21,7 +21,13 @@ export default function CategoryPage() {
   );
   return (
     <Box p={5}>
-      <Text fontSize="xl" mb={5}>
+      <Text
+        fontSize="4xl"
+        textAlign={'center'}
+        fontWeight={'700'}
+        color={'scheme.main-green-blue'}
+        textShadow={'2px 2px #ead2ce'}
+      >
         {selectedCategory?.title}
       </Text>
 

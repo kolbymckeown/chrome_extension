@@ -6,11 +6,6 @@ import CategoryCard from './category-card';
 import { CartItem } from '@/types/item';
 import { useSelector } from 'react-redux';
 import { selectCategories } from '@/redux/slices/category.slice';
-
-interface DisplayCaseProps {
-  categories: CategoriesResponse | undefined;
-}
-
 export interface CartItemsResponse {
   cartItems: CartItem[];
   statusCode: number;
