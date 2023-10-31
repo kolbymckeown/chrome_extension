@@ -106,9 +106,10 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
           item={item}
           onEditClick={() => setIsEditing(true)}
           onDeleteClick={handleDelete}
-          onTogglePurchased={() =>
-            editItem({ ...item, purchased: !item.purchased })
-          }
+          onTogglePurchased={() => {
+            editItem({ ...item, purchased: !item.purchased });
+            dispatch(editReduxItem({ ...item, purchased: !item.purchased }));
+          }}
           isPurchasing={isLoading}
           isModalOpen={modalIsOpen}
           closeModal={() => setModalIsOpen(false)}
