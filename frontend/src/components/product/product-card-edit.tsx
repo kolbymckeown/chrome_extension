@@ -7,7 +7,6 @@ import {
   InputGroup,
   InputLeftElement,
   Textarea,
-  Button,
   Flex,
   Tooltip,
   IconButton,
