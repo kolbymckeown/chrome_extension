@@ -23,10 +23,17 @@ import {
 
 import { useMutation } from '@/hooks/use-query';
 import { FaFolderPlus } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import {
+  addReduxCategory,
+  fetchCategories,
+} from '@/redux/slices/category.slice';
+import { AppDispatch } from '@/redux/store';
 
 export const AddCategory = ({ variant = 'button' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
+  const dispatch = useDispatch<AppDispatch>();
   const { mutate: addItem } = useMutation(`categories`, {
     type: 'POST',
   });
@@ -43,6 +50,7 @@ export const AddCategory = ({ variant = 'button' }) => {
       { ...data },
       {
         onSuccess: () => {
+          dispatch(fetchCategories());
           toast({
             title: 'Item added.',
             description: 'Your category has been successfully added.',
