@@ -45,6 +45,15 @@ const itemsSlice = createSlice({
         state.items[itemIndex] = action.payload;
       }
     },
+    deleteReduxItem(state, action) {
+      console.log(action.payload);
+      const itemIndex = state.items.findIndex(
+        (item) => item.id === action.payload
+      );
+      if (itemIndex !== -1) {
+        state.items.splice(itemIndex, 1);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -62,7 +71,8 @@ const itemsSlice = createSlice({
   },
 });
 
-export const { fetchItemsStart, editReduxItem } = itemsSlice.actions;
+export const { fetchItemsStart, editReduxItem, deleteReduxItem } =
+  itemsSlice.actions;
 
 export const selectItems = (state: { items: ItemsState }) => state.items.items;
 

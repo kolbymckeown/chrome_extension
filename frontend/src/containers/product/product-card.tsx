@@ -1,7 +1,7 @@
 import ProductCardDisplay from '@/components/product/product-card-display';
 import ProductCardEdit from '@/components/product/product-card-edit';
 import { useMutation } from '@/hooks/use-query';
-import { editReduxItem } from '@/redux/slices/items.slice';
+import { deleteReduxItem, editReduxItem } from '@/redux/slices/items.slice';
 import { CartItem } from '@/types/item';
 import { Flex, Spinner, VStack, useToast } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
@@ -78,6 +78,7 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
         });
       },
     });
+    dispatch(deleteReduxItem(item.id));
   };
 
   return (
