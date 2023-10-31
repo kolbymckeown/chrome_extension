@@ -38,6 +38,14 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
   return (
     <form onSubmit={onSubmit}>
       <Box w="100%">
+        <Flex justify={'center'}>
+          <ImageWithFallback
+            src={item.image}
+            alt={item.title}
+            h="250px"
+            w="250px"
+          />
+        </Flex>
         <FormControl>
           <Input
             onChange={onChange}
@@ -57,9 +65,10 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
             }}
             padding={'0'}
             h={'30px'}
+            px={2}
           />
         </FormControl>
-        <Flex>
+        <Flex h={'27px'}>
           <FormControl>
             <Input
               onChange={onChange}
@@ -77,7 +86,7 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
                 borderBottom: '1px solid',
                 borderColor: 'scheme.main-green-blue',
               }}
-              padding={'0'}
+              px={2}
               h={'30px'}
             />
           </FormControl>
@@ -105,20 +114,14 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
                   borderBottom: '1px solid',
                   borderColor: 'scheme.main-green-blue',
                 }}
+                px={2}
                 h="30"
               />
             </InputGroup>
           </FormControl>
         </Flex>
-        <Flex justify={'center'}>
-          <ImageWithFallback
-            src={item.image}
-            alt={item.title}
-            h="200px"
-            w="200px"
-          />
-        </Flex>
-        <FormControl mt={2}>
+
+        <FormControl mt={2} textAlign={'center'}>
           <Textarea
             onChange={onChange}
             placeholder="Description"
@@ -129,6 +132,14 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
             borderRadius={'lg'}
             minHeight={'none'}
             h={'50px'}
+            w={'95%'}
+            resize={'none'}
+            _hover={{
+              border: 'transparent',
+            }}
+            _focusVisible={{
+              border: 'transparent',
+            }}
           />
         </FormControl>
         <Flex mt={2} justify="space-around">
@@ -140,6 +151,9 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
               icon={<FaCheck />}
               borderRadius={'full'}
               type="submit"
+              position={'absolute'}
+              top={0}
+              right={0}
             />
           </Tooltip>
           <Tooltip label={'Cancel'} aria-label="cancel-edit-item">
@@ -150,6 +164,9 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
               icon={<FaArrowLeft />}
               borderRadius={'full'}
               onClick={onCancel}
+              position={'absolute'}
+              top={0}
+              left={0}
             />
           </Tooltip>
         </Flex>
