@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from 'react';
 
 export const ProductCard = ({ item }: { item: CartItem }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [showFunctionality, setShowFunctionality] = useState(false);
   const [formData, setFormData] = useState<CartItem>(item);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const toast = useToast();
@@ -81,17 +82,17 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
     <VStack
       key={item.id}
       w="250px"
-      h="425px"
+      h="375px"
       borderWidth="1px"
       borderRadius="lg"
       borderColor={'scheme.main-green-blue'}
       overflow="hidden"
       mb={5}
       align="center"
-      p={3}
-      pt={4}
       position="relative"
       m={2}
+      gap={0}
+      boxShadow={'10px 10px #4c8d99'}
     >
       {isLoading && (
         <Flex position={'absolute'} top={'40%'}>
