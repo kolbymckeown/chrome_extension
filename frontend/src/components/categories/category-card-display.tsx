@@ -1,10 +1,8 @@
 import React from 'react';
 import {
   Text,
-  Grid,
   Box,
   Tooltip,
-  Button,
   Icon,
   Divider,
   Badge,
@@ -14,11 +12,12 @@ import {
 } from '@chakra-ui/react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import ImageWithFallback from '../helpers/image-fallback';
 import ConfirmationModal from '../helpers/confirmation-modal';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@/hooks/use-query';
 import CategoryDisplayImages from './category-display-images';
+import { useDispatch } from 'react-redux';
+import { deleteReduxCategory } from '@/redux/slices/category.slice';
 
 interface DisplayCategoryCardProps {
   title: string;
@@ -37,7 +36,7 @@ const DisplayCategoryCard = ({
 }: DisplayCategoryCardProps) => {
   const [isModalOpen, setModalIsOpen] = React.useState(false);
   const toast = useToast();
-
+  const dispatch = useDispatch();
   const { mutate: deleteCategory } = useMutation(`categories`, {
     type: 'DELETE',
     query: { categoryId },
@@ -64,6 +63,7 @@ const DisplayCategoryCard = ({
         });
       },
     });
+    dispatch(deleteReduxCategory(categoryId));
   };
 
   return (
