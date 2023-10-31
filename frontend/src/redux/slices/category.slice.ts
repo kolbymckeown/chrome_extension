@@ -44,6 +44,22 @@ export const categorySlice = createSlice({
         state.activeTabs.splice(index, 1);
       }
     },
+    editReduxCategory(state, action) {
+      const categoryIndex = state.categories.findIndex(
+        (category) => category.id === action.payload.id
+      );
+      if (categoryIndex !== -1) {
+        state.categories[categoryIndex] = action.payload;
+      }
+    },
+    deleteReduxCategory(state, action) {
+      const categoryIndex = state.categories.findIndex(
+        (category) => category.id === action.payload
+      );
+      if (categoryIndex !== -1) {
+        state.categories.splice(categoryIndex, 1);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +77,8 @@ export const categorySlice = createSlice({
   },
 });
 
-export const { toggleTab } = categorySlice.actions;
+export const { toggleTab, editReduxCategory, deleteReduxCategory } =
+  categorySlice.actions;
 
 export const selectActiveTabs = (state: { category: CategoryState }) =>
   state.category.activeTabs;
