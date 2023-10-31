@@ -37,6 +37,14 @@ const itemsSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
+    editReduxItem(state, action) {
+      const itemIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (itemIndex !== -1) {
+        state.items[itemIndex] = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,7 +62,7 @@ const itemsSlice = createSlice({
   },
 });
 
-export const { fetchItemsStart } = itemsSlice.actions;
+export const { fetchItemsStart, editReduxItem } = itemsSlice.actions;
 
 export const selectItems = (state: { items: ItemsState }) => state.items.items;
 

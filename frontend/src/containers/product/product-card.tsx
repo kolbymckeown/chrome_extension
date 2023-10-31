@@ -1,17 +1,18 @@
 import ProductCardDisplay from '@/components/product/product-card-display';
 import ProductCardEdit from '@/components/product/product-card-edit';
 import { useMutation } from '@/hooks/use-query';
+import { editReduxItem } from '@/redux/slices/items.slice';
 import { CartItem } from '@/types/item';
 import { Flex, Spinner, VStack, useToast } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export const ProductCard = ({ item }: { item: CartItem }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [showFunctionality, setShowFunctionality] = useState(false);
   const [formData, setFormData] = useState<CartItem>(item);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const toast = useToast();
-
+  const dispatch = useDispatch();
   const { mutate: editItem, isLoading } = useMutation(`cart-item`, {
     type: 'PUT',
   });
@@ -33,6 +34,7 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
       { ...formData },
       {
         onSuccess: () => {
+          dispatch(editReduxItem(formData));
           toast({
             title: 'Item edited.',
             description: 'Your item has been successfully edited.',
