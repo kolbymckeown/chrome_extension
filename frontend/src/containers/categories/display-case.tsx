@@ -22,7 +22,13 @@ export default function DisplayCase() {
       justifyContent="center"
       my={10}
     >
-      <Text fontSize="3xl" mb={4} fontWeight={700} color="scheme.dusty-rose">
+      <Text
+        fontSize="3xl"
+        mb={4}
+        fontWeight={700}
+        color="scheme.dusty-rose"
+        textShadow={'2px 2px #ead2ce'}
+      >
         Categories
       </Text>
       <Grid

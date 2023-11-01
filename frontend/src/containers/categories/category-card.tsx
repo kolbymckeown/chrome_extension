@@ -39,7 +39,7 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
       borderColor="scheme.dusty-rose"
       borderRadius="lg"
       overflow="hidden"
-      shadow="none"
+      boxShadow={'10px 10px #c96a6c'}
     >
       {!isEditing ? (
         <DisplayCategoryCard
