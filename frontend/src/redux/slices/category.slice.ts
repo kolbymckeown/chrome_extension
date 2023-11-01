@@ -11,7 +11,11 @@ export const fetchCategories = createAsyncThunk(
           categoryId: 'all',
         },
       });
-      return data?.categories;
+
+      return data?.categories.sort(
+        (a: Category, b: Category) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
     } catch (error) {
       throw error; // Will be caught as a failure by createAsyncThunk
     }
