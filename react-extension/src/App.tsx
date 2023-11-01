@@ -12,117 +12,117 @@ import Auth from "./components/auth";
 import { ErrorBoundary } from "react-error-boundary";
 
 export type Product = {
-  url?: string;
-  store?: string;
-  image?: string;
-  title?: string;
-  price?: number;
-  description?: string;
-  categoryId?: number;
+	url?: string;
+	store?: string;
+	image?: string;
+	title?: string;
+	price?: number;
+	description?: string;
+	categoryId?: number;
 };
 
 export type Category = {
-  id: string;
-  title: string;
-  isPublic: boolean;
+	id: string;
+	title: string;
+	isPublic: boolean;
 };
 
 export type Categories = {
-  categories: Category[];
+	categories: Category[];
 };
 
 const App = () => {
-  const [responseFromContent, setResponseFromContent] = useState<Product>({
-    url: "",
-    store: "",
-    image: "",
-    title: "",
-    price: 0,
-    description: "",
-  });
+	const [responseFromContent, setResponseFromContent] = useState<Product>({
+		url: "",
+		store: "",
+		image: "",
+		title: "",
+		price: 0,
+		description: "",
+	});
 
-  const {
-    data: categories,
-    isLoading,
-    isError,
-  } = useQuery<Categories>(`categories`, {
-    query: { categoryId: "all" },
-  });
+	const {
+		data: categories,
+		isLoading,
+		isError,
+	} = useQuery<Categories>(`categories`, {
+		query: { categoryId: "all" },
+	});
 
-  const [user, setUser] = useState<boolean>(false);
+	const [user, setUser] = useState<boolean>(false);
 
-  useEffect(() => {
-    getProductOnClick();
-  }, []);
+	useEffect(() => {
+		getProductOnClick();
+	}, []);
 
-  useEffect(() => {
-    // Check if running in a Chrome extension context
-    if (chrome && chrome.cookies) {
-      // Get all cookies
-      chrome.cookies.getAll({}, function (allCookies) {
-        console.log("All cookies:", allCookies);
+	useEffect(() => {
+		// Check if running in a Chrome extension context
+		if (chrome && chrome.cookies) {
+			// Get all cookies
+			chrome.cookies.getAll({}, function (allCookies) {
+				console.log("All cookies:", allCookies);
 
-        const currentUserAuthToken = allCookies.find(
-          (cookie) => cookie.name === "genius_user_auth_token"
-        );
+				const currentUserAuthToken = allCookies.find(
+					(cookie) => cookie.name === "genius_user_auth_token"
+				);
 
-        if (currentUserAuthToken) {
-          // set cookie for the chrome extension here
-          console.log(
-            // current date and time
-            new Date().toLocaleString("en-US", { timeZone: "America/New_York" })
-          );
-          setUser(true);
-        }
-      });
-    }
-  }, []);
+				if (currentUserAuthToken) {
+					// set cookie for the chrome extension here
+					console.log(
+						// current date and time
+						new Date().toLocaleString("en-US", { timeZone: "America/New_York" })
+					);
+					setUser(true);
+				}
+			});
+		}
+	}, []);
 
-  const getProductOnClick = () => {
-    const message: ChromeMessage = {
-      from: Sender.React,
-      message: "Hello from React",
-    };
+	const getProductOnClick = () => {
+		const message: ChromeMessage = {
+			from: Sender.React,
+			message: "Hello from React",
+		};
 
-    getCurrentTabUId((id) => {
-      id &&
-        chrome.tabs.sendMessage(id, message, (responseFromContentScript) => {
-          console.log("product", responseFromContentScript);
-          setResponseFromContent(responseFromContentScript);
-        });
-    });
-  };
+		getCurrentTabUId((id) => {
+			id &&
+				chrome.tabs.sendMessage(id, message, (responseFromContentScript) => {
+					console.log("product", responseFromContentScript);
+					setResponseFromContent(responseFromContentScript);
+				});
+		});
+	};
 
-  return (
-    <ErrorBoundary
-      fallback={
-        <Text color="red.500" fontSize="xl">
-          Something went wrong...
-        </Text>
-      }
-    >
-      <ChakraProvider theme={theme}>
-        <Flex justifyContent="center" alignItems="center" height="100vh">
-          {isLoading ? (
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
-          ) : user ? (
-            <WishlistForm
-              product={responseFromContent}
-              categories={categories}
-            />
-          ) : (
-            <Auth />
-          )}
-        </Flex>
-      </ChakraProvider>
-    </ErrorBoundary>
-  );
+	return (
+		<ErrorBoundary
+			fallback={
+				<Text color="red.500" fontSize="xl">
+					Something went wrong...
+				</Text>
+			}
+		>
+			<ChakraProvider theme={theme}>
+				<Flex justifyContent="center" alignItems="center">
+					{isLoading ? (
+						<Spinner
+							thickness="4px"
+							speed="0.65s"
+							emptyColor="gray.200"
+							color="blue.500"
+							size="xl"
+						/>
+					) : user ? (
+						<WishlistForm
+							product={responseFromContent}
+							categories={categories}
+						/>
+					) : (
+						<Auth />
+					)}
+				</Flex>
+			</ChakraProvider>
+		</ErrorBoundary>
+	);
 };
 
 export default App;
