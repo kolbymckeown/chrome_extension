@@ -16,7 +16,7 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
   const items = useSelector(selectItems);
   // type the following function
 
-  function getFirst4ImagesByCategoryId(
+  function getFirstImageByCategoryId(
     itemsList: CartItem[],
     categoryId: number
   ) {
@@ -24,14 +24,15 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
       (item: CartItem) => item.categoryId === categoryId
     );
 
-    const first4Items = filteredItems.slice(0, 4);
-
-    const images = first4Items.map((item: CartItem) => item.image);
-
-    return images;
+    for (let i = 0; i < filteredItems.length; i++) {
+      if (filteredItems[i]?.image) {
+        return filteredItems[i].image;
+      }
+    }
+    return '';
   }
 
-  const filteredImages = getFirst4ImagesByCategoryId(items, +categoryId);
+  const displayImage = getFirstImageByCategoryId(items, +categoryId);
   return (
     <Box
       maxW="sm"
@@ -39,12 +40,12 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
       borderColor="scheme.dusty-rose"
       borderRadius="lg"
       overflow="hidden"
-      shadow="none"
+      boxShadow={'10px 10px #c96a6c'}
     >
       {!isEditing ? (
         <DisplayCategoryCard
           title={title}
-          filteredImages={filteredImages}
+          displayImage={displayImage}
           categoryId={categoryId}
           isPublic={isPublic}
           setIsEditing={setIsEditing}
@@ -53,7 +54,7 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
         <EditableCategoryCard
           category={category}
           setIsEditing={setIsEditing}
-          filteredImages={filteredImages}
+          displayImage={displayImage}
         />
       )}
     </Box>

@@ -1,16 +1,18 @@
 import ProductCardDisplay from '@/components/product/product-card-display';
 import ProductCardEdit from '@/components/product/product-card-edit';
 import { useMutation } from '@/hooks/use-query';
+import { deleteReduxItem, editReduxItem } from '@/redux/slices/items.slice';
 import { CartItem } from '@/types/item';
 import { Flex, Spinner, VStack, useToast } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export const ProductCard = ({ item }: { item: CartItem }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<CartItem>(item);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const toast = useToast();
-
+  const dispatch = useDispatch();
   const { mutate: editItem, isLoading } = useMutation(`cart-item`, {
     type: 'PUT',
   });
@@ -32,6 +34,7 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
       { ...formData },
       {
         onSuccess: () => {
+          dispatch(editReduxItem(formData));
           toast({
             title: 'Item edited.',
             description: 'Your item has been successfully edited.',
@@ -75,23 +78,24 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
         });
       },
     });
+    dispatch(deleteReduxItem(item.id));
   };
 
   return (
     <VStack
       key={item.id}
       w="250px"
-      h="425px"
+      h="375px"
       borderWidth="1px"
       borderRadius="lg"
       borderColor={'scheme.main-green-blue'}
       overflow="hidden"
       mb={5}
       align="center"
-      p={3}
-      pt={4}
       position="relative"
       m={2}
+      gap={0}
+      boxShadow={'10px 10px #4c8d99'}
     >
       {isLoading && (
         <Flex position={'absolute'} top={'40%'}>
@@ -103,9 +107,10 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
           item={item}
           onEditClick={() => setIsEditing(true)}
           onDeleteClick={handleDelete}
-          onTogglePurchased={() =>
-            editItem({ ...item, purchased: !item.purchased })
-          }
+          onTogglePurchased={() => {
+            editItem({ ...item, purchased: !item.purchased });
+            dispatch(editReduxItem({ ...item, purchased: !item.purchased }));
+          }}
           isPurchasing={isLoading}
           isModalOpen={modalIsOpen}
           closeModal={() => setModalIsOpen(false)}

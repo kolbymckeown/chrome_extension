@@ -1,29 +1,34 @@
 import React from 'react';
 import {
   Text,
-  Grid,
   Box,
   Tooltip,
-  Button,
-  Icon,
   Divider,
   Badge,
   Flex,
   useToast,
   IconButton,
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionButton,
+  Heading,
 } from '@chakra-ui/react';
-import { FaShoppingCart } from 'react-icons/fa';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import ImageWithFallback from '../helpers/image-fallback';
+import { EditIcon, DeleteIcon, HamburgerIcon } from '@chakra-ui/icons';
 import ConfirmationModal from '../helpers/confirmation-modal';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@/hooks/use-query';
 import CategoryDisplayImages from './category-display-images';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteReduxCategory } from '@/redux/slices/category.slice';
+import { FaCaretLeft } from 'react-icons/fa';
+import { selectItems } from '@/redux/slices/items.slice';
+import { formatCurrency } from '@/utils/price-formatter';
 
 interface DisplayCategoryCardProps {
   title: string;
   isPublic: boolean;
-  filteredImages: string[];
+  displayImage: string;
   categoryId: number | undefined;
   setIsEditing: (value: boolean) => void;
 }
@@ -31,17 +36,21 @@ interface DisplayCategoryCardProps {
 const DisplayCategoryCard = ({
   title,
   isPublic,
-  filteredImages,
+  displayImage,
   categoryId,
   setIsEditing,
 }: DisplayCategoryCardProps) => {
   const [isModalOpen, setModalIsOpen] = React.useState(false);
   const toast = useToast();
-
+  const dispatch = useDispatch();
   const { mutate: deleteCategory } = useMutation(`categories`, {
     type: 'DELETE',
     query: { categoryId },
   });
+  const items = useSelector(selectItems);
+  const totalCategoryValue = items
+    .filter((item) => item.categoryId === categoryId)
+    .reduce((acc, item) => acc + item.price, 0);
 
   const handleDelete = () => {
     deleteCategory({
@@ -64,6 +73,7 @@ const DisplayCategoryCard = ({
         });
       },
     });
+    dispatch(deleteReduxCategory(categoryId));
   };
 
   return (
@@ -74,6 +84,59 @@ const DisplayCategoryCard = ({
       width={'300px'}
       position="relative"
     >
+      <Accordion
+        position={'absolute'}
+        top={0}
+        left={0}
+        border={'transparent'}
+        allowToggle
+        zIndex={10}
+      >
+        <AccordionItem>
+          <h2>
+            <AccordionButton
+              _hover={{
+                backgroundColor: 'transparent',
+              }}
+            >
+              <HamburgerIcon color={'scheme.main-green-blue'} />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel p={0}>
+            <Flex direction={'column'}>
+              <>
+                <Tooltip label="Edit" aria-label="Edit">
+                  <IconButton
+                    bg={'transparent'}
+                    aria-label="Purchased"
+                    color={'scheme.dusty-rose'}
+                    icon={<EditIcon color="scheme.dusty-rose" />}
+                    borderRadius={'full'}
+                    onClick={() => setIsEditing(true)}
+                  />
+                </Tooltip>
+
+                <Tooltip label="Delete" aria-label="Delete">
+                  <IconButton
+                    bg={'transparent'}
+                    aria-label="Purchased"
+                    color={'scheme.dusty-rose'}
+                    icon={<DeleteIcon color="scheme.dusty-rose" />}
+                    borderRadius={'full'}
+                    onClick={() => setModalIsOpen(true)}
+                  />
+                </Tooltip>
+                <ConfirmationModal
+                  isOpen={isModalOpen}
+                  onClose={() => setModalIsOpen(false)}
+                  title={'Delete Category'}
+                  callback={handleDelete}
+                />
+              </>
+            </Flex>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
       <Link to={`/category/${categoryId}`}>
         {/* private badge */}
         {!isPublic && (
@@ -86,11 +149,12 @@ const DisplayCategoryCard = ({
             Private
           </Badge>
         )}
-        <Flex p="4" alignItems="center" flexDirection="column">
+        <Flex alignItems="center" flexDirection="column">
+          <CategoryDisplayImages displayImage={displayImage} />
           <Text
             fontSize="2xl"
             fontWeight="bold"
-            color="scheme.dusty-rose"
+            color="#4c8d99"
             lineHeight="1.25"
             maxHeight="2.5em"
             overflow="hidden"
@@ -101,74 +165,52 @@ const DisplayCategoryCard = ({
               WebkitLineClamp: 1,
               WebkitBoxOrient: 'vertical',
             }}
+            pb={1}
+            position={'absolute'}
+            top={'40%'}
+            textShadow={'2px 2px #e5ebe7'}
+            w={'fit-content'}
+            px={2}
+            textAlign={'center'}
+            bg={'scheme.light-rose'}
           >
             {title}
           </Text>
-          <CategoryDisplayImages filteredImages={filteredImages} />
         </Flex>
-        <Flex direction={'column'} alignItems="center">
+        <Flex alignItems="center" direction={'column'}>
           <Divider borderColor="scheme.light-rose" width={'80%'} />
+          <Flex alignItems={'center'}>
+            <Box position="relative" right="40px">
+              <FaCaretLeft color="#c96a6c" size="65px" />
+            </Box>
+            <Tooltip label="Cart Value" aria-label="Total Spent">
+              <Text
+                display={'inline-block'}
+                width={'105px'}
+                h={'38px'}
+                bg={'scheme.dusty-rose'}
+                borderRadius={'3px 4px 4px 3px'}
+                boxShadow={'3px 3px pink'}
+                position={'absolute'}
+                color={'scheme.light-rose'}
+                fontWeight={'300'}
+                right={'77px'}
+                fontSize={'large'}
+                lineHeight={'38px'}
+                p={'0px 10px 0px 10px'}
+                style={{
+                  // @ts-ignore
+                  textWrap: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {formatCurrency(totalCategoryValue) || '$0'}
+              </Text>
+            </Tooltip>
+          </Flex>
         </Flex>
       </Link>
-
-      <Flex p={4} justifyContent="space-evenly">
-        <>
-          <Tooltip label="Edit" aria-label="Edit">
-            <IconButton
-              bg={'scheme.light-rose'}
-              aria-label="Purchased"
-              color={'scheme.dusty-rose'}
-              icon={<EditIcon color="scheme.dusty-rose" />}
-              borderRadius={'full'}
-              onClick={() => setIsEditing(true)}
-            />
-          </Tooltip>
-          <Flex>
-            <Link to={`/category/${categoryId}`}>
-              {/* Icon */}
-              <Icon
-                as={FaShoppingCart}
-                color="scheme.light-rose"
-                w={6}
-                h={6}
-                margin={2}
-              />
-            </Link>
-            {/* Badge */}
-            {filteredImages.length > 0 && (
-              <Tooltip label="Cart Items" aria-label="cart-items">
-                <Box
-                  backgroundColor="scheme.dusty-rose"
-                  color="white"
-                  borderRadius="full"
-                  paddingX="2"
-                  fontSize="sm"
-                  position="absolute"
-                  right="120px"
-                >
-                  {filteredImages.length}
-                </Box>
-              </Tooltip>
-            )}
-          </Flex>
-          <Tooltip label="Delete" aria-label="Delete">
-            <IconButton
-              bg={'scheme.light-rose'}
-              aria-label="Purchased"
-              color={'scheme.dusty-rose'}
-              icon={<DeleteIcon color="scheme.dusty-rose" />}
-              borderRadius={'full'}
-              onClick={() => setModalIsOpen(true)}
-            />
-          </Tooltip>
-          <ConfirmationModal
-            isOpen={isModalOpen}
-            onClose={() => setModalIsOpen(false)}
-            title={'Delete Category'}
-            callback={handleDelete}
-          />
-        </>
-      </Flex>
     </Box>
   );
 };

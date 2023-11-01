@@ -11,7 +11,11 @@ export const fetchCategories = createAsyncThunk(
           categoryId: 'all',
         },
       });
-      return data?.categories;
+
+      return data?.categories.sort(
+        (a: Category, b: Category) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
     } catch (error) {
       throw error; // Will be caught as a failure by createAsyncThunk
     }
@@ -44,6 +48,22 @@ export const categorySlice = createSlice({
         state.activeTabs.splice(index, 1);
       }
     },
+    editReduxCategory(state, action) {
+      const categoryIndex = state.categories.findIndex(
+        (category) => category.id === action.payload.id
+      );
+      if (categoryIndex !== -1) {
+        state.categories[categoryIndex] = action.payload;
+      }
+    },
+    deleteReduxCategory(state, action) {
+      const categoryIndex = state.categories.findIndex(
+        (category) => category.id === action.payload
+      );
+      if (categoryIndex !== -1) {
+        state.categories.splice(categoryIndex, 1);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +81,8 @@ export const categorySlice = createSlice({
   },
 });
 
-export const { toggleTab } = categorySlice.actions;
+export const { toggleTab, editReduxCategory, deleteReduxCategory } =
+  categorySlice.actions;
 
 export const selectActiveTabs = (state: { category: CategoryState }) =>
   state.category.activeTabs;

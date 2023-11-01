@@ -6,11 +6,6 @@ import CategoryCard from './category-card';
 import { CartItem } from '@/types/item';
 import { useSelector } from 'react-redux';
 import { selectCategories } from '@/redux/slices/category.slice';
-
-interface DisplayCaseProps {
-  categories: CategoriesResponse | undefined;
-}
-
 export interface CartItemsResponse {
   cartItems: CartItem[];
   statusCode: number;
@@ -27,7 +22,13 @@ export default function DisplayCase() {
       justifyContent="center"
       my={10}
     >
-      <Text fontSize="3xl" mb={4} fontWeight={700} color="scheme.dusty-rose">
+      <Text
+        fontSize="3xl"
+        mb={4}
+        fontWeight={700}
+        color="scheme.dusty-rose"
+        textShadow={'2px 2px #ead2ce'}
+      >
         Categories
       </Text>
       <Grid

@@ -14,21 +14,24 @@ import { Category } from '@/types/category';
 import { useMutation } from '@/hooks/use-query';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 import CategoryDisplayImages from './category-display-images';
+import { useDispatch } from 'react-redux';
+import { editReduxCategory } from '@/redux/slices/category.slice';
 
 interface EditableCategoryCardProps {
   category: Category;
   setIsEditing: (value: boolean) => void;
-  filteredImages: string[];
+  displayImage: string;
 }
 
 const EditableCategoryCard = ({
   category,
   setIsEditing,
-  filteredImages,
+  displayImage,
 }: EditableCategoryCardProps) => {
   const { title, isPublic } = category;
   const [formData, setFormData] = React.useState<Category>(category);
   const toast = useToast();
+  const dispatch = useDispatch();
   const { mutate: updateCategory, isLoading } = useMutation(`categories`, {
     type: 'PUT',
   });
@@ -69,6 +72,7 @@ const EditableCategoryCard = ({
         },
       }
     );
+    dispatch(editReduxCategory(formData));
     setIsEditing(false);
   };
 
@@ -114,7 +118,7 @@ const EditableCategoryCard = ({
             </Checkbox>
           </FormControl>
         </Flex>
-        <CategoryDisplayImages filteredImages={filteredImages} />
+        <CategoryDisplayImages displayImage={displayImage} />
         <Flex direction={'column'} alignItems="center">
           <Divider borderColor="scheme.light-rose" width={'90%'} mt={4} />
         </Flex>

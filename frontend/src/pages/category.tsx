@@ -1,15 +1,17 @@
 import { CartItem } from '@/types/item';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
 import { useSelector } from 'react-redux';
 import { ProductCard } from '../containers/product/product-card';
 import { useParams } from 'react-router-dom';
+import { selectItems } from '@/redux/slices/items.slice';
 
 export default function CategoryPage() {
   const { categoryId } = useParams();
 
-  let itemsList = useSelector(
-    (state: any) => state.items.items?.[+categoryId!]
+  const items = useSelector(selectItems);
+  const itemsList = items.filter(
+    (item: CartItem) => item.categoryId === +categoryId!
   );
 
   const selectedCategory = useSelector((state: any) =>
@@ -19,16 +21,26 @@ export default function CategoryPage() {
   );
   return (
     <Box p={5}>
-      <Text fontSize="xl" mb={5}>
+      <Text
+        fontSize="4xl"
+        textAlign={'center'}
+        fontWeight={'700'}
+        color={'scheme.main-green-blue'}
+        textShadow={'2px 2px #ead2ce'}
+      >
         {selectedCategory?.title}
       </Text>
 
-      <Flex wrap="wrap">
-        {categoryId &&
-          itemsList?.map((item: CartItem) => (
-            <ProductCard item={item} key={item.id} />
-          ))}
-      </Flex>
+      {itemsList.length !== 0 ? (
+        <Flex wrap="wrap">
+          {categoryId &&
+            itemsList?.map((item: CartItem) => (
+              <ProductCard item={item} key={item.id} />
+            ))}
+        </Flex>
+      ) : (
+        <Heading>No items in this category</Heading>
+      )}
     </Box>
   );
 }
