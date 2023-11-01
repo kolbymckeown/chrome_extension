@@ -12,32 +12,19 @@ const CategoryDisplayImages = ({
 }: CategoryDisplayImagesProps) => {
   return (
     <Grid templateColumns="repeat(2, 1fr)" w={'100%'} filter={'blur(2px)'}>
-      {filteredImages.length > 3 ? (
-        filteredImages.map((image: string, i: number) => (
-          <Box key={i} overflow="hidden" w={'150px'} h={'150px'}>
-            <ImageWithFallback
-              src={image}
-              alt={`Image ${image} `}
-              w="150px"
-              h="150px"
-            />
-          </Box>
-        ))
-      ) : (
-        <Box
-          key={filteredImages[0]}
-          borderWidth="1px"
-          overflow="hidden"
-          gridColumn="span 2"
-        >
-          <ImageWithFallback
-            src={filteredImages[0]}
-            alt={`Image ${filteredImages[0]}`}
-            w={'300px'}
-            h={'300px'}
-          />
-        </Box>
-      )}
+      <Box
+        key={filteredImages[0]}
+        borderWidth="1px"
+        overflow="hidden"
+        gridColumn="span 2"
+      >
+        <ImageWithFallback
+          src={filteredImages[0]}
+          alt={`Image ${filteredImages[0]}`}
+          w={'300px'}
+          h={'300px'}
+        />
+      </Box>
     </Grid>
   );
 };
