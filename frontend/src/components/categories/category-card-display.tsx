@@ -12,14 +12,18 @@ import {
   AccordionItem,
   AccordionPanel,
   AccordionButton,
+  Heading,
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, HamburgerIcon } from '@chakra-ui/icons';
 import ConfirmationModal from '../helpers/confirmation-modal';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@/hooks/use-query';
 import CategoryDisplayImages from './category-display-images';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteReduxCategory } from '@/redux/slices/category.slice';
+import { FaCaretLeft } from 'react-icons/fa';
+import { selectItems } from '@/redux/slices/items.slice';
+import { formatCurrency } from '@/utils/price-formatter';
 
 interface DisplayCategoryCardProps {
   title: string;
@@ -43,6 +47,10 @@ const DisplayCategoryCard = ({
     type: 'DELETE',
     query: { categoryId },
   });
+  const items = useSelector(selectItems);
+  const totalCategoryValue = items
+    .filter((item) => item.categoryId === categoryId)
+    .reduce((acc, item) => acc + item.price, 0);
 
   const handleDelete = () => {
     deleteCategory({
@@ -169,8 +177,38 @@ const DisplayCategoryCard = ({
             {title}
           </Text>
         </Flex>
-        <Flex direction={'column'} alignItems="center">
+        <Flex alignItems="center" direction={'column'}>
           <Divider borderColor="scheme.light-rose" width={'80%'} />
+          <Flex alignItems={'center'}>
+            <Box position="relative" right="40px">
+              <FaCaretLeft color="#c96a6c" size="65px" />
+            </Box>
+            <Tooltip label="Cart Value" aria-label="Total Spent">
+              <Text
+                display={'inline-block'}
+                width={'105px'}
+                h={'38px'}
+                bg={'scheme.dusty-rose'}
+                borderRadius={'3px 4px 4px 3px'}
+                boxShadow={'3px 3px pink'}
+                position={'absolute'}
+                color={'scheme.light-rose'}
+                fontWeight={'300'}
+                right={'77px'}
+                fontSize={'large'}
+                lineHeight={'38px'}
+                p={'0px 10px 0px 10px'}
+                style={{
+                  // @ts-ignore
+                  textWrap: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {formatCurrency(totalCategoryValue) || '$0'}
+              </Text>
+            </Tooltip>
+          </Flex>
         </Flex>
       </Link>
     </Box>
