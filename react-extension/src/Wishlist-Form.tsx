@@ -211,7 +211,7 @@ const WishlistForm = ({
 						boxShadow="none"
 					/>
 				</FormControl>
-				<Flex mt={4} gap={2} justifyContent="space-between">
+				<Flex mt={4} gap={1} justifyContent="space-between">
 					<Button
 						mt={4}
 						color="scheme.dusty-rose"
@@ -222,6 +222,7 @@ const WishlistForm = ({
 							bg: "scheme.dusty-rose",
 							color: "white",
 						}}
+						boxShadow="3px 3px pink"
 						type="submit"
 					>
 						Add to Wishlist
@@ -236,6 +237,7 @@ const WishlistForm = ({
 							bg: "scheme.dusty-rose",
 							color: "white",
 						}}
+						boxShadow="3px 3px pink"
 						onClick={() => {
 							const home = `${process.env.REACT_APP_FRONTEND_URL}`;
 							window.open(home, "_blank");
