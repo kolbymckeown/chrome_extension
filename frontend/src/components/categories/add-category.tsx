@@ -75,9 +75,10 @@ export const AddCategory = ({ variant = 'button' }) => {
     <Flex direction="column" align="center">
       {variant === 'button' && (
         <Button
-          color="scheme.dark-blue"
+          color="white"
           variant="outline"
           border="none"
+          _hover={{ color: 'scheme.dusty-rose', bg: 'white' }}
           rightIcon={<FaFolderPlus />}
           onClick={() => setIsOpen(true)}
         >
