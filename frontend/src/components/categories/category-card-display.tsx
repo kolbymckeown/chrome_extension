@@ -86,11 +86,12 @@ const DisplayCategoryCard = ({
             Private
           </Badge>
         )}
-        <Flex p="4" alignItems="center" flexDirection="column">
+        <Flex alignItems="center" flexDirection="column">
+          <CategoryDisplayImages filteredImages={filteredImages} />
           <Text
             fontSize="2xl"
             fontWeight="bold"
-            color="scheme.dusty-rose"
+            color="#4c8d99"
             lineHeight="1.25"
             maxHeight="2.5em"
             overflow="hidden"
@@ -101,21 +102,28 @@ const DisplayCategoryCard = ({
               WebkitLineClamp: 1,
               WebkitBoxOrient: 'vertical',
             }}
+            pb={1}
+            position={'absolute'}
+            top={'40%'}
+            textShadow={'2px 2px #e5ebe7'}
+            w={'fit-content'}
+            px={2}
+            textAlign={'center'}
+            bg={'scheme.light-rose'}
           >
             {title}
           </Text>
-          <CategoryDisplayImages filteredImages={filteredImages} />
         </Flex>
         <Flex direction={'column'} alignItems="center">
           <Divider borderColor="scheme.light-rose" width={'80%'} />
         </Flex>
       </Link>
 
-      <Flex p={4} justifyContent="space-evenly">
+      <Flex p={4} pt={3} justifyContent="space-evenly">
         <>
           <Tooltip label="Edit" aria-label="Edit">
             <IconButton
-              bg={'scheme.light-rose'}
+              bg={'transparent'}
               aria-label="Purchased"
               color={'scheme.dusty-rose'}
               icon={<EditIcon color="scheme.dusty-rose" />}
@@ -153,7 +161,7 @@ const DisplayCategoryCard = ({
           </Flex>
           <Tooltip label="Delete" aria-label="Delete">
             <IconButton
-              bg={'scheme.light-rose'}
+              bg={'transparent'}
               aria-label="Purchased"
               color={'scheme.dusty-rose'}
               icon={<DeleteIcon color="scheme.dusty-rose" />}
