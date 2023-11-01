@@ -15,10 +15,9 @@ const ImageWithFallback = ({
   w = '225px',
 }: ImageWithFallbackProps) => {
   const [imageError, setImageError] = useState(false);
-
   return (
     <Image
-      src={imageError ? '/shopping-bag.png' : src}
+      src={imageError || !src ? '/shopping-bag.png' : src}
       alt={alt}
       onError={() => setImageError(true)}
       h={h}

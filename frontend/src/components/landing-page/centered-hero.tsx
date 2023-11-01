@@ -1,6 +1,6 @@
-import { Button, Flex, Icon, Link, Text } from '@chakra-ui/react';
+import { Button, Flex, Icon, Text } from '@chakra-ui/react';
 import { FaChrome } from 'react-icons/fa';
-import NextLink from 'next/link';
+import { Link } from 'react-router-dom';
 
 export default function CenteredHero() {
   return (
@@ -24,9 +24,7 @@ export default function CenteredHero() {
         Your custom curated shopping list to keep track of those items you've
         been wanting!
       </Text>
-      <Link
-        as={NextLink}
-        href="/session/register"
+      <Flex
         mt={5}
         display="flex"
         alignItems="center"
@@ -35,11 +33,14 @@ export default function CenteredHero() {
           textDecoration: 'none',
         }}
       >
-        <Button colorScheme="accent" textTransform="uppercase">
-          <Icon as={FaChrome} mr={2} />
-          Add to chrome - it's free
-        </Button>
-      </Link>
+        {/* TODO: add to chrome link */}
+        <Link to="/session/login">
+          <Button colorScheme="accent" textTransform="uppercase">
+            <Icon as={FaChrome} mr={2} />
+            Add to chrome - it's free
+          </Button>
+        </Link>
+      </Flex>
     </Flex>
   );
 }

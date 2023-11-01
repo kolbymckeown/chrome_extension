@@ -1,9 +1,11 @@
 import React from 'react';
 import { Box, Text, Grid } from '@chakra-ui/react';
-import { CategoriesResponse } from './tabs';
+import { CategoriesResponse } from '../../components/categories/tabs';
 import { Category } from '@/types/category';
-import { CategoryCard } from './category-card';
+import CategoryCard from './category-card';
 import { CartItem } from '@/types/item';
+import { useSelector } from 'react-redux';
+import { selectCategories } from '@/redux/slices/category.slice';
 
 interface DisplayCaseProps {
   categories: CategoriesResponse | undefined;
@@ -14,7 +16,9 @@ export interface CartItemsResponse {
   statusCode: number;
 }
 
-export default function DisplayCase({ categories }: DisplayCaseProps) {
+export default function DisplayCase() {
+  const categories = useSelector(selectCategories);
+
   return (
     <Box
       display="flex"
@@ -33,7 +37,7 @@ export default function DisplayCase({ categories }: DisplayCaseProps) {
         px={6}
         justifyContent="center"
       >
-        {categories?.categories?.map((category: Category) => (
+        {categories?.map((category: Category) => (
           <CategoryCard category={category} key={category.id} />
         ))}
       </Grid>

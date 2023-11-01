@@ -6,35 +6,31 @@ import {
   Image,
   IconButton,
   LinkProps,
+  Tooltip,
+  Flex,
 } from '@chakra-ui/react';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
-const links = [
-  'Blog',
-  'Documentation',
-  'Careers',
-  'Sign up',
-  'Terms of use',
-  'Privacy policy',
-];
+// const links = [
+//   'Blog',
+//   'Documentation',
+//   'Careers',
+//   'Sign up',
+//   'Terms of use',
+//   'Privacy policy',
+// ];
 const accounts = [
   {
-    url: 'https://github.com/',
-    label: 'Github Account',
+    url: 'https://github.com/noahnovickf',
+    label: 'Github Account - Noah Novick',
     type: 'gray',
     icon: <FaGithub />,
   },
   {
-    url: 'https://twitter.com/',
-    label: 'Twitter Account',
-    type: 'twitter',
-    icon: <FaTwitter />,
-  },
-  {
-    url: 'https://linkedin.com/',
-    label: 'LinkedIn Account',
-    type: 'linkedin',
-    icon: <FaLinkedin />,
+    url: 'https://github.com/kolbymckeown',
+    label: 'Github Account - Kolby McKeown',
+    type: 'gray',
+    icon: <FaGithub />,
   },
 ];
 
@@ -44,76 +40,37 @@ const Footer = () => {
       maxW="5xl"
       marginInline="auto"
       p={8}
-      spacing={{ base: 8, md: 0 }}
-      justifyContent="space-between"
-      alignItems="center"
       direction={{ base: 'column', md: 'row' }}
+      justify={'center'}
     >
       <Link href="/">
         <Image w="100px" src="/genius-logo.png" alt="Genius Logo" />
       </Link>
 
-      {/* Desktop Screen */}
       <HStack
-        spacing={4}
-        alignItems="center"
-        display={{ base: 'none', md: 'flex' }}
-      >
-        {links.map((link, index) => (
-          <CustomLink key={index}>{link}</CustomLink>
-        ))}
-      </HStack>
-
-      {/* Mobile and Tablet Screens */}
-      <Stack display={{ base: 'flex', md: 'none' }} alignItems="center">
-        <HStack alignItems="center">
-          <CustomLink>Sign up</CustomLink>
-          <Divider h="1rem" orientation="vertical" />
-          <CustomLink>Blog</CustomLink>
-          <Divider h="1rem" orientation="vertical" />
-          <CustomLink>Career</CustomLink>
-        </HStack>
-        <HStack alignItems="center">
-          <CustomLink>Documentation</CustomLink>
-          <Divider h="1rem" orientation="vertical" />
-          <CustomLink>Terms of use</CustomLink>
-        </HStack>
-        <CustomLink>Privacy policy</CustomLink>
-      </Stack>
-
-      <Stack
         direction="row"
         spacing={5}
-        pt={{ base: 4, md: 0 }}
         alignItems="center"
+        justifySelf="flex-end"
+        position={'absolute'}
+        right={'10'}
       >
         {accounts.map((sc, index) => (
-          <IconButton
-            key={index}
-            as={Link}
-            isExternal
-            href={sc.url}
-            aria-label={sc.label}
-            colorScheme={sc.type}
-            icon={sc.icon}
-            rounded="md"
-          />
+          <Tooltip key={index} label={sc.label} aria-label={sc.label}>
+            <IconButton
+              key={index}
+              as={Link}
+              isExternal
+              href={sc.url}
+              aria-label={sc.label}
+              colorScheme={sc.type}
+              icon={sc.icon}
+              rounded="md"
+            />
+          </Tooltip>
         ))}
-      </Stack>
+      </HStack>
     </Stack>
-  );
-};
-
-const CustomLink = ({ children, ...props }: LinkProps) => {
-  return (
-    <Link
-      href="#"
-      fontSize="sm"
-      _hover={{ textDecoration: 'underline' }}
-      {...props}
-    >
-      {children}
-    </Link>
   );
 };
 

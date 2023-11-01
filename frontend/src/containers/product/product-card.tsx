@@ -1,5 +1,5 @@
-import ProductCardDisplay from '@/components/categories/product-card-display';
-import ProductCardEdit from '@/components/categories/product-card-edit';
+import ProductCardDisplay from '@/components/product/product-card-display';
+import ProductCardEdit from '@/components/product/product-card-edit';
 import { useMutation } from '@/hooks/use-query';
 import { CartItem } from '@/types/item';
 import { Flex, Spinner, VStack, useToast } from '@chakra-ui/react';

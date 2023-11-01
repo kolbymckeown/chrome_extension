@@ -4,10 +4,11 @@ import Head from 'next/head';
 import Footer from './footer';
 import Navbar from './navbar';
 
-import useTranslations  from '@/hooks/use-translations';
+import useTranslations from '@/hooks/use-translations';
+import { Outlet } from 'react-router-dom';
 
 type ILayoutProps = {
-  children: React.ReactNode;
+  // children: React.ReactNode;
   seoTranslationKey: string;
   seoTranslationVariables?: Record<string, string>;
   plainTitle?: string;
@@ -15,7 +16,7 @@ type ILayoutProps = {
 };
 
 export const Layout = ({
-  children,
+  // children,
   seoTranslationKey,
   seoTranslationVariables,
   plainTitle,
@@ -55,7 +56,8 @@ export const Layout = ({
           minHeight={`calc(100vh - 65px - 105px)`}
           flex={1}
         >
-          {children}
+          {/* {children} */}
+          <Outlet />
         </Flex>
         <Footer />
       </section>

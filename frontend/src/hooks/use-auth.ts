@@ -32,7 +32,8 @@ type AuthHook = {
   logout: () => Promise<void>;
   setAuthenticatedUser: (user: any, token: string) => any;
   getAuthenticatedUser: (userId?: string) => any;
-  signInWithGoogle: (newAccount?: boolean) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  isUserInDB: (userId: string) => Promise<boolean>;
 };
 
 const useAuth = (): AuthHook => {
@@ -43,6 +44,14 @@ const useAuth = (): AuthHook => {
     asynchrounousRequest(`users`, {
       query: { userId: (auth.currentUser && auth.currentUser.uid) || '' },
     });
+
+  const isUserInDB = async (userId: string) => {
+    const { user } = await asynchrounousRequest(`users`, {
+      query: { userId },
+    });
+
+    return !!user;
+  };
 
   const setAuthenticatedUser = (user: any, authToken: any) => {
     if (!user) {
@@ -60,12 +69,13 @@ const useAuth = (): AuthHook => {
     }
   };
 
-  const signInWithGoogle = async (newAccount?: boolean) => {
+  const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      const existingAccount = await isUserInDB(user.uid);
 
-      if (newAccount) {
+      if (!existingAccount) {
         const { user: dbUser, authToken } = await asynchrounousRequest(
           'users',
           {
@@ -92,8 +102,6 @@ const useAuth = (): AuthHook => {
           console.error('Error fetching user from database:', error);
         }
       }
-
-      router.push('/');
     } catch (error) {
       console.error('Error signing in with Google', error);
       throw error;
@@ -171,6 +179,7 @@ const useAuth = (): AuthHook => {
     signInWithGoogle,
     getAuthenticatedUser,
     setAuthenticatedUser,
+    isUserInDB,
   };
 };
 

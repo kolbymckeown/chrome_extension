@@ -39,7 +39,6 @@ export const AddCategory = ({ variant = 'button' }) => {
   });
 
   const onSubmit = (data: any) => {
-    console.log({ data });
     addItem(
       { ...data },
       {

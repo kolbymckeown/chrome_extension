@@ -8,24 +8,34 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import NextLink from 'next/link';
 
 import useAuth from '@/hooks/use-auth';
 import { selectUser } from '@/redux/slices/user.slice';
 import { AddItem } from '../items/add-item';
 import { AddCategory } from '../categories/add-category';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const user = useSelector(selectUser);
   const { logout } = useAuth();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const isLoginPage = pathname === '/session/login';
+
+  const handleLogout = async () => {
+    navigate('/session/login');
+    await logout();
+  };
 
   return (
     <Box as="nav" px="4" bg="scheme.main-green-blue" boxShadow="sm">
       <Flex h="20" alignItems="center" justifyContent="space-between" mx="auto">
-        <NextLink href="/">
+        <Link to="/">
           <Image w="150px" h="50px" src="/genius-logo.png" alt="Genius Logo" />
-        </NextLink>
+        </Link>
         {user.email ? (
           <>
             <Flex display={{ base: 'none', md: 'flex' }} gap="4">
@@ -36,7 +46,7 @@ export default function Navbar() {
               <Button
                 variant="outline"
                 color="scheme.dark-blue"
-                onClick={logout}
+                onClick={handleLogout}
                 border="none"
                 rightIcon={<FaSignOutAlt />}
               >
@@ -52,7 +62,7 @@ export default function Navbar() {
                     as={FaSignOutAlt}
                     variant="outline"
                     color="scheme.dark-blue"
-                    onClick={logout}
+                    onClick={handleLogout}
                     border="none"
                     cursor={'pointer'}
                     w={6}
@@ -62,16 +72,13 @@ export default function Navbar() {
               </Tooltip>
             </Flex>
           </>
+        ) : isLoginPage ? (
+          <Text fontWeight={'700'}>Welcome to Genius</Text>
         ) : (
           <Flex display={{ base: 'none', md: 'flex' }} gap="4">
-            <NextLink href="/session/login">
-              <Button variant="outline" colorScheme="accent">
-                Login
-              </Button>
-            </NextLink>
-            <NextLink href="/session/register">
-              <Button colorScheme="accent">Sign Up</Button>
-            </NextLink>
+            <Link to="/session/login">
+              <Button color={'scheme.main-green-blue'}>Login</Button>
+            </Link>
           </Flex>
         )}
       </Flex>

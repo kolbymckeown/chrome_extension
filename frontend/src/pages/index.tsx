@@ -1,53 +1,74 @@
-import DisplayCase, {
-  CartItemsResponse,
-} from '@/components/categories/display-case';
-import { CategoriesResponse } from '@/components/categories/tabs';
-import { Layout } from '@/components/layout';
-import useQuery from '@/hooks/use-query';
-import { selectUser } from '@/redux/slices/user.slice';
+import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchCartItems } from '@/redux/slices/items.slice';
+import { fetchCategories } from '@/redux/slices/category.slice';
+import { selectUser, userLoading } from '@/redux/slices/user.slice';
+import DisplayCase from '@/containers/categories/display-case';
+import { Layout } from '@/components/layout';
+import CategoryPage from './category';
+import NotFound from './404page';
+import RegisterPage from './login';
 import LandingPage from '@/components/landing-page';
-import { useEffect } from 'react';
-import { fetchItemsStart, fetchItemsSuccess } from '@/redux/slices/items.slice';
+import { RouteObject, useRoutes } from 'react-router-dom';
+import LoadingScreen from './Loading';
+import { AppDispatch } from '@/redux/store';
 
 export default function Home() {
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
-
-  const { data: cartItems } = useQuery<CartItemsResponse>('cart-item', {
-    query: { cartItemId: 'all' },
-  });
+  const userIsLoading = useSelector(userLoading);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (user) {
-      dispatch(fetchItemsStart());
-      if (cartItems) {
-        dispatch(fetchItemsSuccess(cartItems.cartItems));
-      }
+    if (user?.email) {
+      dispatch(fetchCategories());
+      dispatch(fetchCartItems());
     }
-  }, [dispatch, cartItems]);
+  }, [dispatch, user?.email]);
 
-  const { data: categories } = useQuery<CategoriesResponse>(
-    `categories`,
-    {
-      query: { categoryId: 'all' },
-    },
-    { enabled: !!user.email }
-  );
+  const InnerRouter = () => {
+    const routes: RouteObject[] = [
+      {
+        path: '/',
+        element: <Layout seoTranslationKey="try" />,
+        children: [
+          {
+            index: true,
+            element: user?.email ? (
+              <DisplayCase />
+            ) : userIsLoading ? (
+              <LoadingScreen />
+            ) : (
+              <LandingPage />
+            ),
+          },
+          {
+            path: `category/:categoryId`,
+            element: user?.email ? (
+              <CategoryPage />
+            ) : userIsLoading ? (
+              <LoadingScreen />
+            ) : (
+              <RegisterPage />
+            ),
+          },
+          {
+            path: 'session/login',
+            element: <RegisterPage />,
+          },
+          {
+            path: '*',
+            element: <NotFound />,
+          },
+        ],
+      },
+    ];
+    const element = useRoutes(routes);
+    return (
+      <div>
+        <Suspense fallback={<LoadingScreen />}>{element}</Suspense>
+      </div>
+    );
+  };
 
-  return (
-    <>
-      {!user.email ? (
-        <>
-          <LandingPage />
-        </>
-      ) : (
-        <>
-          <Layout seoTranslationKey="index">
-            <DisplayCase categories={categories} />
-          </Layout>
-        </>
-      )}
-    </>
-  );
+  return <InnerRouter />;
 }
