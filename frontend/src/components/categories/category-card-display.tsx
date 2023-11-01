@@ -3,15 +3,17 @@ import {
   Text,
   Box,
   Tooltip,
-  Icon,
   Divider,
   Badge,
   Flex,
   useToast,
   IconButton,
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionButton,
 } from '@chakra-ui/react';
-import { FaShoppingCart } from 'react-icons/fa';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { EditIcon, DeleteIcon, HamburgerIcon } from '@chakra-ui/icons';
 import ConfirmationModal from '../helpers/confirmation-modal';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@/hooks/use-query';
@@ -22,7 +24,7 @@ import { deleteReduxCategory } from '@/redux/slices/category.slice';
 interface DisplayCategoryCardProps {
   title: string;
   isPublic: boolean;
-  filteredImages: string[];
+  displayImage: string;
   categoryId: number | undefined;
   setIsEditing: (value: boolean) => void;
 }
@@ -30,7 +32,7 @@ interface DisplayCategoryCardProps {
 const DisplayCategoryCard = ({
   title,
   isPublic,
-  filteredImages,
+  displayImage,
   categoryId,
   setIsEditing,
 }: DisplayCategoryCardProps) => {
@@ -74,6 +76,59 @@ const DisplayCategoryCard = ({
       width={'300px'}
       position="relative"
     >
+      <Accordion
+        position={'absolute'}
+        top={0}
+        left={0}
+        border={'transparent'}
+        allowToggle
+        zIndex={10}
+      >
+        <AccordionItem>
+          <h2>
+            <AccordionButton
+              _hover={{
+                backgroundColor: 'transparent',
+              }}
+            >
+              <HamburgerIcon color={'scheme.main-green-blue'} />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel p={0}>
+            <Flex direction={'column'}>
+              <>
+                <Tooltip label="Edit" aria-label="Edit">
+                  <IconButton
+                    bg={'transparent'}
+                    aria-label="Purchased"
+                    color={'scheme.dusty-rose'}
+                    icon={<EditIcon color="scheme.dusty-rose" />}
+                    borderRadius={'full'}
+                    onClick={() => setIsEditing(true)}
+                  />
+                </Tooltip>
+
+                <Tooltip label="Delete" aria-label="Delete">
+                  <IconButton
+                    bg={'transparent'}
+                    aria-label="Purchased"
+                    color={'scheme.dusty-rose'}
+                    icon={<DeleteIcon color="scheme.dusty-rose" />}
+                    borderRadius={'full'}
+                    onClick={() => setModalIsOpen(true)}
+                  />
+                </Tooltip>
+                <ConfirmationModal
+                  isOpen={isModalOpen}
+                  onClose={() => setModalIsOpen(false)}
+                  title={'Delete Category'}
+                  callback={handleDelete}
+                />
+              </>
+            </Flex>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
       <Link to={`/category/${categoryId}`}>
         {/* private badge */}
         {!isPublic && (
@@ -87,7 +142,7 @@ const DisplayCategoryCard = ({
           </Badge>
         )}
         <Flex alignItems="center" flexDirection="column">
-          <CategoryDisplayImages filteredImages={filteredImages} />
+          <CategoryDisplayImages displayImage={displayImage} />
           <Text
             fontSize="2xl"
             fontWeight="bold"
@@ -118,65 +173,6 @@ const DisplayCategoryCard = ({
           <Divider borderColor="scheme.light-rose" width={'80%'} />
         </Flex>
       </Link>
-
-      <Flex p={4} pt={3} justifyContent="space-evenly">
-        <>
-          <Tooltip label="Edit" aria-label="Edit">
-            <IconButton
-              bg={'transparent'}
-              aria-label="Purchased"
-              color={'scheme.dusty-rose'}
-              icon={<EditIcon color="scheme.dusty-rose" />}
-              borderRadius={'full'}
-              onClick={() => setIsEditing(true)}
-            />
-          </Tooltip>
-          <Flex>
-            <Link to={`/category/${categoryId}`}>
-              {/* Icon */}
-              <Icon
-                as={FaShoppingCart}
-                color="scheme.light-rose"
-                w={6}
-                h={6}
-                margin={2}
-              />
-            </Link>
-            {/* Badge */}
-            {filteredImages.length > 0 && (
-              <Tooltip label="Cart Items" aria-label="cart-items">
-                <Box
-                  backgroundColor="scheme.dusty-rose"
-                  color="white"
-                  borderRadius="full"
-                  paddingX="2"
-                  fontSize="sm"
-                  position="absolute"
-                  right="120px"
-                >
-                  {filteredImages.length}
-                </Box>
-              </Tooltip>
-            )}
-          </Flex>
-          <Tooltip label="Delete" aria-label="Delete">
-            <IconButton
-              bg={'transparent'}
-              aria-label="Purchased"
-              color={'scheme.dusty-rose'}
-              icon={<DeleteIcon color="scheme.dusty-rose" />}
-              borderRadius={'full'}
-              onClick={() => setModalIsOpen(true)}
-            />
-          </Tooltip>
-          <ConfirmationModal
-            isOpen={isModalOpen}
-            onClose={() => setModalIsOpen(false)}
-            title={'Delete Category'}
-            callback={handleDelete}
-          />
-        </>
-      </Flex>
     </Box>
   );
 };

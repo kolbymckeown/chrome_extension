@@ -20,13 +20,13 @@ import { editReduxCategory } from '@/redux/slices/category.slice';
 interface EditableCategoryCardProps {
   category: Category;
   setIsEditing: (value: boolean) => void;
-  filteredImages: string[];
+  displayImage: string;
 }
 
 const EditableCategoryCard = ({
   category,
   setIsEditing,
-  filteredImages,
+  displayImage,
 }: EditableCategoryCardProps) => {
   const { title, isPublic } = category;
   const [formData, setFormData] = React.useState<Category>(category);
@@ -118,7 +118,7 @@ const EditableCategoryCard = ({
             </Checkbox>
           </FormControl>
         </Flex>
-        <CategoryDisplayImages filteredImages={filteredImages} />
+        <CategoryDisplayImages displayImage={displayImage} />
         <Flex direction={'column'} alignItems="center">
           <Divider borderColor="scheme.light-rose" width={'90%'} mt={4} />
         </Flex>
