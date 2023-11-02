@@ -87,7 +87,7 @@ const App = () => {
 		getCurrentTabUId((id) => {
 			id &&
 				chrome.tabs.sendMessage(id, message, (responseFromContentScript) => {
-					console.log("product", responseFromContentScript);
+
 					setResponseFromContent(responseFromContentScript);
 				});
 		});

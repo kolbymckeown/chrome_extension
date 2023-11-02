@@ -20,7 +20,6 @@ export default function useQuery<T>(
   fetchOptions?: { [key: string]: any },
   options?: UseQueryOptions
 ) {
-  console.log(url, fetchOptions);
   const response = useBaseQuery<T>({
     ...options,
     queryKey: [options?.queryKey || url],

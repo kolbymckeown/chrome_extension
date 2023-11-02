@@ -12,6 +12,7 @@ export const CategoryTabs = () => {
     <Flex w="100%" bg={'scheme.light-rose'} overflow={'scroll'}>
       {categories?.map((category: any) => (
         <CategoryTab
+          key={category.id}
           category={category}
           selected={category.id === +categoryId}
         />
