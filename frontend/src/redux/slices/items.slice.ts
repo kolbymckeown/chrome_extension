@@ -46,7 +46,6 @@ const itemsSlice = createSlice({
       }
     },
     deleteReduxItem(state, action) {
-      console.log(action.payload);
       const itemIndex = state.items.findIndex(
         (item) => item.id === action.payload
       );

@@ -12,7 +12,7 @@ import {
   AccordionItem,
   AccordionPanel,
   AccordionButton,
-  Heading,
+
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, HamburgerIcon } from '@chakra-ui/icons';
 import ConfirmationModal from '../helpers/confirmation-modal';
@@ -97,6 +97,8 @@ const DisplayCategoryCard = ({
         border={'transparent'}
         allowToggle
         zIndex={10}
+        borderRadius={'0px 0px 10px 0px'}
+        bg={'white'}
       >
         <AccordionItem>
           <h2>
@@ -105,7 +107,7 @@ const DisplayCategoryCard = ({
                 backgroundColor: 'transparent',
               }}
             >
-              <HamburgerIcon color={'scheme.main-green-blue'} />
+              <HamburgerIcon color={'scheme.dusty-rose'} />
             </AccordionButton>
           </h2>
           <AccordionPanel p={0}>

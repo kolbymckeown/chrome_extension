@@ -40,16 +40,36 @@ const ConfirmationModal = ({
         </ModalBody>
         <ModalFooter>
           <Button
-            color={'scheme.dusty-rose'}
-            bg={'scheme.warm-white'}
+            bg={'scheme.dusty-rose'}
             onClick={onClose}
             mr={2}
-            _hover={{ bg: 'scheme.light-rose' }}
             variant={'outline'}
+            color="white"
+            borderColor="scheme.dusty-rose"
+            borderWidth={1}
+            _hover={{
+              bg: 'white',
+              borderColor: 'scheme.dusty-rose',
+              color: 'scheme.dusty-rose',
+              boxShadow: '3px 3px #4c8d99',
+            }}
+            boxShadow="3px 3px pink"
           >
             Cancel
           </Button>
-          <Button color={'scheme.main-green-blue'} onClick={handleConfirm}>
+          <Button
+            onClick={handleConfirm}
+            color="scheme.dusty-rose"
+            borderColor="scheme.dusty-rose"
+            borderWidth={1}
+            bg="white"
+            _hover={{
+              bg: 'scheme.dusty-rose',
+              color: 'white',
+              boxShadow: '3px 3px #4c8d99',
+            }}
+            boxShadow="3px 3px pink"
+          >
             Confirm
           </Button>
         </ModalFooter>

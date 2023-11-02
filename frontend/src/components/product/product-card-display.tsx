@@ -74,7 +74,8 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
           border={'transparent'}
           allowToggle
           zIndex={10}
-          onClick={() => setOptionsOpen(!optionsOpen)}
+          borderRadius={'0px 0px 10px 0px'}
+          bg={'white'}
         >
           <AccordionItem>
             <h2>
@@ -82,6 +83,7 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
                 _hover={{
                   backgroundColor: 'transparent',
                 }}
+                onClick={() => setOptionsOpen(!optionsOpen)}
               >
                 <HamburgerIcon color={'scheme.main-green-blue'} />
               </AccordionButton>
@@ -166,12 +168,22 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
             </Heading>
             <Flex justifyContent={'space-between'} w="100%">
               <Text
+                height={'20px'}
+                textOverflow={'ellipsis'}
+                whiteSpace={'nowrap'}
+                overflow={'hidden'}
                 fontWeight={item?.store ? '700' : '500'}
                 color={item?.store ? 'scheme.main-green-blue' : 'gray'}
               >
                 {item.store ? item.store : 'Add Store'}
               </Text>
-              <Text color={'scheme.main-green-blue'}>
+              <Text
+                color={'scheme.main-green-blue'}
+                height={'20px'}
+                textOverflow={'ellipsis'}
+                whiteSpace={'nowrap'}
+                overflow={'hidden'}
+              >
                 {formatCurrency(item.price)}
               </Text>
             </Flex>

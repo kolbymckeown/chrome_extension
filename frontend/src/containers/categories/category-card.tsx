@@ -34,12 +34,14 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
 
   const displayImage = getFirstImageByCategoryId(items, +categoryId);
   const imagesForCategory = items
-    .filter((item: CartItem) => item.categoryId === categoryId).map(item => item.image).filter(Boolean);
+    .filter((item: CartItem) => item.categoryId === categoryId)
+    .map((item) => item.image)
+    .filter(Boolean);
 
-  console.log(imagesForCategory)
   return (
     <Box
       maxW="sm"
+      h={'350px'}
       border="1px solid"
       borderColor="scheme.dusty-rose"
       borderRadius="lg"

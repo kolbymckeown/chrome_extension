@@ -64,7 +64,21 @@ export default function Navbar() {
         </HStack>
         <Flex alignItems="center">
           {user.email ? (
-            <Button onClick={handleLogout}>Sign out</Button>
+            <Button
+              onClick={handleLogout}
+              color="scheme.dusty-rose"
+              borderColor="scheme.dusty-rose"
+              borderWidth={1}
+              bg="white"
+              _hover={{
+                bg: 'scheme.dusty-rose',
+                color: 'white',
+                border: '1px solid white',
+              }}
+              boxShadow="3px 3px pink"
+            >
+              Sign out
+            </Button>
           ) : (
             !isLoginPage && (
               <Link to="/session/login">

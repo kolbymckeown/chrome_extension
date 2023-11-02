@@ -1,10 +1,11 @@
 export function formatCurrency(price: number) {
+  let numberedPrice = price;
   if (typeof price !== 'number') {
-    Number(price);
+    numberedPrice = Number(price);
   }
 
   // Use toFixed(2) to round to 2 decimal places and convert to string
-  const formattedPrice = price.toFixed(2);
+  const formattedPrice = numberedPrice.toFixed(2);
 
   // Add commas for thousands separator
   const parts = formattedPrice.split('.');

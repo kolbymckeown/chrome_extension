@@ -27,14 +27,16 @@ import {
 
 import useQuery, { useMutation } from '@/hooks/use-query';
 import { cartItemSchema } from '@/schemas';
-import { CategoriesResponse } from '../categories/tabs';
 import { FaCartPlus } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCategories } from '@/redux/slices/category.slice';
+import { fetchCartItems } from '@/redux/slices/items.slice';
+import { AppDispatch } from '@/redux/store';
 
 export const AddItem = ({ variant = 'button' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     mutate: addItem,
     isLoading,
@@ -43,9 +45,6 @@ export const AddItem = ({ variant = 'button' }) => {
     type: 'POST',
   });
 
-  // const { data: categories } = useQuery<CategoriesResponse>(`categories`, {
-  //   query: { categoryId: 'all' },
-  // });
   const categories = useSelector(selectCategories);
 
   const { handleSubmit, control, reset } = useForm({
@@ -57,6 +56,8 @@ export const AddItem = ({ variant = 'button' }) => {
       image: '',
       quantity: 1,
       purchased: false,
+      store: '',
+      url: '',
     },
   });
 
@@ -72,6 +73,7 @@ export const AddItem = ({ variant = 'button' }) => {
             duration: 3000,
             isClosable: true,
           });
+          dispatch(fetchCartItems());
           setIsOpen(false);
           reset();
         },
@@ -126,7 +128,7 @@ export const AddItem = ({ variant = 'button' }) => {
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Title</FormLabel>
                 <Controller
                   name="title"
@@ -134,20 +136,35 @@ export const AddItem = ({ variant = 'button' }) => {
                   render={({ field }) => <Input {...field} />}
                 />
               </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Store</FormLabel>
+                <Controller
+                  name="store"
+                  control={control}
+                  render={({ field }) => <Input {...field} />}
+                />
+              </FormControl>
 
-              <FormControl mt={4}>
+              <FormControl mt={4} isRequired>
                 <FormLabel>Price</FormLabel>
                 <Controller
                   name="price"
                   control={control}
                   render={({ field }) => (
                     <NumberInput>
-                      <NumberInputField {...field} />
+                      <NumberInputField {...field} placeholder="$" />
                     </NumberInput>
                   )}
                 />
               </FormControl>
-
+              <FormControl>
+                <FormLabel>Product URL</FormLabel>
+                <Controller
+                  name="url"
+                  control={control}
+                  render={({ field }) => <Input {...field} />}
+                />
+              </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Description</FormLabel>
                 <Controller
@@ -164,7 +181,7 @@ export const AddItem = ({ variant = 'button' }) => {
                   render={({ field }) => <Input {...field} />}
                 />
               </FormControl>
-              <FormControl mt={4}>
+              <FormControl mt={4} isRequired>
                 <FormLabel>Category</FormLabel>
                 <Controller
                   name="categoryId"
@@ -177,19 +194,6 @@ export const AddItem = ({ variant = 'button' }) => {
                         </option>
                       ))}
                     </Select>
-                  )}
-                />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Quantity</FormLabel>
-                <Controller
-                  name="quantity"
-                  control={control}
-                  render={({ field }) => (
-                    <NumberInput>
-                      <NumberInputField {...field} />
-                    </NumberInput>
                   )}
                 />
               </FormControl>
@@ -216,10 +220,18 @@ export const AddItem = ({ variant = 'button' }) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="red" mr={3} onClick={() => setIsOpen(false)}>
-                Close
-              </Button>
-              <Button type="submit" colorScheme="green">
+              <Button
+                type="submit"
+                color="scheme.dusty-rose"
+                borderColor="scheme.dusty-rose"
+                borderWidth={1}
+                bg="white"
+                _hover={{
+                  bg: 'scheme.dusty-rose',
+                  color: 'white',
+                }}
+                boxShadow="3px 3px pink"
+              >
                 Save
               </Button>
             </ModalFooter>

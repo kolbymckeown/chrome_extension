@@ -139,16 +139,17 @@ export const AddCategory = ({ variant = 'button' }) => {
 
             <ModalFooter>
               <Button
-                colorScheme="red"
-                mr={3}
-                onClick={() => {
-                  setIsOpen(false);
-                  reset();
+                type="submit"
+                color="scheme.dusty-rose"
+                borderColor="scheme.dusty-rose"
+                borderWidth={1}
+                bg="white"
+                _hover={{
+                  bg: 'scheme.dusty-rose',
+                  color: 'white',
                 }}
+                boxShadow="3px 3px pink"
               >
-                Close
-              </Button>
-              <Button type="submit" colorScheme="green">
                 Save
               </Button>
             </ModalFooter>

@@ -92,7 +92,7 @@ export default function ImageSlider({
       </IconButton>
       {/* Slider */}
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
-        {images.map((url, index) => (
+        {images?.map((url, index) => (
           <Link to={`/category/${categoryId}`}>
             <Box
               key={index}

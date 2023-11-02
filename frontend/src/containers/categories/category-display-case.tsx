@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Text, Grid } from '@chakra-ui/react';
-import { CategoriesResponse } from '../../components/categories/tabs';
 import { Category } from '@/types/category';
 import CategoryCard from './category-card';
 import { CartItem } from '@/types/item';
@@ -11,7 +10,7 @@ export interface CartItemsResponse {
   statusCode: number;
 }
 
-export default function DisplayCase() {
+export default function CategoryDisplayCase() {
   const categories = useSelector(selectCategories);
 
   return (

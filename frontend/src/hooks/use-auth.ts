@@ -89,7 +89,6 @@ const useAuth = (): AuthHook => {
           }
         );
 
-        console.log('New DB User:', dbUser);
         setAuthenticatedUser(dbUser, authToken);
       } else {
         try {

@@ -55,7 +55,11 @@ export default function RegisterPage() {
       direction={{ base: 'column-reverse', md: 'row' }}
     >
       <Flex flex={1}>
-        <Image alt="shopping bag" objectFit="cover" src="/shopping-bag.jpg" />
+        <Image
+          alt="shopping bag"
+          objectFit="contain"
+          src="/genius_main_green_blue.png"
+        />
       </Flex>
       <Flex
         w={['100%', '100%', '50%']}
@@ -63,48 +67,27 @@ export default function RegisterPage() {
         justify="center"
         direction="column"
       >
-        <Heading mb={6}>Login/Register with Google</Heading>
-        {/* <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={4}>
-              <FormControl isRequired>
-                <FormLabel>Email</FormLabel>
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      type="email"
-                      placeholder="Enter your email"
-                    />
-                  )}
-                />
-                <p>{errors.email?.message}</p>
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel>Password</FormLabel>
-                <Controller
-                  name="password"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder="Enter your password"
-                    />
-                  )}
-                />
-                <p>{errors.password?.message}</p>
-              </FormControl>{' '}
-              <Button mt={6} colorScheme="primary" type="submit" width="full">
-                Login
-              </Button>
-              
-            </Stack>
-          </form> */}
-        <Button onClick={handleGoogleSignIn}>
+        <Heading
+          mb={6}
+          fontWeight={'700'}
+          textShadow={'3px 3px #ead2ce'}
+          color="scheme.dusty-rose"
+        >
+          Login/Register
+        </Heading>
+        <Button
+          onClick={handleGoogleSignIn}
+          color="scheme.dusty-rose"
+          borderColor="scheme.dusty-rose"
+          borderWidth={1}
+          bg="white"
+          _hover={{
+            bg: 'scheme.dusty-rose',
+            color: 'white',
+            // boxShadow: '3px 3px #4c8d99',
+          }}
+          boxShadow="3px 3px pink"
+        >
           <Icon as={FcGoogle} mr={2} />
           Sign in with Google
         </Button>
