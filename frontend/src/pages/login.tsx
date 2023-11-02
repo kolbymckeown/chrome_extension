@@ -55,7 +55,11 @@ export default function RegisterPage() {
       direction={{ base: 'column-reverse', md: 'row' }}
     >
       <Flex flex={1}>
-        <Image alt="shopping bag" objectFit="cover" src="/shopping-bag.jpg" />
+        <Image
+          alt="shopping bag"
+          objectFit="contain"
+          src="/genius_main_green_blue.png"
+        />
       </Flex>
       <Flex
         w={['100%', '100%', '50%']}
