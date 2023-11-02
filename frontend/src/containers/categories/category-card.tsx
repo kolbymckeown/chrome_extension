@@ -34,9 +34,9 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
 
   const displayImage = getFirstImageByCategoryId(items, +categoryId);
   const imagesForCategory = items
-    .filter((item: CartItem) => item.categoryId === categoryId)
-    .map((item: CartItem) => item.image);
+    .filter((item: CartItem) => item.categoryId === categoryId).map(item => item.image).filter(Boolean);
 
+  console.log(imagesForCategory)
   return (
     <Box
       maxW="sm"

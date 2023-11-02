@@ -147,7 +147,7 @@ const DisplayCategoryCard = ({
       {/* private badge */}
       {!isPublic && (
         <Badge
-          borderRadius="7px 0px 7px 0px"
+          borderRadius="0px 7px 0px 7px"
           position="absolute"
           color="scheme.dusty-rose"
           top={0}
