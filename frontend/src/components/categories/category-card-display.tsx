@@ -175,7 +175,6 @@ const DisplayCategoryCard = ({
           pb={1}
           top={'40%'}
           textShadow={'2px 2px #e5ebe7'}
-          borderRadius="lg"
           w={'fit-content'}
           px={2}
           textAlign={'center'}
