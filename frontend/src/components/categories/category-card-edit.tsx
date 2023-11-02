@@ -13,9 +13,9 @@ import {
 import { Category } from '@/types/category';
 import { useMutation } from '@/hooks/use-query';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
-import CategoryDisplayImages from './category-display-images';
 import { useDispatch } from 'react-redux';
 import { editReduxCategory } from '@/redux/slices/category.slice';
+import CategoryDisplaySingleImage from './category-display-single-image';
 
 interface EditableCategoryCardProps {
   category: Category;
@@ -77,9 +77,13 @@ const EditableCategoryCard = ({
   };
 
   return (
-    <Box p={4}>
-      <form onSubmit={handleEdit}>
-        <Flex align={'baseline'}>
+    <Box px={'25px'} pt={'3px'}>
+      <form onSubmit={handleEdit} style={{
+        position: 'relative',
+      }}>
+        <Flex direction={'column'} width={'140px'} position={'absolute'} top={'32%'} left={'23%'} style={{
+          textAlignLast: 'center',
+        }} zIndex={10} bg={'scheme.light-rose'}>
           <FormControl>
             <Input
               onClick={(e) => e.preventDefault()}
@@ -87,45 +91,48 @@ const EditableCategoryCard = ({
               placeholder="Enter title"
               name="title"
               defaultValue={title}
+              zIndex={10}
               border={'none'}
-              borderBottom={'1px solid'}
-              borderColor={'scheme.dusty-rose'}
-              borderRadius={'none'}
-              color={'scheme.dusty-rose'}
+              bg={'scheme.light-rose'}
+              fontSize={'large'}
+              color={'scheme.main-green-blue'}
               fontWeight={'700'}
+              borderBottom={'1px solid'}
+              borderRadius={'none'}
+              borderColor={'scheme.dusty-rose'}
+              _hover={{borderBottom: '1px solid'}}
               _focusVisible={{
                 border: 'none',
                 borderBottom: '1px solid',
-                borderColor: 'scheme.dusty-rose',
+                width: '80%',
               }}
-              padding={'0'}
-              mb={'6px'}
-              h={'30px'}
+              textShadow={'2px 2px #e5ebe7'}
             />
           </FormControl>
-          <FormControl>
+        </Flex>
+
+          <FormControl textAlign={'end'}>
             <Checkbox
               id="private-toggle"
               name="isPublic"
               color={'scheme.dusty-rose'}
               fontWeight={'700'}
-              mb={1}
               iconColor="scheme.light-rose"
+              zIndex={10}
               defaultChecked={!isPublic}
               onChange={() => setFormData({ ...formData, isPublic: !isPublic })}
             >
               Private
             </Checkbox>
           </FormControl>
-        </Flex>
-        <CategoryDisplayImages displayImage={displayImage} />
+        <CategoryDisplaySingleImage displayImage={displayImage} />
         <Flex direction={'column'} alignItems="center">
-          <Divider borderColor="scheme.light-rose" width={'90%'} mt={4} />
+          <Divider borderColor="scheme.light-rose" width={'90%'}  />
         </Flex>
         <Flex pt={'16px'} justify={'space-around'}>
           <Tooltip label={'Save'} aria-label="save-edit-item">
             <IconButton
-              bg={'scheme.light-rose'}
+              bg={'transparent'}
               aria-label="Purchased"
               color={'scheme.dusty-rose'}
               icon={<FaCheck />}
@@ -135,7 +142,7 @@ const EditableCategoryCard = ({
           </Tooltip>
           <Tooltip label={'Cancel'} aria-label="cancel-edit-item">
             <IconButton
-              bg={'scheme.light-rose'}
+              bg={'transparent'}
               aria-label="Purchased"
               color={'scheme.dusty-rose'}
               icon={<FaArrowLeft />}

@@ -144,7 +144,7 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
         <Flex mt={2} justify="space-around">
           <Tooltip label={'Save'} aria-label="save-edit-item">
             <IconButton
-              bg={'scheme.bg-green-blue'}
+              bg={'transparent'}
               aria-label="Purchased"
               color={'scheme.main-green-blue'}
               icon={<FaCheck />}
@@ -157,7 +157,7 @@ const ProductCardEdit: React.FC<ProductCardEditProps> = ({
           </Tooltip>
           <Tooltip label={'Cancel'} aria-label="cancel-edit-item">
             <IconButton
-              bg={'scheme.bg-green-blue'}
+              bg={'transparent'}
               aria-label="Purchased"
               color={'scheme.main-green-blue'}
               icon={<FaArrowLeft />}

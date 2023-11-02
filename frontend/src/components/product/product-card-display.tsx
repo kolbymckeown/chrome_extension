@@ -74,7 +74,7 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
           border={'transparent'}
           allowToggle
           zIndex={10}
-          onClick={() => setOptionsOpen(!optionsOpen)}
+        
         >
           <AccordionItem>
             <h2>
@@ -82,6 +82,7 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
                 _hover={{
                   backgroundColor: 'transparent',
                 }}
+                onClick={() => setOptionsOpen(!optionsOpen)}
               >
                 <HamburgerIcon color={'scheme.main-green-blue'} />
               </AccordionButton>
