@@ -140,7 +140,6 @@ export const AddCategory = ({ variant = 'button' }) => {
             <ModalFooter>
               <Button
                 type="submit"
-                type="submit"
                 color="scheme.dusty-rose"
                 borderColor="scheme.dusty-rose"
                 borderWidth={1}
