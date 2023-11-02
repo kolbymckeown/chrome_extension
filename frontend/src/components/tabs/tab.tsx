@@ -18,14 +18,12 @@ export const CategoryTab = ({ category, selected }: CategoryTabProps) => {
       bg={!selected ? 'scheme.light-rose' : 'scheme.dusty-rose'}
       color={!selected ? 'scheme.dusty-rose' : 'scheme.light-rose'}
       textShadow={`2px 2px ${!selected ? '#e5ebe7' : '#4c8d99'}`}
-      // borderBottom={`2px solid #c96a6c`}
       _hover={{
         backgroundColor: 'scheme.dusty-rose',
         color: 'scheme.light-rose',
         textShadow: '2px 2px #4c8d99',
         boxShadow: '8px 0px #4c8d99',
       }}
-      // boxShadow={`4px 4px ${!selected ? '#c96a6c' : ' #c96a6c'}`}
       onClick={() => navigate('/category/' + category.id)}
       borderRadius={'0px 0px 5px 5px'}
       boxShadow={selected ? '8px 0px #4c8d99' : ''}

@@ -9,7 +9,7 @@ export const CategoryTabs = () => {
   const { categoryId = '' } = useParams();
 
   return (
-    <Flex w="100%" bg={'scheme.light-rose'}>
+    <Flex w="100%" bg={'scheme.light-rose'} overflow={'scroll'}>
       {categories?.map((category: any) => (
         <CategoryTab
           category={category}
