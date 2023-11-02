@@ -74,7 +74,8 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
           border={'transparent'}
           allowToggle
           zIndex={10}
-        
+          borderRadius={'0px 0px 10px 0px'}
+          bg={'white'}
         >
           <AccordionItem>
             <h2>
