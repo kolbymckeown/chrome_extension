@@ -23,28 +23,28 @@ export default function ProductDisplayCase() {
   return (
     <Box>
       <CategoryTabs />
-    <Box p={5}>
-      <Text
-        fontSize="4xl"
-        textAlign={'center'}
-        fontWeight={'700'}
-        color={'scheme.main-green-blue'}
-        textShadow={'2px 2px #ead2ce'}
-      >
-        {selectedCategory?.title}
-      </Text>
+      <Box p={5}>
+        <Text
+          fontSize="4xl"
+          textAlign={'center'}
+          fontWeight={'700'}
+          color={'scheme.main-green-blue'}
+          textShadow={'2px 2px #ead2ce'}
+        >
+          {selectedCategory?.title}
+        </Text>
 
-      {itemsList.length !== 0 ? (
-        <Flex wrap="wrap">
-          {categoryId &&
-            itemsList?.map((item: CartItem) => (
-              <ProductCard item={item} key={item.id} />
-            ))}
-        </Flex>
-      ) : (
-        <Heading>No items in this category</Heading>
-      )}
-    </Box>
+        {itemsList.length !== 0 ? (
+          <Flex wrap="wrap">
+            {categoryId &&
+              itemsList?.map((item: CartItem) => (
+                <ProductCard item={item} key={item.id} />
+              ))}
+          </Flex>
+        ) : (
+          <Heading>No items in this category</Heading>
+        )}
+      </Box>
     </Box>
   );
 }
