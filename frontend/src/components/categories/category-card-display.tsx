@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   Box,
@@ -31,6 +31,7 @@ interface DisplayCategoryCardProps {
   displayImage: string;
   categoryId: number | undefined;
   setIsEditing: (value: boolean) => void;
+  imagesForCategory: string[];
 }
 
 const DisplayCategoryCard = ({
@@ -39,14 +40,17 @@ const DisplayCategoryCard = ({
   displayImage,
   categoryId,
   setIsEditing,
+  imagesForCategory,
 }: DisplayCategoryCardProps) => {
-  const [isModalOpen, setModalIsOpen] = React.useState(false);
+  const [isModalOpen, setModalIsOpen] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
   const { mutate: deleteCategory } = useMutation(`categories`, {
     type: 'DELETE',
     query: { categoryId },
   });
+  const [isHovering, setIsHovering] = useState(false);
+
   const items = useSelector(selectItems);
   const totalCategoryValue = items
     .filter((item) => item.categoryId === categoryId)
@@ -83,6 +87,8 @@ const DisplayCategoryCard = ({
       boxShadow={'none'}
       width={'300px'}
       position="relative"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
       <Accordion
         position={'absolute'}
@@ -137,80 +143,91 @@ const DisplayCategoryCard = ({
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-      <Link to={`/category/${categoryId}`}>
-        {/* private badge */}
-        {!isPublic && (
-          <Badge
-            borderRadius="7px 0px 7px 0px"
-            position="absolute"
-            color="scheme.dusty-rose"
-            backgroundColor={'scheme.light-rose'}
-          >
-            Private
-          </Badge>
-        )}
-        <Flex alignItems="center" flexDirection="column">
-          <CategoryDisplayImages displayImage={displayImage} />
-          <Text
-            fontSize="2xl"
-            fontWeight="bold"
-            color="#4c8d99"
-            lineHeight="1.25"
-            maxHeight="2.5em"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="normal"
-            display="-webkit-box"
-            style={{
-              WebkitLineClamp: 1,
-              WebkitBoxOrient: 'vertical',
-            }}
-            pb={1}
-            position={'absolute'}
-            top={'40%'}
-            textShadow={'2px 2px #e5ebe7'}
-            w={'fit-content'}
-            px={2}
-            textAlign={'center'}
-            bg={'scheme.light-rose'}
-          >
-            {title}
-          </Text>
+
+      {/* private badge */}
+      {!isPublic && (
+        <Badge
+          borderRadius="7px 0px 7px 0px"
+          position="absolute"
+          color="scheme.dusty-rose"
+          top={0}
+          right={0}
+          backgroundColor={'scheme.light-rose'}
+        >
+          Private
+        </Badge>
+      )}
+      <Flex alignItems="center" flexDirection="column" mt={7}>
+        <Text
+          fontSize="2xl"
+          fontWeight="bold"
+          color="#4c8d99"
+          lineHeight="1.25"
+          maxHeight="2.5em"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          whiteSpace="normal"
+          display="-webkit-box"
+          style={{
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: 'vertical',
+          }}
+          pb={1}
+          top={'40%'}
+          textShadow={'2px 2px #e5ebe7'}
+          borderRadius="lg"
+          w={'fit-content'}
+          px={2}
+          textAlign={'center'}
+          bg={'scheme.light-rose'}
+          position="absolute"
+          zIndex={1}
+          left={'50%'}
+          transform={'translateX(-50%)'}
+          // when isHovering is true, lets make the title transparent
+          opacity={isHovering ? 0 : 1}
+          transition={'opacity 0.25s ease-in-out'}
+        >
+          <Link to={`/category/${categoryId}`}>{title}</Link>
+        </Text>
+        <CategoryDisplayImages
+          imagesForCategory={imagesForCategory}
+          categoryId={categoryId}
+        />
+      </Flex>
+      <Flex alignItems="center" direction={'column'}>
+        <Divider borderColor="scheme.light-rose" width={'80%'} />
+        <Flex alignItems={'center'}>
+          <Box position="relative" right="40px">
+            <FaCaretLeft color="#c96a6c" size="65px" />
+          </Box>
+          <Tooltip label="Cart Value" aria-label="Total Spent">
+            <Text
+              display={'inline-block'}
+              width={'105px'}
+              h={'38px'}
+              bg={'scheme.dusty-rose'}
+              borderRadius={'3px 4px 4px 3px'}
+              boxShadow={'3px 3px pink'}
+              position={'absolute'}
+              color={'white'}
+              fontWeight={'300'}
+              right={'77px'}
+              fontSize={'large'}
+              lineHeight={'38px'}
+              p={'0px 10px 0px 10px'}
+              style={{
+                // @ts-ignore
+                textWrap: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {formatCurrency(totalCategoryValue) || '$0'}
+            </Text>
+          </Tooltip>
         </Flex>
-        <Flex alignItems="center" direction={'column'}>
-          <Divider borderColor="scheme.light-rose" width={'80%'} />
-          <Flex alignItems={'center'}>
-            <Box position="relative" right="40px">
-              <FaCaretLeft color="#c96a6c" size="65px" />
-            </Box>
-            <Tooltip label="Cart Value" aria-label="Total Spent">
-              <Text
-                display={'inline-block'}
-                width={'105px'}
-                h={'38px'}
-                bg={'scheme.dusty-rose'}
-                borderRadius={'3px 4px 4px 3px'}
-                boxShadow={'3px 3px pink'}
-                position={'absolute'}
-                color={'scheme.light-rose'}
-                fontWeight={'300'}
-                right={'77px'}
-                fontSize={'large'}
-                lineHeight={'38px'}
-                p={'0px 10px 0px 10px'}
-                style={{
-                  // @ts-ignore
-                  textWrap: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {formatCurrency(totalCategoryValue) || '$0'}
-              </Text>
-            </Tooltip>
-          </Flex>
-        </Flex>
-      </Link>
+      </Flex>
     </Box>
   );
 };

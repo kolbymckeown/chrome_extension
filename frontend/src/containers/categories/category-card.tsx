@@ -33,6 +33,10 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
   }
 
   const displayImage = getFirstImageByCategoryId(items, +categoryId);
+  const imagesForCategory = items
+    .filter((item: CartItem) => item.categoryId === categoryId)
+    .map((item: CartItem) => item.image);
+
   return (
     <Box
       maxW="sm"
@@ -49,6 +53,7 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
           categoryId={categoryId}
           isPublic={isPublic}
           setIsEditing={setIsEditing}
+          imagesForCategory={imagesForCategory}
         />
       ) : (
         <EditableCategoryCard
