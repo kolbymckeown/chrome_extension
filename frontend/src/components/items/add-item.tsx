@@ -57,6 +57,7 @@ export const AddItem = ({ variant = 'button' }) => {
       quantity: 1,
       purchased: false,
       store: '',
+      url: '',
     },
   });
 
@@ -127,7 +128,7 @@ export const AddItem = ({ variant = 'button' }) => {
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Title</FormLabel>
                 <Controller
                   name="title"
@@ -135,7 +136,7 @@ export const AddItem = ({ variant = 'button' }) => {
                   render={({ field }) => <Input {...field} />}
                 />
               </FormControl>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Store</FormLabel>
                 <Controller
                   name="store"
@@ -143,19 +144,27 @@ export const AddItem = ({ variant = 'button' }) => {
                   render={({ field }) => <Input {...field} />}
                 />
               </FormControl>
-              <FormControl mt={4}>
+
+              <FormControl mt={4} isRequired>
                 <FormLabel>Price</FormLabel>
                 <Controller
                   name="price"
                   control={control}
                   render={({ field }) => (
                     <NumberInput>
-                      <NumberInputField {...field} />
+                      <NumberInputField {...field} placeholder="$" />
                     </NumberInput>
                   )}
                 />
               </FormControl>
-
+              <FormControl>
+                <FormLabel>Product URL</FormLabel>
+                <Controller
+                  name="url"
+                  control={control}
+                  render={({ field }) => <Input {...field} />}
+                />
+              </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Description</FormLabel>
                 <Controller
@@ -172,7 +181,7 @@ export const AddItem = ({ variant = 'button' }) => {
                   render={({ field }) => <Input {...field} />}
                 />
               </FormControl>
-              <FormControl mt={4}>
+              <FormControl mt={4} isRequired>
                 <FormLabel>Category</FormLabel>
                 <Controller
                   name="categoryId"
@@ -211,10 +220,18 @@ export const AddItem = ({ variant = 'button' }) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="red" mr={3} onClick={() => setIsOpen(false)}>
-                Close
-              </Button>
-              <Button type="submit" colorScheme="green">
+              <Button
+                type="submit"
+                color="scheme.dusty-rose"
+                borderColor="scheme.dusty-rose"
+                borderWidth={1}
+                bg="white"
+                _hover={{
+                  bg: 'scheme.dusty-rose',
+                  color: 'white',
+                }}
+                boxShadow="3px 3px pink"
+              >
                 Save
               </Button>
             </ModalFooter>

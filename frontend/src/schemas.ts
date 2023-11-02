@@ -9,4 +9,5 @@ export const cartItemSchema = Yup.object().shape({
   quantity: Yup.number(),
   purchased: Yup.boolean().required('Required'),
   store: Yup.string().max(250, 'Max length is 100').required('Required'),
+  url: Yup.string(),
 });
