@@ -81,7 +81,7 @@ const EditableCategoryCard = ({
       <form onSubmit={handleEdit} style={{
         position: 'relative',
       }}>
-        <Flex direction={'column'} width={'140px'} position={'absolute'} top={'32%'} left={'23%'} style={{
+        <Flex direction={'column'} width={'140px'} position={'absolute'} top={'134px'} left={'23%'} style={{
           textAlignLast: 'center',
         }} zIndex={10} bg={'scheme.light-rose'}>
           <FormControl>
@@ -129,7 +129,7 @@ const EditableCategoryCard = ({
         <Flex direction={'column'} alignItems="center">
           <Divider borderColor="scheme.light-rose" width={'90%'}  />
         </Flex>
-        <Flex pt={'16px'} justify={'space-around'}>
+        <Flex py={'8px'} justify={'space-around'}>
           <Tooltip label={'Save'} aria-label="save-edit-item">
             <IconButton
               bg={'transparent'}

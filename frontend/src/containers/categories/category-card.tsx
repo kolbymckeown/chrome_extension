@@ -40,6 +40,7 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
   return (
     <Box
       maxW="sm"
+h={'350px'}
       border="1px solid"
       borderColor="scheme.dusty-rose"
       borderRadius="lg"
