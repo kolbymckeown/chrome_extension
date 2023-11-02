@@ -22,7 +22,7 @@ const ImageWithFallback = ({
       onError={() => setImageError(true)}
       h={h}
       w={w}
-      objectFit={'cover'}
+      objectFit={'contain'}
     />
   );
 };
