@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartItems } from '@/redux/slices/items.slice';
 import { fetchCategories } from '@/redux/slices/category.slice';
 import { selectUser, userLoading } from '@/redux/slices/user.slice';
-import DisplayCase from '@/containers/categories/display-case';
 import { Layout } from '@/components/layout';
-import CategoryPage from './category';
 import NotFound from './404page';
 import RegisterPage from './login';
 import LandingPage from '@/components/landing-page';
 import { RouteObject, useRoutes } from 'react-router-dom';
 import LoadingScreen from './Loading';
 import { AppDispatch } from '@/redux/store';
+import ProductDisplayCase from '@/containers/product/product-display-case';
+import CategoryDisplayCase from '@/containers/categories/category-display-case';
 
 export default function Home() {
   const user = useSelector(selectUser);
@@ -34,7 +34,7 @@ export default function Home() {
           {
             index: true,
             element: user?.email ? (
-              <DisplayCase />
+              <CategoryDisplayCase />
             ) : userIsLoading ? (
               <LoadingScreen />
             ) : (
@@ -44,7 +44,7 @@ export default function Home() {
           {
             path: `category/:categoryId`,
             element: user?.email ? (
-              <CategoryPage />
+              <ProductDisplayCase />
             ) : userIsLoading ? (
               <LoadingScreen />
             ) : (

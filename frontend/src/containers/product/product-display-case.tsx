@@ -2,11 +2,12 @@ import { CartItem } from '@/types/item';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
 import { useSelector } from 'react-redux';
-import { ProductCard } from '../containers/product/product-card';
+import { ProductCard } from './product-card';
 import { useParams } from 'react-router-dom';
 import { selectItems } from '@/redux/slices/items.slice';
+import { CategoryTabs } from '@/components/tabs/tabs';
 
-export default function CategoryPage() {
+export default function ProductDisplayCase() {
   const { categoryId } = useParams();
 
   const items = useSelector(selectItems);
@@ -20,6 +21,8 @@ export default function CategoryPage() {
     )
   );
   return (
+    <Box>
+      <CategoryTabs />
     <Box p={5}>
       <Text
         fontSize="4xl"
@@ -41,6 +44,7 @@ export default function CategoryPage() {
       ) : (
         <Heading>No items in this category</Heading>
       )}
+    </Box>
     </Box>
   );
 }
