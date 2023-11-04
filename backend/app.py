@@ -12,7 +12,7 @@ from routes.categories.controller import CategoryResource
 
 # Convert the list of whitelisted origins to a list with stripped elements
 WHITELIST_ORIGINS = [x.strip() for x in os.environ['WHITE_ORIGIN'].split(
-    ',')] if 'WHITE_ORIGIN' in os.environ else ["http://localhost:3000"]
+    ',')] if 'WHITE_ORIGIN' in os.environ else ["http://localhost:3000", "https://chrome-extension-dusky.vercel.app"]
 
 cors = CORS(app, resources={r"*": {"origins": WHITELIST_ORIGINS}})
 
