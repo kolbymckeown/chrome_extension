@@ -44,7 +44,12 @@ const Footer = () => {
       justify={'center'}
     >
       <Link href="/">
-        <Image w="100px" src="/genius-logo.png" alt="Genius Logo" />
+        <Image
+          w="100px"
+          h="40px"
+          src="/genius-modern-dark.png"
+          alt="Genius Logo"
+        />
       </Link>
 
       <HStack
