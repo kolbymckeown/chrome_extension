@@ -12,6 +12,7 @@ import LoadingScreen from './Loading';
 import { AppDispatch } from '@/redux/store';
 import ProductDisplayCase from '@/containers/product/product-display-case';
 import CategoryDisplayCase from '@/containers/categories/category-display-case';
+import TermsAndConditions from '@/containers/terms/terms';
 
 export default function Home() {
   const user = useSelector(selectUser);
@@ -54,6 +55,10 @@ export default function Home() {
           {
             path: 'session/login',
             element: <RegisterPage />,
+          },
+          {
+            path: 'session/terms',
+            element: <TermsAndConditions />,
           },
           {
             path: '*',
