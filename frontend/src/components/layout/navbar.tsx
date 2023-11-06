@@ -50,8 +50,8 @@ export default function Navbar() {
           <Link to="/">
             <Image
               w="150px"
-              h="50px"
-              src="/genius_white.png"
+              h="60px"
+              src="/genius-modern.png"
               alt="Genius Logo"
             />
           </Link>

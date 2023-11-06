@@ -56,9 +56,9 @@ export default function RegisterPage() {
     >
       <Flex flex={1}>
         <Image
-          alt="shopping bag"
           objectFit="contain"
-          src="/genius_main_green_blue.png"
+          src="/genius-modern-dark.png"
+          alt="Genius Logo"
         />
       </Flex>
       <Flex

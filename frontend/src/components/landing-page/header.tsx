@@ -10,7 +10,7 @@ export default function LandingHeader() {
       w="100%"
       alignItems="center"
     >
-      <Image w="150px" h="50px" src="/genius-logo.png" alt="Genius Logo" />
+      <Image w="150px" h="50px" src="/genius-modern.png" alt="Genius Logo" />
 
       <Link
         as={NextLink}
