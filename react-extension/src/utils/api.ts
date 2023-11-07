@@ -80,8 +80,9 @@ export async function asynchrounousRequest(
 		const queryString = formatQueryString(query);
 		const requestHeaders = await getRequestHeaders({ type, body });
 
+		// Switch this to localhost:5000 when developing locally
 		const response = await fetch(
-			`${process.env.REACT_APP_BACKEND_URL}/${request}${queryString}`,
+			`https://chrome-extension-backend-uapu.onrender.com/${request}${queryString}`,
 			requestHeaders
 		);
 

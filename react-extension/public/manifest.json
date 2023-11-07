@@ -23,5 +23,5 @@
 	],
 	"devtools_page": "index.html",
 	"permissions": ["tabs", "activeTab", "cookies"],
-	"host_permissions": ["http://localhost/*", "https://localhost/*"]
+	"host_permissions": ["http://localhost/*", "https://localhost/*", "https://chrome-extension-dusky.vercel.app/*", "https://www.chrome-extension-dusky.vercel.app/*"]
 }
