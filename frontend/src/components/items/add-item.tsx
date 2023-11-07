@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import {
   Flex,
   Button,
@@ -15,7 +14,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   NumberInput,
   NumberInputField,
   Select,
@@ -25,7 +23,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 
-import useQuery, { useMutation } from '@/hooks/use-query';
+import { useMutation } from '@/hooks/use-query';
 import { cartItemSchema } from '@/schemas';
 import { FaCartPlus } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,23 +42,25 @@ export const AddItem = ({ variant = 'button' }) => {
   } = useMutation(`cart-item`, {
     type: 'POST',
   });
-
   const categories = useSelector(selectCategories);
+
+  const defaultValues = {
+    title: '',
+    price: 0,
+    description: '',
+    image: '',
+    quantity: 1,
+    purchased: false,
+    store: '',
+    url: '',
+    categoryId: categories[0]?.id,
+  };
 
   const { handleSubmit, control, reset } = useForm({
     resolver: yupResolver(cartItemSchema),
-    defaultValues: {
-      title: '',
-      price: 0,
-      description: '',
-      image: '',
-      quantity: 1,
-      purchased: false,
-      store: '',
-      url: '',
-    },
+    defaultValues,
   });
-
+  console.log(defaultValues);
   const onSubmit = (data: any) => {
     addItem(
       { ...data },
