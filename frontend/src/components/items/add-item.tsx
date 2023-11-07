@@ -60,7 +60,7 @@ export const AddItem = ({ variant = 'button' }) => {
     resolver: yupResolver(cartItemSchema),
     defaultValues,
   });
-  console.log(defaultValues);
+
   const onSubmit = (data: any) => {
     addItem(
       { ...data },
