@@ -5,7 +5,7 @@ import { Center, Spinner } from '@chakra-ui/react';
 const LoadingScreen = () => {
   return (
     <Center h="100vh">
-      <Spinner size="xl" color="teal.500" />
+      <Spinner size="xl" color="teal.500" thickness="5px" />
     </Center>
   );
 };
