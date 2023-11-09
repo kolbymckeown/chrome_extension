@@ -70,7 +70,10 @@ export default function ImageSlider({
         transform={'translate(0%, -50%)'}
         zIndex={5}
         size="xs"
-        onClick={() => slider?.slickPrev()}
+        onClick={(e) => {
+          e.preventDefault();
+          slider?.slickPrev();
+        }}
       >
         <BiLeftArrowAlt color="#c96a6c" size={20} />
       </IconButton>
@@ -86,7 +89,10 @@ export default function ImageSlider({
         transform={'translate(0%, -50%)'}
         zIndex={5}
         size="xs"
-        onClick={() => slider?.slickNext()}
+        onClick={(e) => {
+          e.preventDefault();
+          slider?.slickNext();
+        }}
       >
         <BiRightArrowAlt color="#c96a6c" size={20} />
       </IconButton>

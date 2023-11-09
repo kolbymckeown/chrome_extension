@@ -12,7 +12,6 @@ import {
   AccordionItem,
   AccordionPanel,
   AccordionButton,
-
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon, HamburgerIcon } from '@chakra-ui/icons';
 import ConfirmationModal from '../helpers/confirmation-modal';
@@ -159,43 +158,45 @@ const DisplayCategoryCard = ({
           Private
         </Badge>
       )}
-      <Flex alignItems="center" flexDirection="column" mt={7}>
-        <Text
-          fontSize="2xl"
-          fontWeight="bold"
-          color="#4c8d99"
-          lineHeight="1.25"
-          maxHeight="2.5em"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          whiteSpace="normal"
-          display="-webkit-box"
-          style={{
-            WebkitLineClamp: 1,
-            WebkitBoxOrient: 'vertical',
-          }}
-          pb={1}
-          top={'40%'}
-          textShadow={'2px 2px #e5ebe7'}
-          w={'fit-content'}
-          px={2}
-          textAlign={'center'}
-          bg={'scheme.light-rose'}
-          position="absolute"
-          zIndex={1}
-          left={'50%'}
-          transform={'translateX(-50%)'}
-          // when isHovering is true, lets make the title transparent
-          opacity={isHovering ? 0 : 1}
-          transition={'opacity 0.25s ease-in-out'}
-        >
-          <Link to={`/category/${categoryId}`}>{title}</Link>
-        </Text>
-        <CategoryDisplayImages
-          imagesForCategory={imagesForCategory}
-          categoryId={categoryId}
-        />
-      </Flex>
+      <Link to={`/category/${categoryId}`}>
+        <Flex alignItems="center" flexDirection="column" mt={7}>
+          <Text
+            fontSize="2xl"
+            fontWeight="bold"
+            color="#4c8d99"
+            lineHeight="1.25"
+            maxHeight="2.5em"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="normal"
+            display="-webkit-box"
+            style={{
+              WebkitLineClamp: 1,
+              WebkitBoxOrient: 'vertical',
+            }}
+            pb={1}
+            top={'40%'}
+            textShadow={'2px 2px #e5ebe7'}
+            w={'fit-content'}
+            px={2}
+            textAlign={'center'}
+            bg={'scheme.light-rose'}
+            position="absolute"
+            zIndex={1}
+            left={'50%'}
+            transform={'translateX(-50%)'}
+            // when isHovering is true, lets make the title transparent
+            opacity={isHovering ? 0 : 1}
+            transition={'opacity 0.25s ease-in-out'}
+          >
+            {title}
+          </Text>
+          <CategoryDisplayImages
+            imagesForCategory={imagesForCategory}
+            categoryId={categoryId}
+          />
+        </Flex>
+      </Link>
       <Flex alignItems="center" direction={'column'}>
         <Divider borderColor="scheme.light-rose" width={'80%'} />
         <Flex alignItems={'center'}>
