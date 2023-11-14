@@ -1,26 +1,27 @@
 import { Box, Flex, Image } from '@chakra-ui/react';
-import LandingHeader from './header';
 import CenteredHero from './centered-hero';
 import InfoSection from './info-section';
 
 const mockData = [
   {
-    imageUrl: 'https://spatium.earth/feature.cfdac386.png',
-    imageAlt: 'Description for image 1',
-    title: 'Title 1',
-    description: 'This is the description for item 1.',
+    imageUrl: 'adidas_screenshot.png',
+    imageAlt: 'Adidas site screenshot',
+    title: 'Shop popular brands - add to your wishlist',
+    description:
+      'One click opens our extension and opens the product info form.',
   },
   {
-    imageUrl: 'https://spatium.earth/sun-widget.460c42bc.png',
-    imageAlt: 'Description for image 2',
-    title: 'Title 2',
-    description: 'This is the description for item 2.',
+    imageUrl: 'apple_screenshot.png',
+    imageAlt: 'Apple site screenshot',
+    title: 'Pulls in product info',
+    description: 'Takes relavent information and displays in editable form.',
   },
   {
-    imageUrl: 'https://spatium.earth/moon-widget.460a1bed.png',
+    imageUrl: 'product_screenshot.png',
     imageAlt: 'Description for image 3',
-    title: 'Title 3',
-    description: 'This is the description for item 3.',
+    title: 'Checkout your wishlist in your organized categories',
+    description:
+      'View your wishlist in a clean and organized way. Create categories, make them private just for you, or share them with friends and family.',
   },
 ];
 
@@ -30,13 +31,14 @@ export default function LandingPage() {
       direction="column"
       minH="100vh"
       bgGradient="linear(to-b, #c96a6c, #4c8d99)"
+      pb={10}
     >
       {/* <LandingHeader /> */}
       <CenteredHero />
       {/* TODO: Replace with usage photos */}
       <Box mx="auto" mt={10} overflow={'hidden'}>
         <Image
-          src="https://spatium.earth/03.608fd791.jpg"
+          src="category_screenshot.png"
           alt="Placeholder Image"
           width={'80%'}
           maxWidth="1200px"

@@ -46,8 +46,8 @@ export default function InfoSection({
         <Image
           src={imageUrl}
           alt={imageAlt}
-          width="425px"
-          height="300px"
+          minWidth="425px"
+          minHeight="300px"
           mx={{ base: 'auto', sm: '0' }}
         />
       </Box>
