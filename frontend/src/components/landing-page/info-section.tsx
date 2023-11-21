@@ -61,7 +61,17 @@ export default function InfoSection({
         <Text mt={2} fontSize="xl">
           {description}
         </Text>
-        <Button mt={2} rounded="3xl" colorScheme="accent">
+        <Button
+          mt={2}
+          rounded="3xl"
+          colorScheme="accent"
+          onClick={() =>
+            window.open(
+              'https://chromewebstore.google.com/detail/genius-chrome-extension/eieaglbljagkphoonaibnoeapaiglegl?hl=en&pli=1',
+              '_blank'
+            )
+          }
+        >
           <Flex alignItems="center">
             <AiOutlinePlus />
             <Text ml={2}>Add To Chrome</Text>

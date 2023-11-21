@@ -34,12 +34,21 @@ export default function CenteredHero() {
         }}
       >
         {/* TODO: add to chrome link */}
-        <Link to="/session/login">
-          <Button colorScheme="accent" textTransform="uppercase">
-            <Icon as={FaChrome} mr={2} />
-            Add to chrome - it's free
-          </Button>
-        </Link>
+        {/* <Link to="https://chromewebstore.google.com/detail/genius-chrome-extension/eieaglbljagkphoonaibnoeapaiglegl?hl=en&pli=1"> */}
+        <Button
+          colorScheme="accent"
+          textTransform="uppercase"
+          onClick={() =>
+            window.open(
+              'https://chromewebstore.google.com/detail/genius-chrome-extension/eieaglbljagkphoonaibnoeapaiglegl?hl=en&pli=1',
+              '_blank'
+            )
+          }
+        >
+          <Icon as={FaChrome} mr={2} />
+          Add to chrome - it's free
+        </Button>
+        {/* </Link> */}
       </Flex>
     </Flex>
   );
