@@ -240,11 +240,11 @@ const WishlistForm = ({
 						}}
 						boxShadow="3px 3px pink"
 						onClick={() => {
-							const home = `${process.env.REACT_APP_FRONTEND_URL}`;
+							const home = `https://chrome-extension-dusky.vercel.app/`;
 							window.open(home, "_blank");
 						}}
 					>
-						Visit Genie
+						Visit Genius
 					</Button>
 				</Flex>
 			</form>
