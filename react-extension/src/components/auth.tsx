@@ -1,15 +1,10 @@
 import React from "react";
-import { Flex, Button, Text, VStack } from "@chakra-ui/react";
+import { Flex, Button, VStack, Image } from "@chakra-ui/react";
 
 export default function Auth() {
 	const handleLogin = () => {
-		const loginUrl = `${process.env.REACT_APP_FRONTEND_URL}/session/login`;
+		const loginUrl = `https://chrome-extension-dusky.vercel.app/session/login`;
 		window.open(loginUrl, "_blank");
-	};
-
-	const handleSignUp = () => {
-		const signUpUrl = `${process.env.REACT_APP_FRONTEND_URL}/session/register`;
-		window.open(signUpUrl, "_blank");
 	};
 
 	return (
@@ -18,18 +13,19 @@ export default function Auth() {
 			alignItems="center"
 			justifyContent="center"
 			width="100%"
-			height="100%"
+			height="100vh"
 			padding="1rem"
 		>
-			<Text fontSize="2xl" fontWeight="bold" marginBottom="1rem">
-				Welcome
-			</Text>
+      <Image
+        w="100px"
+        h="40px"
+        src="/genius-modern-dark.png"
+        alt="Genius Logo"
+        mb={'10px'}
+      />
 			<VStack spacing={4} width="100%">
-				<Button colorScheme="primary" width="100%" onClick={handleLogin}>
+				<Button width="100%" onClick={handleLogin} textShadow={'3px 3px #ead2ce'} color="scheme.dusty-rose">
 					Login
-				</Button>
-				<Button colorScheme="accent" width="100%" onClick={handleSignUp}>
-					Sign Up
 				</Button>
 			</VStack>
 		</Flex>
