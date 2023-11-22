@@ -105,7 +105,7 @@ const App = () => {
 			}
 		>
 			<ChakraProvider theme={theme}>
-				<Flex justifyContent="center" alignItems="center" h={'100vh'}>
+				<Flex justifyContent="center" alignItems="center">
 					{isLoading ? (
 						<Spinner
 							thickness="4px"
