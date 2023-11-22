@@ -32,6 +32,7 @@ export type Categories = {
 };
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [responseFromContent, setResponseFromContent] = useState<Product>({
 		url: "",
 		store: "",
@@ -41,9 +42,9 @@ const App = () => {
 		description: "",
 	});
 
+
 	const {
 		data: categories,
-		isLoading,
 		isError,
 	} = useQuery<Categories>(`categories`, {
 		query: { categoryId: "all" },
@@ -56,6 +57,7 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
+    setIsLoading(true)
 		// Check if running in a Chrome extension context
 		if (chrome && chrome.cookies) {
 			// Get all cookies
@@ -76,6 +78,7 @@ const App = () => {
 				}
 			});
 		}
+    setIsLoading(false)
 	}, []);
 
 	const getProductOnClick = () => {
