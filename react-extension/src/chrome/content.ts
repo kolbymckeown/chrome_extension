@@ -26,7 +26,6 @@ const messagesFromReactAppListener = (
 
 	if (isValidated) {
 		let product: Product = {};
-    console.log('WHY???', document.images)
 
 		// Fetching product title from the page
 		let productName = document.querySelector("h1")?.innerText;
@@ -137,7 +136,6 @@ const messagesFromReactAppListener = (
 
 const main = () => {
 	console.log("[content.ts] Main");
-  console.log('document.images', document.images)
 	/**
 	 * Fired when a message is sent from either an extension process or a content script.
 	 */
