@@ -116,7 +116,7 @@ const messagesFromReactAppListener = (
 		const imgGetter = (): string | undefined => {
 			// @ts-ignore
 			for (let image of document.images) {
-				if (image.height > 400 && !image.src.includes("LOADING")) {
+        if (image.height > 400 && !image.src.includes("LOADING")) {
 					return image.src;
 				}
 			}

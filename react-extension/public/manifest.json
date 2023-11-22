@@ -8,9 +8,6 @@
 		"default_title": "Genius",
 		"default_icon": "genie.png"
 	},
-	"options_ui": {
-		"page": "index.html"
-	},
 	"background": {
 		"service_worker": "./static/js/background.js"
 	},
