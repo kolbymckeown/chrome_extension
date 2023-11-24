@@ -26,9 +26,27 @@ const messagesFromReactAppListener = (
 
 	if (isValidated) {
 		let product: Product = {};
+		// Store Name
+		const storeName = (domain: string): string => {
+			let parts = domain.split(".");
+			if (parts[0] === "www") {
+				parts.shift();
+			}
+			const name = parts[0];
+			return name.charAt(0).toUpperCase() + name.slice(1);
+		};
 
+		product.store = storeName(window.location.hostname);
 		// Fetching product title from the page
+    // if store is amazon, productName should be the title of the product
+    // else, productName should be the h1 of the page
 		let productName = document.querySelector("h1")?.innerText;
+    if(product.store === "Amazon") {
+      const amazonProduct = document.querySelector("#productTitle") as HTMLHeadingElement;
+      if(amazonProduct) {
+        productName = amazonProduct.innerText;
+      }
+    }
 
 		// Fetching product price from the page
 		let priceSelectors: string[] = [
@@ -101,22 +119,22 @@ const messagesFromReactAppListener = (
 		let productUrl = window.location.href;
 		product.url = productUrl;
 
-		// Store Name
-		const storeName = (domain: string): string => {
-			let parts = domain.split(".");
-			if (parts[0] === "www") {
-				parts.shift();
-			}
-			const name = parts[0];
-			return name.charAt(0).toUpperCase() + name.slice(1);
-		};
-
-		product.store = storeName(window.location.hostname);
-
 		const imgGetter = (): string | undefined => {
-			// @ts-ignore
+			// check if store is amazon
+      if(product.store === "Amazon") {
+        const img = document.querySelector("#landingImage") as HTMLImageElement;
+        if(img) {
+          return img.src;
+        }
+      }
+      // @ts-ignore
 			for (let image of document.images) {
         if (image.height > 400 && !image.src.includes("LOADING")) {
+          // if image.src string is less than 40 characters, it's probably a placeholder image, so get the first image that's not a placeholder
+          if(image.src.length < 40) {
+            return image.srcset.split(" ")[0];
+          }
+
 					return image.src;
 				}
 			}
