@@ -6,6 +6,8 @@ import { CartItem } from '@/types/item';
 import { selectItems } from '@/redux/slices/items.slice';
 import { ProductCard } from './product-card';
 import { CategoryTabs } from '@/components/tabs/tabs';
+import { selectCategories } from '@/redux/slices/category.slice';
+import PublicItemsPage from './public-items';
 
 export default function ProductDisplayCase() {
   const { categoryId } = useParams();
@@ -15,6 +17,7 @@ export default function ProductDisplayCase() {
   let itemsList = items.filter(
     (item: CartItem) => item.categoryId === +categoryId!
   );
+  const categories = useSelector(selectCategories);
 
   const sortItems = (option: string) => {
     switch (option) {
@@ -44,6 +47,11 @@ export default function ProductDisplayCase() {
       (category: any) => category.id === +categoryId!
     )
   );
+
+  // if we have a logged in user and the id doesnt belong to them we show them the public route
+  if (!categories.some(({ id }) => id === +categoryId!)) {
+    return <PublicItemsPage />;
+  }
 
   return (
     <Box>
