@@ -8,17 +8,11 @@ import {
   LinkProps,
   Tooltip,
   Flex,
+  Icon,
+  Button,
 } from '@chakra-ui/react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaChrome, FaGithub, FaLinkedin } from 'react-icons/fa';
 
-// const links = [
-//   'Blog',
-//   'Documentation',
-//   'Careers',
-//   'Sign up',
-//   'Terms of use',
-//   'Privacy policy',
-// ];
 const accounts = [
   {
     url: 'https://github.com/noahnovickf',
@@ -27,22 +21,49 @@ const accounts = [
     icon: <FaGithub />,
   },
   {
+    url: 'https://www.linkedin.com/in/noah-novick-821837186/',
+    label: 'LinkedIn Account - Noah Novick',
+    type: 'blue',
+    icon: <FaLinkedin />,
+  },
+  {
     url: 'https://github.com/kolbymckeown',
     label: 'Github Account - Kolby McKeown',
     type: 'gray',
     icon: <FaGithub />,
+  },
+  {
+    url: 'https://www.linkedin.com/in/kolbymckeown/',
+    label: 'LinkedIn Account - Kolby McKeown',
+    type: 'blue',
+    icon: <FaLinkedin />,
   },
 ];
 
 const Footer = () => {
   return (
     <Stack
-      maxW="5xl"
+      as="footer"
+      maxW="7xl"
       marginInline="auto"
       p={8}
       direction={{ base: 'column', md: 'row' }}
-      justify={'center'}
+      justify={'space-between'}
     >
+      <Button
+        ml={5}
+        colorScheme="accent"
+        textTransform="uppercase"
+        onClick={() =>
+          window.open(
+            'https://chromewebstore.google.com/detail/genius-chrome-extension/eieaglbljagkphoonaibnoeapaiglegl?hl=en&pli=1',
+            '_blank'
+          )
+        }
+      >
+        <Icon as={FaChrome} mr={2} />
+        Add to chrome - it's free
+      </Button>
       <Link href="/">
         <Image
           w="100px"
@@ -57,7 +78,6 @@ const Footer = () => {
         spacing={5}
         alignItems="center"
         justifySelf="flex-end"
-        position={'absolute'}
         right={'10'}
       >
         {accounts.map((sc, index) => (

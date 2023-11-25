@@ -49,6 +49,7 @@ export default function Navbar() {
         <HStack spacing={8} alignItems="center">
           <Link to="/">
             <Image
+              ml={5}
               w="150px"
               h="60px"
               src="/genius-modern.png"
