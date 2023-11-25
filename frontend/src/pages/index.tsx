@@ -50,8 +50,12 @@ export default function Home() {
             ) : userIsLoading ? (
               <LoadingScreen />
             ) : (
-              <PublicItemsPage />
+              <RegisterPage />
             ),
+          },
+          {
+            path: 'public/:categoryId',
+            element: <PublicItemsPage />,
           },
           {
             path: 'session/login',
