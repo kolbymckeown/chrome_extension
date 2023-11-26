@@ -21,6 +21,7 @@
 		"@types/node": "20.6.0",
 		"@types/react": "18.2.21",
 		"@types/react-dom": "18.2.7",
+		"copy-to-clipboard": "^3.3.3",
 		"eslint": "8.49.0",
 		"eslint-config-next": "13.4.19",
 		"firebase": "^9.19.1",
@@ -39,6 +40,6 @@
 	},
 	"devDependencies": {
 		"@types/react-slick": "^0.23.11",
-    "prettier": "^2.8.8"
+		"prettier": "^2.8.8"
 	}
 }

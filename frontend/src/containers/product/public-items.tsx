@@ -1,11 +1,12 @@
 import useQuery from '@/hooks/use-query';
 import { CartItem } from '@/types/item';
-import { Button, Flex, Spinner, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Spinner, Text } from '@chakra-ui/react';
 import { Link, useParams } from 'react-router-dom';
 import { ProductCard } from './product-card';
 
 type QueryResponse = {
   cartItems: CartItem[];
+  title: string;
   message?: string;
 };
 
@@ -58,6 +59,17 @@ export default function PublicItemsPage() {
 
   return (
     <div>
+      <Text
+        fontSize="3xl"
+        mb={4}
+        fontWeight={700}
+        color="scheme.dusty-rose"
+        textShadow={'2px 2px #ead2ce'}
+        textAlign="center"
+        pt={5}
+      >
+        {data?.title}
+      </Text>
       <Flex wrap="wrap">
         {data?.cartItems.map((item: CartItem) => (
           <ProductCard key={item.id} item={item} publicView />

@@ -23,6 +23,7 @@ import { deleteReduxCategory } from '@/redux/slices/category.slice';
 import { FaCaretLeft } from 'react-icons/fa';
 import { selectItems } from '@/redux/slices/items.slice';
 import { formatCurrency } from '@/utils/price-formatter';
+import copy from 'copy-to-clipboard';
 
 interface DisplayCategoryCardProps {
   title: string;
@@ -146,7 +147,7 @@ const DisplayCategoryCard = ({
       </Accordion>
 
       {/* private badge */}
-      {!isPublic && (
+      {!isPublic ? (
         <Badge
           borderRadius="0px 7px 0px 7px"
           position="absolute"
@@ -156,6 +157,29 @@ const DisplayCategoryCard = ({
           backgroundColor={'scheme.light-rose'}
         >
           Private
+        </Badge>
+      ) : (
+        <Badge
+          borderRadius="0px 7px 0px 7px"
+          position="absolute"
+          color="scheme.dusty-rose"
+          top={0}
+          right={0}
+          backgroundColor={'scheme.light-rose'}
+          onClick={() => {
+            copy(`
+            ${window.location.origin}/public/${categoryId}
+            `);
+            toast({
+              title: 'Copied to clipboard',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+            });
+          }}
+          cursor="pointer"
+        >
+          Share
         </Badge>
       )}
       <Link to={`/category/${categoryId}`}>

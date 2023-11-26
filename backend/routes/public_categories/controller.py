@@ -21,7 +21,8 @@ class PublicCategoryResource(Resource):
             cart_items = CartItem.query.filter_by(
                 category_id=category_id).all()
             return {
-                "cart_items": [dissoc(item.json(), "user_id", "date_added") for item in cart_items]
+                "cart_items": [dissoc(item.json(), "user_id", "date_added") for item in cart_items],
+                "title": category.title,
             }, 200
 
         except Exception as e:
