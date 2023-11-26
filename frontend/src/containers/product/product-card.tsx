@@ -7,7 +7,13 @@ import { Flex, Spinner, VStack, useToast } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-export const ProductCard = ({ item }: { item: CartItem }) => {
+export const ProductCard = ({
+  item,
+  publicView = false,
+}: {
+  item: CartItem;
+  publicView?: boolean;
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<CartItem>(item);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -105,6 +111,7 @@ export const ProductCard = ({ item }: { item: CartItem }) => {
       {!isEditing ? (
         <ProductCardDisplay
           item={item}
+          publicView={publicView}
           onEditClick={() => setIsEditing(true)}
           onDeleteClick={handleDelete}
           onTogglePurchased={() => {

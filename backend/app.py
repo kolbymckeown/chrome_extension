@@ -8,7 +8,7 @@ from request.exception import AppException, template
 from routes.users.controller import UsersResource
 from routes.cart_item.controller import CartItemResource
 from routes.categories.controller import CategoryResource
-
+from routes.public_categories.controller import PublicCategoryResource
 
 # Convert the list of whitelisted origins to a list with stripped elements
 WHITELIST_ORIGINS = [x.strip() for x in os.environ['WHITE_ORIGIN'].split(
@@ -36,6 +36,7 @@ def register_resources(api):
     api.add_resource(UsersResource, '/users')
     api.add_resource(CartItemResource, '/cart-item')
     api.add_resource(CategoryResource, '/categories')
+    api.add_resource(PublicCategoryResource, '/public-category')
 
 
 api = Api(app)
