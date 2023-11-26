@@ -31,7 +31,7 @@ export default function Home() {
     const routes: RouteObject[] = [
       {
         path: '/',
-        element: <Layout seoTranslationKey="try" />,
+        element: <Layout seoTranslationKey="Home" />,
         children: [
           {
             index: true,
