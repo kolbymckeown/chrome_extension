@@ -39,8 +39,6 @@ export default function ImageSlider({
   const top = '90%';
   const side = '5%';
 
-  // These are the images used in the slide
-  console.log(images);
   return (
     <Box
       position={'relative'}
