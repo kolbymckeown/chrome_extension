@@ -11,21 +11,23 @@ from request.auth import get_app_auth_token
 import sys
 from .model import Category  # Import the Category model
 
+
 class CategoryResource(Resource):
     @jwt_required(optional=True)
     def get(self):
         auth_token = get_jwt_identity()
-        category_id = request.args.get("category_id")  # Update the parameter name
+        category_id = request.args.get(
+            "category_id")  # Update the parameter name
 
         if category_id == "all":
             try:
-                categories = find(Category, filter={"user_id": auth_token, "deleted": False}).db_entries
+                categories = find(Category, filter={
+                                  "user_id": auth_token, "deleted": False}).db_entries
 
                 return Response({
                     "categories": [category.json() for category in categories]
                 }, code=200).json
             except Exception as e:
-                print(e, file=sys.stderr)
                 return Response({"message": "Something went wrong"}, code=500).json
 
         category = find_one(Category, filter={"id": category_id})
@@ -67,12 +69,10 @@ class CategoryResource(Resource):
             updated_data = Request().body
 
             # Print the updated_data dictionary
-            print(updated_data, file=sys.stderr)
 
             immutable_fields = ["id", "created_at"]
 
             for key, value in updated_data.items():
-                print(key, value, file=sys.stderr)
                 if key not in immutable_fields:
                     setattr(current_category, key, value)
 
@@ -80,7 +80,6 @@ class CategoryResource(Resource):
 
             return Response({"category": current_category.json()}, code=200).json
         except Exception as e:
-            print(e, file=sys.stderr)
             return Response({"message": "Something went wrong"}, code=500).json
 
     @jwt_required()
@@ -89,7 +88,8 @@ class CategoryResource(Resource):
         category_id = request.args.get('category_id')
 
         # Ensure the user has the necessary permissions to delete this category
-        category = Category.query.filter_by(id=category_id, user_id=user_id).first()
+        category = Category.query.filter_by(
+            id=category_id, user_id=user_id).first()
         if not category:
             return {"message": "Category not found or you don't have permission to delete it"}, 404
 

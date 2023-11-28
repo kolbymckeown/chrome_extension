@@ -32,7 +32,7 @@ export type Categories = {
 };
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [responseFromContent, setResponseFromContent] = useState<Product>({
 		url: "",
 		store: "",
@@ -42,11 +42,7 @@ const App = () => {
 		description: "",
 	});
 
-
-	const {
-		data: categories,
-		isError,
-	} = useQuery<Categories>(`categories`, {
+	const { data: categories, isError } = useQuery<Categories>(`categories`, {
 		query: { categoryId: "all" },
 	});
 
@@ -57,28 +53,21 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-    setIsLoading(true)
+		setIsLoading(true);
 		// Check if running in a Chrome extension context
 		if (chrome && chrome.cookies) {
 			// Get all cookies
 			chrome.cookies.getAll({}, function (allCookies) {
-				console.log("All cookies:", allCookies);
-
 				const currentUserAuthToken = allCookies.find(
 					(cookie) => cookie.name === "genius_user_auth_token"
 				);
 
 				if (currentUserAuthToken) {
-					// set cookie for the chrome extension here
-					console.log(
-						// current date and time
-						new Date().toLocaleString("en-US", { timeZone: "America/New_York" })
-					);
 					setUser(true);
 				}
 			});
 		}
-    setIsLoading(false)
+		setIsLoading(false);
 	}, []);
 
 	const getProductOnClick = () => {
@@ -90,7 +79,6 @@ const App = () => {
 		getCurrentTabUId((id) => {
 			id &&
 				chrome.tabs.sendMessage(id, message, (responseFromContentScript) => {
-
 					setResponseFromContent(responseFromContentScript);
 				});
 		});
