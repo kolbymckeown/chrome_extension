@@ -7,6 +7,7 @@ import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 // And react-slick as our Carousel Lib
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
+import ImageWithFallback from './image-fallback';
 
 // Settings for the slider
 const settings = {
@@ -39,7 +40,7 @@ export default function ImageSlider({
   const side = '5%';
 
   // These are the images used in the slide
-
+  console.log(images);
   return (
     <Box
       position={'relative'}
@@ -100,14 +101,12 @@ export default function ImageSlider({
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
         {images?.map((url, index) => (
           <Link to={`/category/${categoryId}`}>
-            <Box
+            <ImageWithFallback
+              src={url}
+              alt="displayImg"
+              h="250px"
+              w="250px"
               key={index}
-              height={'250px'}
-              position="relative"
-              backgroundPosition="center"
-              backgroundRepeat="no-repeat"
-              backgroundSize="contain"
-              backgroundImage={`url(${url})`}
             />
           </Link>
         ))}
