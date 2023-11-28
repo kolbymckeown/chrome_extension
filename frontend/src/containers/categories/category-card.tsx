@@ -33,8 +33,12 @@ const CategoryCard = ({ category }: CategoryCardProps) => {
   }
 
   const displayImage = getFirstImageByCategoryId(items, +categoryId);
+  // all images contain this to start.... eliminates broken images
   const imagesForCategory = items
-    .filter((item: CartItem) => item.categoryId === categoryId)
+    .filter(
+      (item: CartItem) =>
+        item.categoryId === categoryId && item.image.startsWith('https://')
+    )
     .map((item) => item.image)
     .filter(Boolean);
 

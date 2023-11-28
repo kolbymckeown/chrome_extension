@@ -18,7 +18,7 @@ import {
   Text,
   Tooltip,
 } from '@chakra-ui/react';
-import { FaCheck, FaEdit, FaMinus, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaEdit, FaMagic, FaMinus, FaTrash } from 'react-icons/fa';
 import { HamburgerIcon } from '@chakra-ui/icons';
 
 interface ProductCardDisplayProps {
@@ -93,6 +93,20 @@ const ProductCardDisplay: React.FC<ProductCardDisplayProps> = ({
               </h2>
               <AccordionPanel p={0}>
                 <Flex direction={'column'}>
+                  {/* for AI feature coming soon */}
+                  {/* <Tooltip label="AI" aria-label="AI">
+                  <IconButton
+                    bg={'transparent'}
+                    aria-label="AI"
+                    color={'scheme.main-green-blue'}
+                    icon={<FaMagic />}
+                    borderRadius={'full'}
+                    onClick={onEditClick}
+                    _hover={{
+                      bg: 'transparent',
+                    }}
+                  />
+                </Tooltip> */}
                   <Tooltip label="Edit" aria-label="Edit">
                     <IconButton
                       bg={'transparent'}
