@@ -24,12 +24,10 @@ export const Layout = ({
 }: ILayoutProps) => {
   const { txid } = useTranslations();
   const fullPageTitle = `Genius | ${
-    plainTitle ||
-    txid(`seo.title.${seoTranslationKey}`, seoTranslationVariables)
+    plainTitle || txid(`${seoTranslationKey}`, seoTranslationVariables)
   }`;
   const description =
-    plainDescription ||
-    txid(`seo.description.${seoTranslationKey}`, seoTranslationVariables);
+    plainDescription || txid(`${seoTranslationKey}`, seoTranslationVariables);
 
   return (
     <>
