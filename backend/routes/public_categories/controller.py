@@ -26,7 +26,6 @@ class PublicCategoryResource(Resource):
             }, 200
 
         except Exception as e:
-            print(e, file=sys.stderr)
             return {"message": "Something went wrong"}, 500
 
 

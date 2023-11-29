@@ -152,7 +152,6 @@ const useAuth = (): AuthHook => {
       setAuthenticatedUser(dbUser, authToken);
       router.push('/');
     } catch (error) {
-      console.log({ error });
       console.error('Error creating account with email and password', error);
       throw error;
     }

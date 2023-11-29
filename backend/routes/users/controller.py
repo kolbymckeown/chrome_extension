@@ -29,7 +29,6 @@ class UsersResource(Resource):
                         user.json(), ['id']) for user in all_users]
                 }, code=200).json
             except Exception as e:
-                print(e, file=sys.stderr)
                 return Response({"message": "Something went wrong"}, code=500).json
 
         user = find_one(Users, filter={"id": user_id})
@@ -76,13 +75,11 @@ class UsersResource(Resource):
             updated_data = Request().body
 
             # Print the updated_data dictionary
-            print(updated_data, file=sys.stderr)
 
             immutable_fields = ["id", "email",
                                 "first_name", "last_name", "profile_complete"]
 
             for key, value in updated_data.items():
-                print(key, value, file=sys.stderr)
                 if key not in immutable_fields:
                     setattr(current_user, key, value)
 
@@ -93,5 +90,4 @@ class UsersResource(Resource):
 
             return Response({"user": current_user.json()}, code=200).json
         except Exception as e:
-            print(e, file=sys.stderr)
             return Response({"message": "Something went wrong"}, code=500).json
