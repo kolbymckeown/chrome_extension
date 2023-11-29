@@ -14,9 +14,11 @@ import {
 	Spinner,
 	Text,
 	useToast,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Categories, Product } from "./App";
 import { useMutation } from "./hooks/use-query";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 interface FormData {
 	title?: string;
@@ -125,16 +127,27 @@ const WishlistForm = ({
 				</FormControl>
 				<FormControl mt={4} color={"scheme.main-green-blue"}>
 					{formData?.image ? (
-						<Image
-							mt={4}
-							src={formData.image}
-							alt="Product Image"
-							width={290}
-							height={290}
-						/>
+            <Flex direction={'column'}>
+              <Image
+                mt={4}
+                src={formData.image}
+                alt="Product Image"
+                width={290}
+                height={290}
+              />
+              <Text cursor="pointer" onClick={() => {
+                console.log('click')
+                setFormData({...formData, image: ''})
+                }}>wrong image?</Text>
+            </Flex>
 					) : (
 						<>
-							<FormLabel color={"scheme.main-green-blue"}>Image URL</FormLabel>
+              <Flex direction={'row'}>
+                <FormLabel color={"scheme.main-green-blue"}>Image URL</FormLabel>
+                <Tooltip label={`Right click image and "copy image address"`} aria-label="Image copy">
+                  <InfoOutlineIcon color={'scheme.main-green-blue'} />
+                </Tooltip>
+              </Flex>
 							<Input
 								type="text"
 								name="image"
