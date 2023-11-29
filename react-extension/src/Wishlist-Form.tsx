@@ -135,10 +135,7 @@ const WishlistForm = ({
                 width={290}
                 height={290}
               />
-              <Text cursor="pointer" onClick={() => {
-                console.log('click')
-                setFormData({...formData, image: ''})
-                }}>wrong image?</Text>
+              <Text cursor="pointer" onClick={() => setFormData({...formData, image: ''})}>Wrong image?</Text>
             </Flex>
 					) : (
 						<>
