@@ -21,6 +21,7 @@ import { selectUser } from '@/redux/slices/user.slice';
 import { AddItem } from '../items/add-item';
 import { AddCategory } from '../categories/add-category';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SearchComponent from './search';
 
 export default function Navbar() {
   const user = useSelector(selectUser);
@@ -65,21 +66,24 @@ export default function Navbar() {
         </HStack>
         <Flex alignItems="center">
           {user.email ? (
-            <Button
-              onClick={handleLogout}
-              color="scheme.dusty-rose"
-              borderColor="scheme.dusty-rose"
-              borderWidth={1}
-              bg="white"
-              _hover={{
-                bg: 'scheme.dusty-rose',
-                color: 'white',
-                border: '1px solid white',
-              }}
-              boxShadow="3px 3px pink"
-            >
-              Sign out
-            </Button>
+            <>
+              <SearchComponent />
+              <Button
+                onClick={handleLogout}
+                color="scheme.dusty-rose"
+                borderColor="scheme.dusty-rose"
+                borderWidth={1}
+                bg="white"
+                _hover={{
+                  bg: 'scheme.dusty-rose',
+                  color: 'white',
+                  border: '1px solid white',
+                }}
+                boxShadow="3px 3px pink"
+              >
+                Sign out
+              </Button>
+            </>
           ) : (
             !isLoginPage && (
               <Link to="/session/login">
