@@ -51,7 +51,7 @@ const Footer = () => {
     >
       <Flex direction="column" w="100%">
         <Divider mb={'10px'} />
-        <Flex w="100%" justify="space-between">
+        <Flex w="100%" justify="space-between" align={'center'}>
           <Button
             ml={5}
             colorScheme="blue"
@@ -73,8 +73,10 @@ const Footer = () => {
               alt="Genius Logo"
             />
           </Link>
-
-          <HStack
+          <Link mr={5} href="/contact" color={'scheme.main-green-blue'}>
+            Contact us
+          </Link>
+          {/* <HStack
             direction="row"
             spacing={5}
             alignItems="center"
@@ -96,7 +98,7 @@ const Footer = () => {
                 />
               </Tooltip>
             ))}
-          </HStack>
+          </HStack> */}
         </Flex>
       </Flex>
     </Stack>

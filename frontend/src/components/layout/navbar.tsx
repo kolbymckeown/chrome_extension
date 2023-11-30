@@ -6,9 +6,14 @@ import {
   useDisclosure,
   HStack,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Divider,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
 import useAuth from '@/hooks/use-auth';
 import { selectUser } from '@/redux/slices/user.slice';
@@ -88,6 +93,38 @@ export default function Navbar() {
               >
                 Sign out
               </Button>
+              <Menu>
+                <MenuButton
+                  ml={2}
+                  as={IconButton}
+                  bg={'white'}
+                  _hover={{
+                    bg: 'scheme.dusty-rose',
+                    color: 'white',
+                    border: '1px solid white',
+                  }}
+                  border={'1px solid'}
+                  borderColor={'scheme.dusty-rose'}
+                  boxShadow={'3px 3px pink'}
+                  icon={<ChevronDownIcon color="scheme.dusty-rose" />}
+                ></MenuButton>
+                <MenuList>
+                  <MenuItem color={'scheme.main-green-blue'}>Account</MenuItem>
+                  <Divider />
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/contact')}
+                  >
+                    Contact us
+                  </MenuItem>
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/session/terms')}
+                  >
+                    Terms of service
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </>
           ) : (
             !isLoginPage && (
