@@ -21,6 +21,7 @@ import { selectUser } from '@/redux/slices/user.slice';
 import { AddItem } from '../items/add-item';
 import { AddCategory } from '../categories/add-category';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SearchComponent from './search';
 
 export default function Navbar() {
   const user = useSelector(selectUser);
@@ -64,6 +65,7 @@ export default function Navbar() {
           )}
         </HStack>
         <Flex alignItems="center">
+          <SearchComponent />
           {user.email ? (
             <Button
               onClick={handleLogout}
