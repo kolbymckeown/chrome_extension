@@ -44,9 +44,8 @@ const Footer = () => {
   return (
     <Stack
       as="footer"
-      maxW="7xl"
       marginInline="auto"
-      p={8}
+      py={8}
       direction={{ base: 'column', md: 'row' }}
       justify={'space-between'}
     >
@@ -64,8 +63,7 @@ const Footer = () => {
               )
             }
           >
-            <Icon as={FaChrome} mr={2} />
-            Add to chrome - it's free
+            <Icon as={FaChrome} />
           </Button>
           <Link href="/">
             <Image
@@ -82,6 +80,7 @@ const Footer = () => {
             alignItems="center"
             justifySelf="flex-end"
             right={'10'}
+            mr={5}
           >
             {accounts.map((sc, index) => (
               <Tooltip key={index} label={sc.label} aria-label={sc.label}>

@@ -31,7 +31,7 @@ const SearchComponent = () => {
       : [];
 
   return (
-    <Box position="relative" mr={'5px'}>
+    <Box position="relative" mr={'5px'} display={{ base: 'none', md: 'flex' }}>
       <Input
         ref={inputRef}
         placeholder="Search items..."
