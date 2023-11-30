@@ -59,7 +59,7 @@ export default function ProductDisplayCase() {
     <Box>
       <CategoryTabs />
       <Box p={5}>
-        <Flex alignItems="center" justifyContent={'center'} gap={5} mb={4}>
+        {/* <Flex alignItems="center" justifyContent={'center'} gap={5} mb={4}>
           <Text
             fontSize="4xl"
             textAlign={'center'}
@@ -98,7 +98,7 @@ export default function ProductDisplayCase() {
               Share <FaRegCopy />
             </Button>
           )}
-        </Flex>
+        </Flex> */}
 
         <Select onChange={(e) => setSortOption(e.target.value)} w={'300px'}>
           <option value="dateNewest">Date Added: Newest to Oldest</option>
