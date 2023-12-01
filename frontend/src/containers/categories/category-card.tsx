@@ -1,7 +1,7 @@
 import { selectItems } from '@/redux/slices/items.slice';
 import { Category } from '@/types/category';
 import { CartItem } from '@/types/item';
-import { Box, useToast } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import EditableCategoryCard from '../../components/categories/category-card-edit';

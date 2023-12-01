@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   Flex,
@@ -31,7 +30,7 @@ export const AddCategory = ({ variant = 'button' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch<AppDispatch>();
-  const { mutate: addItem } = useMutation(`categories`, {
+  const { mutate: addCategory } = useMutation(`categories`, {
     type: 'POST',
   });
 
@@ -43,7 +42,7 @@ export const AddCategory = ({ variant = 'button' }) => {
   });
 
   const onSubmit = (data: any) => {
-    addItem(
+    addCategory(
       { ...data },
       {
         onSuccess: () => {

@@ -5,12 +5,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 export const fetchCategories = createAsyncThunk(
   'data/fetchCategories',
   async () => {
+    console.log('here?');
     try {
       const data = await asynchrounousRequest('categories', {
         query: {
           categoryId: 'all',
         },
       });
+      console.log('data', data);
 
       return data?.categories.sort(
         (a: Category, b: Category) =>
