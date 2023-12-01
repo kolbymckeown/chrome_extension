@@ -15,6 +15,7 @@ import CategoryDisplayCase from '@/containers/categories/category-display-case';
 import TermsAndConditions from '@/containers/terms/terms';
 import PublicItemsPage from '@/containers/product/public-items';
 import ContactPage from '@/containers/contact/contact';
+import AccountPage from '@/containers/account/account';
 
 export default function Home() {
   const user = useSelector(selectUser);
@@ -48,6 +49,16 @@ export default function Home() {
             path: `category/:categoryId`,
             element: user?.email ? (
               <ProductDisplayCase />
+            ) : userIsLoading ? (
+              <LoadingScreen />
+            ) : (
+              <RegisterPage />
+            ),
+          },
+          {
+            path: 'account',
+            element: user?.email ? (
+              <AccountPage />
             ) : userIsLoading ? (
               <LoadingScreen />
             ) : (

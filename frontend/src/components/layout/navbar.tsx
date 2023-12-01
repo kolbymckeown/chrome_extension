@@ -78,38 +78,35 @@ export default function Navbar() {
           {user.email ? (
             <>
               {!isPublicRoute && <SearchComponent />}
-              <Button
-                onClick={handleLogout}
-                color="scheme.dusty-rose"
-                borderColor="scheme.dusty-rose"
-                borderWidth={1}
-                bg="white"
-                _hover={{
-                  bg: 'scheme.dusty-rose',
-                  color: 'white',
-                  border: '1px solid white',
-                }}
-                boxShadow="3px 3px pink"
-              >
-                Sign out
-              </Button>
               <Menu>
                 <MenuButton
-                  ml={2}
+                  ml={1}
                   as={IconButton}
                   bg={'white'}
+                  border={'1px solid'}
+                  borderColor={'scheme.dusty-rose'}
+                  boxShadow={'3px 3px pink'}
+                  color={'scheme.dusty-rose'}
                   _hover={{
                     bg: 'scheme.dusty-rose',
                     color: 'white',
                     border: '1px solid white',
                   }}
-                  border={'1px solid'}
-                  borderColor={'scheme.dusty-rose'}
-                  boxShadow={'3px 3px pink'}
-                  icon={<ChevronDownIcon color="scheme.dusty-rose" />}
+                  icon={<ChevronDownIcon />}
                 ></MenuButton>
                 <MenuList>
-                  <MenuItem color={'scheme.main-green-blue'}>Account</MenuItem>
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/')}
+                  >
+                    Home
+                  </MenuItem>
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/account')}
+                  >
+                    Account
+                  </MenuItem>
                   <Divider />
                   <MenuItem
                     color={'scheme.main-green-blue'}
@@ -122,6 +119,13 @@ export default function Navbar() {
                     onClick={() => navigate('/session/terms')}
                   >
                     Terms of service
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={handleLogout}
+                  >
+                    Sign out
                   </MenuItem>
                 </MenuList>
               </Menu>

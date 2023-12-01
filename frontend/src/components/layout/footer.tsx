@@ -1,17 +1,6 @@
-import {
-  Stack,
-  HStack,
-  Link,
-  Divider,
-  Image,
-  IconButton,
-  LinkProps,
-  Tooltip,
-  Flex,
-  Icon,
-  Button,
-} from '@chakra-ui/react';
+import { Stack, Divider, Image, Flex, Icon, Button } from '@chakra-ui/react';
 import { FaChrome, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const accounts = [
   {
@@ -41,6 +30,7 @@ const accounts = [
 ];
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <Stack
       as="footer"
@@ -65,17 +55,16 @@ const Footer = () => {
           >
             <Icon as={FaChrome} />
           </Button>
-          <Link href="/">
-            <Image
-              w="100px"
-              h="40px"
-              src="/genius-modern-dark.png"
-              alt="Genius Logo"
-            />
-          </Link>
-          <Link mr={5} href="/contact" color={'scheme.main-green-blue'}>
+          <Image
+            onClick={() => navigate('/')}
+            w="100px"
+            h="40px"
+            src="/genius-modern-dark.png"
+            alt="Genius Logo"
+          />
+          <Button onClick={() => navigate('/contact')} mr={5}>
             Contact us
-          </Link>
+          </Button>
           {/* <HStack
             direction="row"
             spacing={5}
