@@ -44,7 +44,7 @@ const Footer = () => {
         <Flex w="100%" justify="space-between" align={'center'}>
           <Button
             ml={5}
-            colorScheme="blue"
+            color={'scheme.main-green-blue'}
             textTransform="uppercase"
             onClick={() =>
               window.open(
@@ -62,7 +62,12 @@ const Footer = () => {
             src="/genius-modern-dark.png"
             alt="Genius Logo"
           />
-          <Button onClick={() => navigate('/contact')} mr={5}>
+          <Button
+            onClick={() => navigate('/contact')}
+            mr={5}
+            variant="ghost"
+            color={'scheme.main-green-blue'}
+          >
             Contact us
           </Button>
           {/* <HStack
