@@ -1,17 +1,6 @@
-import {
-  Stack,
-  HStack,
-  Link,
-  Divider,
-  Image,
-  IconButton,
-  LinkProps,
-  Tooltip,
-  Flex,
-  Icon,
-  Button,
-} from '@chakra-ui/react';
+import { Stack, Divider, Image, Flex, Icon, Button } from '@chakra-ui/react';
 import { FaChrome, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const accounts = [
   {
@@ -41,21 +30,21 @@ const accounts = [
 ];
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <Stack
       as="footer"
-      maxW="7xl"
       marginInline="auto"
-      p={8}
+      py={8}
       direction={{ base: 'column', md: 'row' }}
       justify={'space-between'}
     >
       <Flex direction="column" w="100%">
         <Divider mb={'10px'} />
-        <Flex w="100%" justify="space-between">
+        <Flex w="100%" justify="space-between" align={'center'}>
           <Button
             ml={5}
-            colorScheme="blue"
+            color={'scheme.main-green-blue'}
             textTransform="uppercase"
             onClick={() =>
               window.open(
@@ -64,24 +53,30 @@ const Footer = () => {
               )
             }
           >
-            <Icon as={FaChrome} mr={2} />
-            Add to chrome - it's free
+            <Icon as={FaChrome} />
           </Button>
-          <Link href="/">
-            <Image
-              w="100px"
-              h="40px"
-              src="/genius-modern-dark.png"
-              alt="Genius Logo"
-            />
-          </Link>
-
-          <HStack
+          <Image
+            onClick={() => navigate('/')}
+            w="100px"
+            h="40px"
+            src="/genius-modern-dark.png"
+            alt="Genius Logo"
+          />
+          <Button
+            onClick={() => navigate('/contact')}
+            mr={5}
+            variant="ghost"
+            color={'scheme.main-green-blue'}
+          >
+            Contact us
+          </Button>
+          {/* <HStack
             direction="row"
             spacing={5}
             alignItems="center"
             justifySelf="flex-end"
             right={'10'}
+            mr={5}
           >
             {accounts.map((sc, index) => (
               <Tooltip key={index} label={sc.label} aria-label={sc.label}>
@@ -97,7 +92,7 @@ const Footer = () => {
                 />
               </Tooltip>
             ))}
-          </HStack>
+          </HStack> */}
         </Flex>
       </Flex>
     </Stack>

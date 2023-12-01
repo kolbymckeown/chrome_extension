@@ -5,6 +5,8 @@ import CategoryCard from './category-card';
 import { CartItem } from '@/types/item';
 import { useSelector } from 'react-redux';
 import { selectCategories } from '@/redux/slices/category.slice';
+import { DefaultAddCategory } from '@/components/categories/default-add-category';
+import EditableCategoryCard from '@/components/categories/category-card-edit';
 export interface CartItemsResponse {
   cartItems: CartItem[];
   statusCode: number;
@@ -37,6 +39,7 @@ export default function CategoryDisplayCase() {
         px={6}
         justifyContent="center"
       >
+        <DefaultAddCategory />
         {categories?.map((category: Category) => (
           <CategoryCard category={category} key={category.id} />
         ))}

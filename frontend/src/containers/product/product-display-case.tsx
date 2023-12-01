@@ -59,7 +59,7 @@ export default function ProductDisplayCase() {
     <Box>
       <CategoryTabs />
       <Box p={5}>
-        <Flex alignItems="center" justifyContent={'center'} gap={5} mb={4}>
+        {/* <Flex alignItems="center" justifyContent={'center'} gap={5} mb={4}>
           <Text
             fontSize="4xl"
             textAlign={'center'}
@@ -69,6 +69,23 @@ export default function ProductDisplayCase() {
           >
             {selectedCategory?.title}
           </Text>
+          
+        </Flex> */}
+        <Flex justify={'space-between'}>
+          <Select
+            onChange={(e) => setSortOption(e.target.value)}
+            w={'300px'}
+            color={'scheme.dusty-rose'}
+            fontWeight={'600'}
+            ml={2}
+            border={'1px solid pink'}
+            focusBorderColor="#ffc0cb"
+          >
+            <option value="dateNewest">Date Added: Newest to Oldest</option>
+            <option value="dateOldest">Date Added: Oldest to Newest</option>
+            <option value="priceHighToLow">Price: High to Low</option>
+            <option value="priceLowToHigh">Price: Low to High</option>
+          </Select>
           {selectedCategory?.isPublic && (
             <Button
               color="scheme.dusty-rose"
@@ -99,14 +116,6 @@ export default function ProductDisplayCase() {
             </Button>
           )}
         </Flex>
-
-        <Select onChange={(e) => setSortOption(e.target.value)} w={'300px'}>
-          <option value="dateNewest">Date Added: Newest to Oldest</option>
-          <option value="dateOldest">Date Added: Oldest to Newest</option>
-          <option value="priceHighToLow">Price: High to Low</option>
-          <option value="priceLowToHigh">Price: Low to High</option>
-        </Select>
-
         {itemsList.length !== 0 ? (
           <Flex wrap="wrap">
             {itemsList.map((item: CartItem) => (

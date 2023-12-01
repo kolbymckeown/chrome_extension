@@ -1,20 +1,19 @@
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useDisclosure,
   HStack,
-  Avatar,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Divider,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
 import useAuth from '@/hooks/use-auth';
 import { selectUser } from '@/redux/slices/user.slice';
@@ -31,6 +30,7 @@ export default function Navbar() {
   const { pathname } = useLocation();
 
   const isLoginPage = pathname === '/session/login';
+  const isPublicRoute = pathname.startsWith('/public');
 
   const handleLogout = async () => {
     navigate('/session/login');
@@ -46,6 +46,16 @@ export default function Navbar() {
           aria-label="Open Menu"
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
+          background={'white'}
+          boxShadow={'3px 3px pink'}
+          color={'scheme.dusty-rose'}
+          border={'1px solid'}
+          borderColor={'scheme.dusty-rose'}
+          _hover={{
+            bg: 'scheme.dusty-rose',
+            color: 'white',
+            border: '1px solid white',
+          }}
         />
         <HStack spacing={8} alignItems="center">
           <Link to="/">
@@ -67,22 +77,58 @@ export default function Navbar() {
         <Flex alignItems="center">
           {user.email ? (
             <>
-              <SearchComponent />
-              <Button
-                onClick={handleLogout}
-                color="scheme.dusty-rose"
-                borderColor="scheme.dusty-rose"
-                borderWidth={1}
-                bg="white"
-                _hover={{
-                  bg: 'scheme.dusty-rose',
-                  color: 'white',
-                  border: '1px solid white',
-                }}
-                boxShadow="3px 3px pink"
-              >
-                Sign out
-              </Button>
+              {!isPublicRoute && <SearchComponent />}
+              <Menu>
+                <MenuButton
+                  ml={1}
+                  as={IconButton}
+                  bg={'white'}
+                  border={'1px solid'}
+                  borderColor={'scheme.dusty-rose'}
+                  boxShadow={'3px 3px pink'}
+                  color={'scheme.dusty-rose'}
+                  _hover={{
+                    bg: 'scheme.dusty-rose',
+                    color: 'white',
+                    border: '1px solid white',
+                  }}
+                  icon={<ChevronDownIcon />}
+                ></MenuButton>
+                <MenuList>
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/')}
+                  >
+                    Home
+                  </MenuItem>
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/account')}
+                  >
+                    Account
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/contact')}
+                  >
+                    Contact us
+                  </MenuItem>
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={() => navigate('/session/terms')}
+                  >
+                    Terms of service
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    color={'scheme.main-green-blue'}
+                    onClick={handleLogout}
+                  >
+                    Sign out
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </>
           ) : (
             !isLoginPage && (

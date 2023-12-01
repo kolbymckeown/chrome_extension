@@ -15,18 +15,21 @@ export const CategoryTab = ({ category, selected }: CategoryTabProps) => {
       px={'10px'}
       mr={'8px'}
       cursor={'pointer'}
-      bg={!selected ? 'scheme.light-rose' : 'scheme.dusty-rose'}
-      color={!selected ? 'scheme.dusty-rose' : 'scheme.light-rose'}
-      textShadow={`2px 2px ${!selected ? '#e5ebe7' : '#4c8d99'}`}
+      bg={!selected ? 'scheme.dusty-rose' : 'white'}
+      color={!selected ? 'white' : 'scheme.dusty-rose'}
       _hover={{
-        backgroundColor: 'scheme.dusty-rose',
-        color: 'scheme.light-rose',
-        textShadow: '2px 2px #4c8d99',
-        boxShadow: '8px 0px #4c8d99',
+        backgroundColor: 'white',
+        color: 'scheme.dusty-rose',
+        border: '1px solid',
+        borderColor: 'pink',
+        borderBottom: 'none',
       }}
       onClick={() => navigate('/category/' + category.id)}
-      borderRadius={'0px 0px 5px 5px'}
-      boxShadow={selected ? '8px 0px #4c8d99' : ''}
+      borderRadius={'5px 5px 0px 0px'}
+      boxShadow={selected ? '4px 0px pink' : ''}
+      border={selected ? '1px solid' : 'none'}
+      borderColor={'pink'}
+      borderBottom={'none'}
     >
       <Text
         fontSize={'x-large'}
