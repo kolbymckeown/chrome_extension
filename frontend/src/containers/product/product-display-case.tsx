@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -16,15 +16,48 @@ import { ProductCard } from './product-card';
 import { CategoryTabs } from '@/components/tabs/tabs';
 import { FaRegCopy } from 'react-icons/fa';
 import copy from 'copy-to-clipboard';
+import useQuery from '@/hooks/use-query';
+import { range } from '@/utils/functions';
+
+type CartItemType = {
+  cartItems: CartItem[];
+  totalPages: number;
+};
 
 export default function ProductDisplayCase() {
   const { categoryId } = useParams();
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
   const [sortOption, setSortOption] = useState('');
   const toast = useToast();
-  const items = useSelector(selectItems);
-  let itemsList = items.filter(
-    (item: CartItem) => item.categoryId === +categoryId!
+  const selectedCategory = useSelector((state: any) =>
+    state.category.categories.find(
+      (category: any) => category.id === +categoryId!
+    )
   );
+  const { data, isLoading, isError, refetch } = useQuery<CartItemType>(
+    `cart-item`,
+    {
+      query: {
+        cartItemId: 'all',
+        categoryId,
+        itemsPerPage,
+        page,
+      },
+    }
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [itemsPerPage, page, refetch]);
+
+  console.log({ data, isLoading, isError });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (data?.cartItems.length === 0)
+    return <Heading>No items in this category</Heading>;
+
+  let itemsList = data?.cartItems || [];
 
   const sortItems = (option: string) => {
     switch (option) {
@@ -48,12 +81,6 @@ export default function ProductDisplayCase() {
   };
 
   itemsList = sortItems(sortOption);
-
-  const selectedCategory = useSelector((state: any) =>
-    state.category.categories.find(
-      (category: any) => category.id === +categoryId!
-    )
-  );
 
   return (
     <Box>
@@ -99,20 +126,51 @@ export default function ProductDisplayCase() {
             </Button>
           )}
         </Flex>
+        <Flex
+          gap={5}
+          justifyContent="space-between"
+          flexDirection={{ base: 'column', md: 'row' }}
+        >
+          <Select onChange={(e) => setSortOption(e.target.value)} w={'300px'}>
+            <option value="dateNewest">Date Added: Newest to Oldest</option>
+            <option value="dateOldest">Date Added: Oldest to Newest</option>
+            <option value="priceHighToLow">Price: High to Low</option>
+            <option value="priceLowToHigh">Price: Low to High</option>
+          </Select>
 
-        <Select onChange={(e) => setSortOption(e.target.value)} w={'300px'}>
-          <option value="dateNewest">Date Added: Newest to Oldest</option>
-          <option value="dateOldest">Date Added: Oldest to Newest</option>
-          <option value="priceHighToLow">Price: High to Low</option>
-          <option value="priceLowToHigh">Price: Low to High</option>
-        </Select>
+          <Select
+            onChange={(e) => setItemsPerPage(Number(e.target.value))}
+            defaultValue={itemsPerPage}
+            w={'300px'}
+          >
+            {[2, 5, 10, 15].map((num) => (
+              <option key={num} value={num}>
+                Items per page: {num}
+              </option>
+            ))}
+          </Select>
+        </Flex>
 
         {itemsList.length !== 0 ? (
-          <Flex wrap="wrap">
-            {itemsList.map((item: CartItem) => (
-              <ProductCard item={item} key={item.id} />
-            ))}
-          </Flex>
+          <Box>
+            <Flex wrap="wrap">
+              {itemsList.map((item: CartItem) => (
+                <ProductCard item={item} key={item.id} />
+              ))}
+            </Flex>
+            <Flex justifyContent="center" mt={4}>
+              {range(1, data?.totalPages || 0).map((pageNum) => (
+                <Button
+                  key={pageNum}
+                  onClick={() => setPage(pageNum - 1)}
+                  m={1}
+                  isDisabled={page === pageNum - 1}
+                >
+                  {pageNum}
+                </Button>
+              ))}
+            </Flex>
+          </Box>
         ) : (
           <Heading>No items in this category</Heading>
         )}

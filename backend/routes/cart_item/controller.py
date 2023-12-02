@@ -6,7 +6,7 @@ from routes.users.model import Users
 from request.response import Response
 from request.request import Request
 from utils.database import find_one, find
-import sys
+from math import ceil
 
 from .model import CartItem
 
@@ -19,24 +19,40 @@ class CartItemResource(Resource):
         cart_item_id = request.args.get("cart_item_id")
         category_id = request.args.get("category_id")
 
-        # pagination parameters
-        page = int(request.args.get("page", 0))
-        items_per_page = int(request.args.get("items_per_page", 10))
-        offset = page * items_per_page
-
         if cart_item_id == "all":
             query = CartItem.query.filter_by(user_id=user_id)
+
             if category_id:
+                # Pagination parameters
+                page = int(request.args.get("page", 0))
+                items_per_page = int(request.args.get("items_per_page", 10))
+                offset = page * items_per_page
+
+                # Count total items in this category for this user
+                total_items = CartItem.query.filter_by(
+                    user_id=user_id, category_id=category_id).count()
+                total_pages = ceil(total_items / items_per_page)
+
                 query = query.filter_by(category_id=category_id)
+                query = query.order_by(CartItem.date_added.desc())
 
-            query = query.order_by(CartItem.date_added.desc())
+                # Apply pagination
+                cart_items = query.limit(items_per_page).offset(offset).all()
 
-            # Apply pagination
-            cart_items = query.limit(items_per_page).offset(offset).all()
+                response_data = {
+                    "cart_items": [item.json() for item in cart_items],
+                    "total_pages": total_pages
+                }
+            else:
+                # No pagination if category_id is not provided
+                cart_items = query.order_by(CartItem.date_added.desc()).all()
+                response_data = {"cart_items": [
+                    item.json() for item in cart_items]}
 
             if not cart_items:
-                return Response({"cart_items": []}, code=200).json
-            return Response({"cart_items": [item.json() for item in cart_items]}, code=200).json
+                response_data["cart_items"] = []
+
+            return Response(response_data, code=200).json
         else:
             # Fetch a specific cart item
             cart_item = find_one(CartItem, filter={"id": cart_item_id})
